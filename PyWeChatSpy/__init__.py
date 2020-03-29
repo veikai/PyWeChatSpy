@@ -4,10 +4,9 @@ import json
 import os
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
-from time import sleep
 import winreg
 
-__version__ = "1.0.0.2"
+__version__ = "1.0.0.3"
 
 
 class WeChatSpy:
@@ -21,12 +20,10 @@ class WeChatSpy:
         self.__socket_server_handle = socket(AF_INET, SOCK_STREAM)
         self.login = False
         self.pid = 0
-        t_start_server = Thread(target=self.__start_server)
-        t_start_server.daemon = True
-        t_start_server.start()
 
     def __start_server(self):
         self.__socket_server_handle.bind(("127.0.0.1", self.__port))
+        self.__run_wechat()
         self.__socket_server_handle.listen(5)
         self.__socket_client_handle, client_address = self.__socket_server_handle.accept()
         data_str = ""
@@ -44,7 +41,7 @@ class WeChatSpy:
                             self.__parser(data)
                 data_str = ""
 
-    def run(self):
+    def __run_wechat(self):
         handle = winreg.OpenKey(
             winreg.HKEY_CURRENT_USER,
             r'Software\Tencent\WeChat',
@@ -62,13 +59,19 @@ class WeChatSpy:
             c_char_p(wechat_path.encode(encoding="gbk")),
             c_char_p(dll_path.encode(encoding="gbk"))
         )
-        while not self.__socket_client_handle:
-            sleep(0.5)
 
     def __send(self, data):
         data = json.dumps(data)
         data_length_bytes = int.to_bytes(len(data.encode(encoding="utf8")), length=4, byteorder="little")
         self.__socket_client_handle.send(data_length_bytes + data.encode(encoding="utf8"))
+
+    def run(self, background=False):
+        if background:
+            t_start_server = Thread(target=self.__start_server)
+            t_start_server.daemon = True
+            t_start_server.start()
+        else:
+            self.__start_server()
 
     def send_text(self, wxid, content, at_wxid=""):
         """
