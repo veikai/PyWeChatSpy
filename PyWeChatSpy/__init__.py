@@ -6,7 +6,7 @@ from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
 import winreg
 
-__version__ = "1.0.0.3"
+__version__ = "1.0.0.4"
 
 
 class WeChatSpy:
