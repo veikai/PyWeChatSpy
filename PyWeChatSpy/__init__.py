@@ -74,6 +74,3 @@ class WeChatSpy:
         data = {"code": 6, "wxid": wxid, "image_path": image_path}
         self.__send(data)
 
-    def decrypt_image(self, data_path, output):
-        data = {"code": 7, "data_path": data_path, "output": output}
-        self.__send(data)
