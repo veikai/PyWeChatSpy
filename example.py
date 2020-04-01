@@ -1,4 +1,5 @@
 from PyWeChatSpy import WeChatSpy
+import os
 
 
 def parser(data):
@@ -7,8 +8,14 @@ def parser(data):
         print(data)
     elif data["type"] == 5:
         # 微信消息
-        for i in data["data"]:
-            print(i)
+        for msg in data["data"]:
+            print(msg)
+            if msg["msg_type"] == 3:
+                data_path = msg["data_path"]
+                while True:
+                    if os.path.exists(data_path):
+                        spy.decrypt_image(data_path, "img.jpg")
+                        break
     else:
         print(data)
 

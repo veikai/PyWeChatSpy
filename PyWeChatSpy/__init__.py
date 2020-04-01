@@ -1,19 +1,15 @@
 from ast import literal_eval
-from ctypes import cdll, c_char_p
 import json
 import os
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
-import winreg
 
-__version__ = "1.0.0.4"
+__version__ = "1.0.0.5"
 
 
 class WeChatSpy:
     def __init__(self, port=9527, parser=None, error_handle=None):
         self.__error_handle = error_handle
-        self.__package_path = os.path.split(os.path.abspath(__file__))[0]
-        self.__helper = cdll.LoadLibrary(self.__package_path + "\\InjectHelper.dll")
         self.__parser = parser
         self.__port = port
         self.__socket_client_handle = None
@@ -24,7 +20,7 @@ class WeChatSpy:
     def __start_server(self):
         self.__socket_server_handle.bind(("127.0.0.1", self.__port))
         self.__run_wechat()
-        self.__socket_server_handle.listen(5)
+        self.__socket_server_handle.listen(1)
         self.__socket_client_handle, client_address = self.__socket_server_handle.accept()
         data_str = ""
         while True:
@@ -42,23 +38,9 @@ class WeChatSpy:
                 data_str = ""
 
     def __run_wechat(self):
-        handle = winreg.OpenKey(
-            winreg.HKEY_CURRENT_USER,
-            r'Software\Tencent\WeChat',
-            0,
-            (winreg.KEY_WOW64_64KEY + winreg.KEY_READ)
-        )
-        reg_wechat_path, _type = winreg.QueryValueEx(handle, "InstallPath")
-        reg_wechat_version, _type = winreg.QueryValueEx(handle, "Version")
-        dll_path = os.path.join(self.__package_path, str(reg_wechat_version), "WeChatSpy.dll")
-        if not os.path.exists(dll_path):
-            print("微信版本不受支持")
-            return
-        wechat_path = os.path.join(reg_wechat_path, "WeChat.exe")
-        self.pid = self.__helper.OpenAndInject(
-            c_char_p(wechat_path.encode(encoding="gbk")),
-            c_char_p(dll_path.encode(encoding="gbk"))
-        )
+        current_path = os.path.split(os.path.abspath(__file__))[0]
+        launcher_path = os.path.join(current_path, "Launcher.exe")
+        os.system(launcher_path)
 
     def __send(self, data):
         data = json.dumps(data)
@@ -90,4 +72,8 @@ class WeChatSpy:
         :param image_path: 图片路径
         """
         data = {"code": 6, "wxid": wxid, "image_path": image_path}
+        self.__send(data)
+
+    def decrypt_image(self, data_path, output):
+        data = {"code": 7, "data_path": data_path, "output": output}
         self.__send(data)

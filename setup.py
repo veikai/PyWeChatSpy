@@ -8,7 +8,7 @@ setup(
     packages=find_packages(),
     package_data={
         "PyWeChatSpy": [
-            "InjectHelper.dll",
+            "Launcher.exe",
             "1644691589/WeChatSpy.dll"
         ]
     },
