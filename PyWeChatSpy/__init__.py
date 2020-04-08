@@ -4,13 +4,19 @@ import os
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
 
-__version__ = "1.0.0.7"
+__version__ = "1.0.0.8"
 
 
 class WeChatSpy:
-    def __init__(self, port=9527, parser=None, error_handle=None):
+    def __init__(self, port=9527, parser=None, error_handle=None, download_image=False):
+        # 是否下载图片(小于2MB)
+        # 该参数为True时 微信会自动下载收到的小于2MB的图片 但会造成图片消息延迟响应
+        self.__download_image = download_image
+        # TODO: 异常处理函数
         self.__error_handle = error_handle
+        # socket数据处理函数
         self.__parser = parser
+        # socket端口
         self.__port = port
         self.__socket_client_handle = None
         self.__socket_server_handle = socket(AF_INET, SOCK_STREAM)
@@ -22,6 +28,8 @@ class WeChatSpy:
         self.__run_wechat()
         self.__socket_server_handle.listen(1)
         self.__socket_client_handle, client_address = self.__socket_server_handle.accept()
+        if self.__download_image:
+            self.__send({"code": 1})
         data_str = ""
         while True:
             _data_str = self.__socket_client_handle.recv(4096).decode(encoding="utf8", errors="ignore")
@@ -31,8 +39,10 @@ class WeChatSpy:
                 for data in data_str.split("*393545857*"):
                     if data:
                         data = literal_eval(data)
-                        if data["type"] == 1:
+                        if not self.login and data["type"] == 1:
                             self.login = True
+                        elif self.login and data["type"] == 203:
+                            self.login = False
                         if callable(self.__parser):
                             self.__parser(data)
                 data_str = ""
