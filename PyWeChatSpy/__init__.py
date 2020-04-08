@@ -4,7 +4,7 @@ import os
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
 
-__version__ = "1.0.0.6"
+__version__ = "1.0.0.7"
 
 
 class WeChatSpy:
@@ -73,4 +73,3 @@ class WeChatSpy:
         """
         data = {"code": 6, "wxid": wxid, "image_path": image_path}
         self.__send(data)
-

@@ -2,8 +2,7 @@ from PyWeChatSpy import WeChatSpy
 
 
 def parser(data):
-    if data["type"] != 200:
-        print(data)
+    print(data)
 
 
 if __name__ == '__main__':

@@ -17,4 +17,6 @@ setup(
     author_email="veikai@126.com",
     description="A spy program that helps people make better use of WeChat",
     url='https://github.com/veikai/PyWeChatSpy.git',
+    license="apache2",
+    platforms="win32"
 )
