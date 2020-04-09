@@ -13,6 +13,8 @@ def parser(data):
         # 消息
         for item in data["data"]:
             print(item)
+            if item["msg_type"] == 1:
+                spy.send_text("filehelper", item["content"])
 
 
 if __name__ == '__main__':

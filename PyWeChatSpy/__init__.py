@@ -4,16 +4,18 @@ import os
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
 
-__version__ = "1.0.0.8"
+__version__ = "1.0.1.0"
 
 
 class WeChatSpy:
-    def __init__(self, port=9527, parser=None, error_handle=None, download_image=False):
+    def __init__(self, port=9527, parser=None, error_handle=None, download_image=False, multi=False):
         # 是否下载图片(小于2MB)
         # 该参数为True时 微信会自动下载收到的小于2MB的图片 但会造成图片消息延迟响应
         self.__download_image = download_image
         # TODO: 异常处理函数
         self.__error_handle = error_handle
+        # 是否多开微信PC客户端
+        self.__multi = multi
         # socket数据处理函数
         self.__parser = parser
         # socket端口
@@ -50,7 +52,7 @@ class WeChatSpy:
     def __run_wechat(self):
         current_path = os.path.split(os.path.abspath(__file__))[0]
         launcher_path = os.path.join(current_path, "Launcher.exe")
-        os.system(launcher_path)
+        os.system(launcher_path + " multi") if self.__multi else os.system(launcher_path)
 
     def __send(self, data):
         data = json.dumps(data)
