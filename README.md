@@ -2,11 +2,11 @@
 A spy program that helps people make better use of WeChat
 
 ##支持微信版本
-* 2.7.185
 * 2.8.0.133
 
 ## 返回数据样例
 * `{"type":1,"wxid":"","nickname":"","wechatid":"","profilephoto_url":"","phone_num":""}`  >当前登录微信账号基本信息
+* `{"type":2,"wxid":"","nickname":"","wechatid":"",...}`  >联系人详情
 * `{"type":5,"data":[{"self":0,"msg_type":1,"wxid1":"","wxid2":"","head":"","content":""}]}`  >微信消息 
   * `self`类型说明：
         * 1 消息由当前登录账号发出
@@ -19,5 +19,10 @@ A spy program that helps people make better use of WeChat
   * `head`说明：当消息来自群聊时，head为包括被at人列表(atuserlist)、群人数(membercount)的xml结构体
 * `{"type":200}`  >心跳
 * `{"type":303}`  >微信登出
+
+## 功能列表
+* `send_text(wxid, content, at_wxid="")` >发送文本消息
+* `send_image(wxid, image_path)` >发送图片消息消息
+* `query_contact_details(wxid)` >查询联系人详情
 
 详细使用方法见example.py

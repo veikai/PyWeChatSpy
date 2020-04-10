@@ -4,7 +4,7 @@ import os
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
 
-__version__ = "1.0.1.0"
+__version__ = "1.0.1.2"
 
 
 class WeChatSpy:
@@ -72,8 +72,10 @@ class WeChatSpy:
         发送文本消息
         :param wxid: 文本消息接收wxid
         :param content: 文本消息内容
-        :param at_wxid: 如果wxid为群wxid且需要@群成员 此参数为被@群成员wxid 否则传空字符串
+        :param at_wxid: 如果wxid为群wxid且需要@群成员 此参数为被@群成员wxid，以英文逗号分隔
         """
+        if not wxid.endswith("chatroom"):
+            at_wxid = ""
         data = {"code": 5, "wxid": wxid, "at_wxid": at_wxid, "content": content}
         self.__send(data)
 
@@ -84,4 +86,12 @@ class WeChatSpy:
         :param image_path: 图片路径
         """
         data = {"code": 6, "wxid": wxid, "image_path": image_path}
+        self.__send(data)
+
+    def query_contact_details(self, wxid):
+        """
+        查询联系人详情
+        :param wxid: 联系人wxid
+        """
+        data = {"code": 2, "wxid": wxid}
         self.__send(data)
