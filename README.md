@@ -1,12 +1,14 @@
 # PyWeChatSpy
 A spy program that helps people make better use of WeChat
 
+[硬核WeChatBot](https://zhuanlan.zhihu.com/p/118674498)
+
 ##支持微信版本
 * 2.8.0.133
 
 ## 返回数据样例
 * `{"type":1,"wxid":"","nickname":"","wechatid":"","profilephoto_url":"","phone_num":""}`  >当前登录微信账号基本信息
-* `{"type":2,"wxid":"","nickname":"","wechatid":"",...}`  >联系人详情
+* `{"type":2,"wxid":"","nickname":"","wechat_id":"",...}`  >联系人详情
 * `{"type":5,"data":[{"self":0,"msg_type":1,"wxid1":"","wxid2":"","head":"","content":""}]}`  >微信消息 
   * `self`类型说明：
         * 1 消息由当前登录账号发出
