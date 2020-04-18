@@ -30,6 +30,7 @@ class WeChatSpy:
     def __start_server(self):
         while True:
             socket_client, client_address = self.__socket_server.accept()
+            print(f"A WeChat process from {client_address} successfully connected")
             self.__socket_client_dict[client_address[1]] = socket_client
             if self.__download_image:
                 self.__send({"code": 1}, client_address[1])

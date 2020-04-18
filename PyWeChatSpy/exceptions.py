@@ -26,12 +26,6 @@ class CreateProcessError(SpyError):
             super(Exception, self).__init__("Create WeChat Process Failed")
 
 
-class DLLInjectedError(SpyError):
-    def __init__(self):
-        super(Exception, self).__init__(
-            "WeChatSpy.dll has been injected into the WeChat process, please exit WeChat and retry")
-
-
 class GetLoginWndHandleError(SpyError):
     def __init__(self):
         super(Exception, self).__init__("Get WeChat Login Window Handle Failed")
@@ -53,16 +47,15 @@ def handle_error_code(error_code):
     elif error_code == "-4":
         raise CreateProcessError()
     elif error_code == "-5":
-        raise DLLInjectedError()
-    elif error_code == "-6":
         raise CreateProcessError(False)
-    elif error_code == "-7":
+    elif error_code == "-6":
         raise GetLoginWndHandleError()
-    elif error_code == "-8":
+    elif error_code == "-7":
         raise InjectError("Apply For Virtual Memory Failed")
-    elif error_code == "-9":
+    elif error_code == "-8":
         raise InjectError("Write DLL Path Into Memory Failed")
-    elif error_code == "-10":
+    elif error_code == "-9":
         raise InjectError("Get Function LoadLibraryA Address Failed")
-    elif error_code == "-1":
+    elif error_code == "-10":
         raise InjectError("Create Remote Thread Failed")
+
