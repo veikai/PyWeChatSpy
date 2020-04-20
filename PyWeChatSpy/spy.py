@@ -80,10 +80,10 @@ class WeChatSpy:
     def send_text(self, wxid, content, at_wxid="", client_port=None):
         """
         发送文本消息
-        :param client_port:
         :param wxid: 文本消息接收wxid
         :param content: 文本消息内容
         :param at_wxid: 如果wxid为群wxid且需要@群成员 此参数为被@群成员wxid，以英文逗号分隔
+        :param client_port:
         """
         if not wxid.endswith("chatroom"):
             at_wxid = ""
@@ -93,18 +93,19 @@ class WeChatSpy:
     def send_image(self, wxid, image_path, client_port=None):
         """
         发送图片消息
-        :param client_port:
         :param wxid: 图片消息接收wxid
         :param image_path: 图片路径
+        :param client_port:
         """
         data = {"code": 6, "wxid": wxid, "image_path": image_path}
         self.__send(data, client_port)
 
-    def query_contact_details(self, wxid, client_port=None):
+    def query_contact_details(self, wxid, chatroom_wxid="", client_port=None):
         """
         查询联系人详情
-        :param client_port:
         :param wxid: 联系人wxid
+        :param chatroom_wxid:
+        :param client_port:
         """
-        data = {"code": 2, "wxid": wxid}
+        data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
         self.__send(data, client_port)

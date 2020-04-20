@@ -10,22 +10,27 @@ def get_reply(data):
 
 def parser(data):
     if data["type"] == 1:
+        # 登录信息
         print(data)
-    elif data["type"] == 200:
-        # 心跳
-        pass
     elif data["type"] == 203:
+        # 微信登出
         print("微信退出登录")
     elif data["type"] == 5:
         # 消息
         for item in data["data"]:
-            if not item["wxid1"].endswith("@chatroom"):
-                content = item["content"]
-                print(content)
-                reply = get_reply(content)
-                print(reply)
-                spy.send_text(item["wxid1"], reply)
+            print(item)
+            wxid1, wxid2 = item["wxid1"], item.get("wxid2")
+            if wxid1.endswith("chatroom"):
+                # 查询群信息
+                spy.query_contact_details(wxid1)
+                if wxid2:
+                    # 查询寻群内发言人信息
+                    spy.query_contact_details(wxid2, wxid1)
+            else:
+                # 查询普通联系人信息
+                spy.query_contact_details(wxid1)
     elif data["type"] == 2:
+        # 联系人信息
         print(data)
 
 
