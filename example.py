@@ -20,15 +20,9 @@ def parser(data):
         for item in data["data"]:
             print(item)
             wxid1, wxid2 = item["wxid1"], item.get("wxid2")
-            if wxid1.endswith("chatroom"):
-                # 查询群信息
-                spy.query_contact_details(wxid1)
-                if wxid2:
-                    # 查询寻群内发言人信息
-                    spy.query_contact_details(wxid2, wxid1)
-            else:
-                # 查询普通联系人信息
-                spy.query_contact_details(wxid1)
+            spy.query_contact_details(wxid1)
+            if wxid1.endswith("chatroom") and wxid2:
+                spy.query_contact_details(wxid2, wxid1)
     elif data["type"] == 2:
         # 联系人信息
         print(data)
