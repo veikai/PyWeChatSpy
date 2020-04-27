@@ -6,10 +6,20 @@ from threading import Thread
 from time import sleep
 from subprocess import Popen, PIPE
 from .exceptions import handle_error_code
+import logging
+
+
+formatter = logging.Formatter('%(asctime)s [%(threadName)s] %(levelname)s: %(message)s')
+sh = logging.StreamHandler()
+sh.setFormatter(formatter)
+sh.setLevel(logging.DEBUG)
 
 
 class WeChatSpy:
     def __init__(self, parser=None, error_handle=None, download_image=False, multi=False):
+        self.logger = logging.getLogger()
+        self.logger.addHandler(sh)
+        self.logger.setLevel(logging.DEBUG)
         # 是否下载图片(小于2MB)
         # 该参数为True时 微信会自动下载收到的小于2MB的图片 但会造成图片消息延迟响应
         self.__download_image = download_image
@@ -25,24 +35,42 @@ class WeChatSpy:
         self.__socket_server.listen(1)
         t_start_server = Thread(target=self.__start_server)
         t_start_server.daemon = True
+        t_start_server.name = "socket accept"
         t_start_server.start()
+
+    def add_log_output_file(self, filename="spy.log", mode='a', encoding="utf8", delay=False, level="WARNING"):
+        fh = logging.FileHandler(filename, mode=mode, encoding=encoding, delay=delay)
+        if level.upper() == "DEBUG":
+            fh.setLevel(logging.DEBUG)
+        elif level.upper() == "INFO":
+            fh.setLevel(logging.INFO)
+        elif level.upper() == "WARNING":
+            fh.setLevel(logging.WARNING)
+        elif level.upper() == "ERROR":
+            fh.setLevel(logging.ERROR)
+        fh.setFormatter(formatter)
+        self.logger.addHandler(fh)
 
     def __start_server(self):
         while True:
             socket_client, client_address = self.__socket_server.accept()
-            print(f"A WeChat process from {client_address} successfully connected")
+            self.logger.info(f"A WeChat process from {client_address} successfully connected")
             self.__socket_client_dict[client_address[1]] = socket_client
             if self.__download_image:
                 self.__send({"code": 1}, client_address[1])
             t_socket_client_receive = Thread(target=self.receive, args=(socket_client, client_address[1]))
-            t_socket_client_receive.name = f"客户端{client_address[1]}receive线程"
+            t_socket_client_receive.name = f"client {client_address[1]}"
             t_socket_client_receive.daemon = True
             t_socket_client_receive.start()
 
     def receive(self, socket_client, client_port):
         data_str = ""
+        _data_str = None
         while True:
-            _data_str = socket_client.recv(4096).decode(encoding="utf8", errors="ignore")
+            try:
+                _data_str = socket_client.recv(4096).decode(encoding="utf8", errors="ignore")
+            except Exception as e:
+                return self.logger.error(e)
             if _data_str:
                 data_str += _data_str
             if data_str and data_str.endswith("*393545857*"):
@@ -97,6 +125,8 @@ class WeChatSpy:
         :param image_path: 图片路径
         :param client_port:
         """
+        if len(image_path.split("\\")) > 8:
+            return self.logger.warning(f"Image path is too long: {image_path}")
         data = {"code": 6, "wxid": wxid, "image_path": image_path}
         self.__send(data, client_port)
 
