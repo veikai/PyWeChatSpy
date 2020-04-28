@@ -7,8 +7,9 @@ from time import sleep
 from subprocess import Popen, PIPE
 from .exceptions import handle_error_code
 import logging
+import re
 
-
+pattern = '[\u4e00-\u9fa5]'
 formatter = logging.Formatter('%(asctime)s [%(threadName)s] %(levelname)s: %(message)s')
 sh = logging.StreamHandler()
 sh.setFormatter(formatter)
@@ -127,6 +128,8 @@ class WeChatSpy:
         """
         if len(image_path.split("\\")) > 8:
             return self.logger.warning(f"Image path is too long: {image_path}")
+        if re.findall(pattern, image_path):
+            return self.logger.warning(f"Chinese characters are not allowed in image path: {image_path}")
         data = {"code": 6, "wxid": wxid, "image_path": image_path}
         self.__send(data, client_port)
 
