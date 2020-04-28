@@ -3,3 +3,4 @@ build
 dist
 PyWeChatSpy.egg-info
 *.log
+*.xor

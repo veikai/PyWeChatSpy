@@ -142,3 +142,17 @@ class WeChatSpy:
         """
         data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
         self.__send(data, client_port)
+
+    def query_contact_list(self, step=50, client_port=None):
+        """
+        查询联系人详情
+        :param step: 每次回调的联系人列表长度
+        :param client_port:
+        :return:
+        """
+        if not os.path.exists("key.xor"):
+            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
+        with open("key.xor", "r") as rf:
+            key = rf.read().rstrip()
+        data = {"code": 3, "key": key, "step": step}
+        self.__send(data, client_port)
