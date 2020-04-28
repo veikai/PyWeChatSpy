@@ -16,11 +16,11 @@ A spy program that helps people make better use of WeChat
         * 0 消息由他人发出
   * `msg_type`类型说明：
         * 1 文本消息
-        * 37 好友请求消息
-            * 好友请求消息为xml结构体，其中fromusername为请求方wxid,encryptusername为v1字段,ticket为v2字段,content为请求内容
-        * 10000 联系人变动消息
-  * `head`说明：当消息来自群聊时，head为包括被at人列表(atuserlist)、群人数(membercount)的xml结构体
-* `{"type":200}`  >心跳
+        * 3 图片消息
+  * `wxid1` 消息来源可能是联系人好友也可能是群
+  * `wxid2` 当消息来自群时 为具体群内发言成员
+  * `content` 消息具体内容
+* `{"type":200}`  >心跳 用于验证微信客户端与Spy连接状态
 * `{"type":303}`  >微信登出
 * `{"type":9527, "content":""}`  >系统提示
 
