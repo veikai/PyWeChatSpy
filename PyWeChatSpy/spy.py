@@ -7,6 +7,7 @@ from time import sleep
 from subprocess import Popen, PIPE
 from .exceptions import handle_error_code
 import logging
+import warnings
 import re
 
 pattern = '[\u4e00-\u9fa5]'
@@ -106,6 +107,16 @@ class WeChatSpy:
             while True:
                 sleep(86400)
 
+    def query_contact_details(self, wxid, chatroom_wxid="", client_port=None):
+        """
+        查询联系人详情
+        :param wxid: 联系人wxid
+        :param chatroom_wxid:
+        :param client_port:
+        """
+        data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
+        self.__send(data, client_port)
+
     def send_text(self, wxid, content, at_wxid="", client_port=None):
         """
         发送文本消息
@@ -120,27 +131,22 @@ class WeChatSpy:
         self.__send(data, client_port)
 
     def send_image(self, wxid, image_path, client_port=None):
-        """
-        发送图片消息
-        :param wxid: 图片消息接收wxid
-        :param image_path: 图片路径
-        :param client_port:
-        """
-        if len(image_path.split("\\")) > 8:
-            return self.logger.warning(f"Image path is too long: {image_path}")
-        if re.findall(pattern, image_path):
-            return self.logger.warning(f"Chinese characters are not allowed in image path: {image_path}")
-        data = {"code": 6, "wxid": wxid, "image_path": image_path}
-        self.__send(data, client_port)
+        warnings.warn("The 'send_image' kwarg is deprecated, and has been replaced by the 'send_file'",
+                      DeprecationWarning)
+        self.send_file(wxid, image_path, client_port)
 
-    def query_contact_details(self, wxid, chatroom_wxid="", client_port=None):
+    def send_file(self, wxid, file_path, client_port=None):
         """
-        查询联系人详情
-        :param wxid: 联系人wxid
-        :param chatroom_wxid:
+        发送文件消息
+        :param wxid: 文件消息接收wxid
+        :param file_path: 文件路径
         :param client_port:
         """
-        data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
+        if len(file_path.split("\\")) > 8:
+            return self.logger.warning(f"File path is too long: {file_path}")
+        if re.findall(pattern, file_path):
+            return self.logger.warning(f"Chinese characters are not allowed in file path: {file_path}")
+        data = {"code": 6, "wxid": wxid, "file_path": file_path}
         self.__send(data, client_port)
 
     def query_contact_list(self, step=50, client_port=None):
