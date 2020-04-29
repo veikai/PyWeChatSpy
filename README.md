@@ -12,11 +12,12 @@ A spy program that helps people make better use of WeChat
 * `{"type":3,"data":["wxid":"","nickname":"","remark":""]}`  >联系人列表
 * `{"type":5,"data":[{"self":0,"msg_type":1,"wxid1":"","wxid2":"","head":"","content":""}]}`  >微信消息 
   * `self`类型说明：
-        * 1 消息由当前登录账号发出
-        * 0 消息由他人发出
+    * 1 消息由当前登录账号发出
+    * 0 消息由他人发出
   * `msg_type`类型说明：
-        * 1 文本消息
-        * 3 图片消息
+    * 1 文本消息
+    * 3 图片消息
+    * 37 好友申请消息
   * `wxid1` 消息来源可能是联系人好友也可能是群
   * `wxid2` 当消息来自群时 为具体群内发言成员
   * `content` 消息具体内容
@@ -29,5 +30,6 @@ A spy program that helps people make better use of WeChat
 * `send_image(wxid, image_path)` >发送图片消息消息
 * `query_contact_details(wxid)` >查询联系人详情
 * `query_contact_list(step=50)` >查询联系人列表
+* `accept_new_contact(encryptusername, ticket)` >接受新联系人申请
 
 详细使用方法见[example.py](https://github.com/veikai/PyWeChatSpy/blob/master/example.py)

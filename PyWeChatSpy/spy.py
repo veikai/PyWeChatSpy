@@ -156,3 +156,11 @@ class WeChatSpy:
             key = rf.read().rstrip()
         data = {"code": 3, "key": key, "step": step}
         self.__send(data, client_port)
+
+    def accept_new_contact(self, encryptusername, ticket, client_port=None):
+        if not os.path.exists("key.xor"):
+            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
+        with open("key.xor", "r") as rf:
+            key = rf.read().rstrip()
+        data = {"code": 7, "key": key, "encryptusername": encryptusername, "ticket": ticket}
+        self.__send(data, client_port)
