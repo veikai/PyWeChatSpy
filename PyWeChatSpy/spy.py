@@ -31,7 +31,7 @@ class WeChatSpy:
         self.__multi = multi
         # socket数据处理函数
         self.__parser = parser
-        self.__socket_client_dict = {}
+        self.__pid2client = {}
         self.__socket_server = socket(AF_INET, SOCK_STREAM)
         self.__socket_server.bind(("127.0.0.1", 9527))
         self.__socket_server.listen(1)
@@ -57,15 +57,14 @@ class WeChatSpy:
         while True:
             socket_client, client_address = self.__socket_server.accept()
             self.logger.info(f"A WeChat process from {client_address} successfully connected")
-            self.__socket_client_dict[client_address[1]] = socket_client
             if self.__download_image:
                 self.__send({"code": 1}, client_address[1])
-            t_socket_client_receive = Thread(target=self.receive, args=(socket_client, client_address[1]))
+            t_socket_client_receive = Thread(target=self.receive, args=(socket_client, ))
             t_socket_client_receive.name = f"client {client_address[1]}"
             t_socket_client_receive.daemon = True
             t_socket_client_receive.start()
 
-    def receive(self, socket_client, client_port):
+    def receive(self, socket_client):
         data_str = ""
         _data_str = None
         while True:
@@ -79,16 +78,17 @@ class WeChatSpy:
                 for data in data_str.split("*393545857*"):
                     if data:
                         data = literal_eval(data)
-                        data["client_port"] = client_port
+                        if data["type"] == 1:
+                            self.__pid2client[data["pid"]] = socket_client
                         if callable(self.__parser):
                             self.__parser(data)
                 data_str = ""
 
-    def __send(self, data, client_port):
-        if client_port:
-            socket_client = self.__socket_client_dict.get(client_port)
+    def __send(self, data, pid):
+        if pid:
+            socket_client = self.__pid2client.get(pid)
         else:
-            socket_client_list = list(self.__socket_client_dict.values())
+            socket_client_list = list(self.__pid2client.values())
             socket_client = socket_client_list[0] if socket_client_list else None
         if socket_client:
             data = json.dumps(data)
@@ -107,53 +107,53 @@ class WeChatSpy:
             while True:
                 sleep(86400)
 
-    def query_contact_details(self, wxid, chatroom_wxid="", client_port=None):
+    def query_contact_details(self, wxid, chatroom_wxid="", pid=None):
         """
         查询联系人详情
         :param wxid: 联系人wxid
         :param chatroom_wxid:
-        :param client_port:
+        :param pid:
         """
         data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
-        self.__send(data, client_port)
+        self.__send(data, pid)
 
-    def send_text(self, wxid, content, at_wxid="", client_port=None):
+    def send_text(self, wxid, content, at_wxid="", pid=None):
         """
         发送文本消息
         :param wxid: 文本消息接收wxid
         :param content: 文本消息内容
         :param at_wxid: 如果wxid为群wxid且需要@群成员 此参数为被@群成员wxid，以英文逗号分隔
-        :param client_port:
+        :param pid:
         """
         if not wxid.endswith("chatroom"):
             at_wxid = ""
         data = {"code": 5, "wxid": wxid, "at_wxid": at_wxid, "content": content}
-        self.__send(data, client_port)
+        self.__send(data, pid)
 
-    def send_image(self, wxid, image_path, client_port=None):
+    def send_image(self, wxid, image_path, pid=None):
         warnings.warn("The 'send_image' kwarg is deprecated, and has been replaced by the 'send_file'",
                       DeprecationWarning)
-        self.send_file(wxid, image_path, client_port)
+        self.send_file(wxid, image_path, pid)
 
-    def send_file(self, wxid, file_path, client_port=None):
+    def send_file(self, wxid, file_path, pid=None):
         """
         发送文件消息
         :param wxid: 文件消息接收wxid
         :param file_path: 文件路径
-        :param client_port:
+        :param pid:
         """
         if len(file_path.split("\\")) > 8:
             return self.logger.warning(f"File path is too long: {file_path}")
         if re.findall(pattern, file_path):
             return self.logger.warning(f"Chinese characters are not allowed in file path: {file_path}")
         data = {"code": 6, "wxid": wxid, "file_path": file_path}
-        self.__send(data, client_port)
+        self.__send(data, pid)
 
-    def query_contact_list(self, step=50, client_port=None):
+    def query_contact_list(self, step=50, pid=None):
         """
         查询联系人详情
         :param step: 每次回调的联系人列表长度
-        :param client_port:
+        :param pid:
         :return:
         """
         if not os.path.exists("key.xor"):
@@ -161,12 +161,12 @@ class WeChatSpy:
         with open("key.xor", "r") as rf:
             key = rf.read().rstrip()
         data = {"code": 3, "key": key, "step": step}
-        self.__send(data, client_port)
+        self.__send(data, pid)
 
-    def accept_new_contact(self, encryptusername, ticket, client_port=None):
+    def accept_new_contact(self, encryptusername, ticket, pid=None):
         if not os.path.exists("key.xor"):
             return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
         with open("key.xor", "r") as rf:
             key = rf.read().rstrip()
         data = {"code": 7, "key": key, "encryptusername": encryptusername, "ticket": ticket}
-        self.__send(data, client_port)
+        self.__send(data, pid)
