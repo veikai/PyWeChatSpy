@@ -114,7 +114,12 @@ class WeChatSpy:
         :param chatroom_wxid:
         :param pid:
         """
-        data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
+        if not os.path.exists("key.xor"):
+            key = ""
+        else:
+            with open("key.xor", "r") as rf:
+                key = rf.read().rstrip()
+        data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid, "key": key}
         self.__send(data, pid)
 
     def send_text(self, wxid, content, at_wxid="", pid=None):
