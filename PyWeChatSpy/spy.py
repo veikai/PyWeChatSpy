@@ -71,6 +71,10 @@ class WeChatSpy:
             try:
                 _data_str = socket_client.recv(4096).decode(encoding="utf8", errors="ignore")
             except Exception as e:
+                for k, v in self.__pid2client.items():
+                    if v == socket:
+                        self.__pid2client.pop(k)
+                        break
                 return self.logger.error(e)
             if _data_str:
                 data_str += _data_str
@@ -78,7 +82,7 @@ class WeChatSpy:
                 for data in data_str.split("*393545857*"):
                     if data:
                         data = literal_eval(data)
-                        if data["type"] == 1:
+                        if not self.__pid2client.get(data["pid"]) and ["type"] == 200:
                             self.__pid2client[data["pid"]] = socket_client
                         if callable(self.__parser):
                             self.__parser(data)
@@ -114,12 +118,31 @@ class WeChatSpy:
         :param chatroom_wxid:
         :param pid:
         """
+        data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
+        self.__send(data, pid)
+
+    def query_contact_list(self, step=50, pid=None):
+        """
+        查询联系人详情
+        :param step: 每次回调的联系人列表长度
+        :param pid:
+        :return:
+        """
         if not os.path.exists("key.xor"):
-            key = ""
-        else:
-            with open("key.xor", "r") as rf:
-                key = rf.read().rstrip()
-        data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid, "key": key}
+            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
+        data = {"code": 3, "step": step}
+        self.__send(data, pid)
+
+    def query_chatroom_member(self, wxid, pid=None):
+        """
+        查询群成员列表
+        :param wxid: 群wxid
+        :param pid:
+        :return:
+        """
+        if not os.path.exists("key.xor"):
+            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
+        data = {"code": 4, "wxid": wxid}
         self.__send(data, pid)
 
     def send_text(self, wxid, content, at_wxid="", pid=None):
@@ -136,7 +159,7 @@ class WeChatSpy:
         self.__send(data, pid)
 
     def send_image(self, wxid, image_path, pid=None):
-        warnings.warn("The 'send_image' kwarg is deprecated, and has been replaced by the 'send_file'",
+        warnings.warn("The function 'send_image' is deprecated, and has been replaced by the function 'send_file'",
                       DeprecationWarning)
         self.send_file(wxid, image_path, pid)
 
@@ -154,24 +177,8 @@ class WeChatSpy:
         data = {"code": 6, "wxid": wxid, "file_path": file_path}
         self.__send(data, pid)
 
-    def query_contact_list(self, step=50, pid=None):
-        """
-        查询联系人详情
-        :param step: 每次回调的联系人列表长度
-        :param pid:
-        :return:
-        """
-        if not os.path.exists("key.xor"):
-            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
-        with open("key.xor", "r") as rf:
-            key = rf.read().rstrip()
-        data = {"code": 3, "key": key, "step": step}
-        self.__send(data, pid)
-
     def accept_new_contact(self, encryptusername, ticket, pid=None):
         if not os.path.exists("key.xor"):
             return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
-        with open("key.xor", "r") as rf:
-            key = rf.read().rstrip()
-        data = {"code": 7, "key": key, "encryptusername": encryptusername, "ticket": ticket}
+        data = {"code": 7, "encryptusername": encryptusername, "ticket": ticket}
         self.__send(data, pid)
