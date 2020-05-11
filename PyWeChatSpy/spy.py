@@ -82,7 +82,8 @@ class WeChatSpy:
                 for data in data_str.split("*393545857*"):
                     if data:
                         data = literal_eval(data)
-                        if not self.__pid2client.get(data["pid"]) and ["type"] == 200:
+                        if not self.__pid2client.get(data["pid"]) and data["type"] == 200:
+                            self.logger.info(f"{data['pid']} reconnected")
                             self.__pid2client[data["pid"]] = socket_client
                         if callable(self.__parser):
                             self.__parser(data)
