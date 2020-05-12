@@ -56,7 +56,6 @@ class WeChatSpy:
     def __start_server(self):
         while True:
             socket_client, client_address = self.__socket_server.accept()
-            self.logger.info(f"A WeChat process from {client_address} successfully connected")
             if self.__download_image:
                 self.__send({"code": 1}, client_address[1])
             t_socket_client_receive = Thread(target=self.receive, args=(socket_client, ))
@@ -71,11 +70,13 @@ class WeChatSpy:
             try:
                 _data_str = socket_client.recv(4096).decode(encoding="utf8", errors="ignore")
             except Exception as e:
-                for k, v in self.__pid2client.items():
-                    if v == socket:
-                        self.__pid2client.pop(k)
-                        break
-                return self.logger.error(e)
+                for pid, client in self.__pid2client.items():
+                    if client == socket_client:
+                        self.__pid2client.pop(pid)
+                        return self.logger.warning(f"A WeChat process (PID:{pid}) has disconnected: {e}")
+                else:
+                    pid = "unknown"
+                    return self.logger.warning(f"A WeChat process (PID:{pid}) has disconnected: {e}")
             if _data_str:
                 data_str += _data_str
             if data_str and data_str.endswith("*393545857*"):
@@ -83,8 +84,8 @@ class WeChatSpy:
                     if data:
                         data = literal_eval(data)
                         if not self.__pid2client.get(data["pid"]) and data["type"] == 200:
-                            self.logger.info(f"{data['pid']} reconnected")
                             self.__pid2client[data["pid"]] = socket_client
+                            self.logger.info(f"A WeChat process (PID:{data['pid']}) successfully connected")
                         if callable(self.__parser):
                             self.__parser(data)
                 data_str = ""
@@ -98,7 +99,16 @@ class WeChatSpy:
         if socket_client:
             data = json.dumps(data)
             data_length_bytes = int.to_bytes(len(data.encode(encoding="utf8")), length=4, byteorder="little")
-            socket_client.send(data_length_bytes + data.encode(encoding="utf8"))
+            try:
+                socket_client.send(data_length_bytes + data.encode(encoding="utf8"))
+            except Exception as e:
+                for pid, v in self.__pid2client.items():
+                    if v == socket_client:
+                        self.__pid2client.pop(pid)
+                        return self.logger.warning(f"A WeChat process (PID:{pid}) has disconnected: {e}")
+                else:
+                    pid = "unknown"
+                    return self.logger.warning(f"A WeChat process (PID:{pid}) has disconnected: {e}")
 
     def run(self, background=False):
         current_path = os.path.split(os.path.abspath(__file__))[0]
