@@ -56,6 +56,6 @@ def parser(data):
 
 
 if __name__ == '__main__':
-    spy = WeChatSpy(parser=parser, download_image=True)
+    spy = WeChatSpy(parser=parser)
     spy.add_log_output_file()  # 添加日志输出文件
     spy.run()
