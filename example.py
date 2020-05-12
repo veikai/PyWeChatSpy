@@ -15,28 +15,28 @@ def get_reply(data):
 def parser(data):
     if data["type"] == 1:
         # 登录信息
-        spy.logger.info(data)
+        print(data)
         # 查询联系人列表
-        spy.query_contact_list()
+        # spy.query_contact_list()
     elif data["type"] == 203:
         # 微信登出
-        spy.logger.info("微信退出登录")
+        print("微信退出登录")
     elif data["type"] == 5:
         # 消息
         for item in data["data"]:
-            spy.logger.info(item)
+            print(item)
             if item["msg_type"] == 1:
                 # 普通聊天消息
                 wxid1, wxid2 = item["wxid1"], item.get("wxid2")
                 # reply = get_reply(item["content"])
                 # spy.send_text(wxid1, reply)
                 if contact := contact_dict.get(wxid1):
-                    spy.logger.info(contact)
+                    print(contact)
                 else:
                     spy.query_contact_details(wxid1)
                 if wxid1.endswith("chatroom") and wxid2:
                     if contact := contact_dict.get(wxid2):
-                        spy.logger.info(contact)
+                        print(contact)
                     else:
                         spy.query_contact_details(wxid2, wxid1)
             elif item["msg_type"] == 37:
@@ -46,7 +46,7 @@ def parser(data):
                 spy.accept_new_contact(encryptusername, ticket)
     elif data["type"] == 2:
         # 联系人详情
-        spy.logger.info(data)
+        print(data)
     elif data["type"] == 3:
         # 联系人列表
         for contact in data["data"]:
@@ -56,6 +56,6 @@ def parser(data):
 
 
 if __name__ == '__main__':
-    spy = WeChatSpy(parser=parser)
+    spy = WeChatSpy(parser=parser, download_image=True)
     spy.add_log_output_file()  # 添加日志输出文件
     spy.run()

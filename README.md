@@ -26,10 +26,13 @@ A spy program that helps people make better use of WeChat
 * `{"type":9527, "content":""}`  >系统提示
 
 ## 功能列表
-* `send_text(wxid, content, at_wxid="")` >发送文本消息
-* `send_image(wxid, image_path)` >发送图片消息消息
+* `send_text(wxid, content, at_wxid="")` >发送文本
+* `send_file(wxid, file)` >发送文件
 * `query_contact_details(wxid)` >查询联系人详情
 * `query_contact_list(step=50)` >查询联系人列表
+    * `step` 联系人会异步分批返回 每次返回的联系人个数
 * `accept_new_contact(encryptusername, ticket)` >接受新联系人申请
+    * `encryptusername、ticket` 好友申请消息体里的字段 自行解析xml可以得到
+* `send_announcement(wxid, content)` >发送群公告
 
 详细使用方法见[example.py](https://github.com/veikai/PyWeChatSpy/blob/master/example.py)

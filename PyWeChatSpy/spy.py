@@ -18,13 +18,10 @@ sh.setLevel(logging.DEBUG)
 
 
 class WeChatSpy:
-    def __init__(self, parser=None, error_handle=None, download_image=False, multi=False):
+    def __init__(self, parser=None, error_handle=None, multi=False):
         self.logger = logging.getLogger()
         self.logger.addHandler(sh)
         self.logger.setLevel(logging.DEBUG)
-        # 是否下载图片(小于2MB)
-        # 该参数为True时 微信会自动下载收到的小于2MB的图片 但会造成图片消息延迟响应
-        self.__download_image = download_image
         # TODO: 异常处理函数
         self.__error_handle = error_handle
         # 是否多开微信PC客户端
@@ -56,8 +53,6 @@ class WeChatSpy:
     def __start_server(self):
         while True:
             socket_client, client_address = self.__socket_server.accept()
-            if self.__download_image:
-                self.__send({"code": 1}, client_address[1])
             t_socket_client_receive = Thread(target=self.receive, args=(socket_client, ))
             t_socket_client_receive.name = f"client {client_address[1]}"
             t_socket_client_receive.daemon = True
@@ -192,4 +187,10 @@ class WeChatSpy:
         if not os.path.exists("key.xor"):
             return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
         data = {"code": 7, "encryptusername": encryptusername, "ticket": ticket}
+        self.__send(data, pid)
+        
+    def send_announcement(self, wxid, content, pid=None):
+        if not wxid.endswith("chatroom"):
+            return self.logger.warning("Can only send announcements to chatrooms")
+        data = {"code": 8, "wxid": wxid, "content": content}
         self.__send(data, pid)
