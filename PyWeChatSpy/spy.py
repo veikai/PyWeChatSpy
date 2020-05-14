@@ -194,3 +194,17 @@ class WeChatSpy:
             return self.logger.warning("Can only send announcements to chatrooms")
         data = {"code": 8, "wxid": wxid, "content": content}
         self.__send(data, pid)
+
+    def create_chatroom(self, wxid, pid=None):
+        if not os.path.exists("key.xor"):
+            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
+        if len(wxid.split(",")) < 2:
+            return self.logger.warning("This function requires at least two wxids separated by ','")
+        data = {"code": 9, "wxid": wxid}
+        self.__send(data, pid)
+
+    def share_chatroom(self, chatroom_wxid, wxid, pid=None):
+        if not os.path.exists("key.xor"):
+            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
+        data = {"code": 10, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
+        self.__send(data, pid)

@@ -34,5 +34,9 @@ A spy program that helps people make better use of WeChat
 * `accept_new_contact(encryptusername, ticket)` >接受新联系人申请
     * `encryptusername、ticket` 好友申请消息体里的字段 自行解析xml可以得到
 * `send_announcement(wxid, content)` >发送群公告
+* `create_chatroom("wxid1,wxid2,...,wxidn")` >创建群聊
+* `share_chatroom(chatroom_wxid, "wxid1,wxid2,...,wxidn")` >分享群聊邀请链接`
+
+
 
 详细使用方法见[example.py](https://github.com/veikai/PyWeChatSpy/blob/master/example.py)
