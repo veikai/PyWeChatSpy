@@ -134,8 +134,6 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        if not os.path.exists("key.xor"):
-            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
         data = {"code": 3, "step": step}
         self.__send(data, pid)
 
@@ -146,8 +144,6 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        if not os.path.exists("key.xor"):
-            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
         data = {"code": 4, "wxid": wxid}
         self.__send(data, pid)
 
@@ -184,8 +180,6 @@ class WeChatSpy:
         self.__send(data, pid)
 
     def accept_new_contact(self, encryptusername, ticket, pid=None):
-        if not os.path.exists("key.xor"):
-            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
         data = {"code": 7, "encryptusername": encryptusername, "ticket": ticket}
         self.__send(data, pid)
         
@@ -196,15 +190,11 @@ class WeChatSpy:
         self.__send(data, pid)
 
     def create_chatroom(self, wxid, pid=None):
-        if not os.path.exists("key.xor"):
-            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
         if len(wxid.split(",")) < 2:
             return self.logger.warning("This function requires at least two wxids separated by ','")
         data = {"code": 9, "wxid": wxid}
         self.__send(data, pid)
 
     def share_chatroom(self, chatroom_wxid, wxid, pid=None):
-        if not os.path.exists("key.xor"):
-            return self.logger.warning("File [key.xor] not found,please contact the author to obtain")
         data = {"code": 10, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
         self.__send(data, pid)
