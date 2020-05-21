@@ -36,6 +36,11 @@ A spy program that helps people make better use of WeChat
 * `send_announcement(wxid, content)` >发送群公告
 * `create_chatroom("wxid1,wxid2,...,wxidn")` >创建群聊
 * `share_chatroom(chatroom_wxid, "wxid1,wxid2,...,wxidn")` >分享群聊邀请链接`
+* `remove_chatroom_member(chatroom_wxid, "wxid1,wxid2,...,wxidn")`  > 移除群成员
+* `remove_contact(wxid)` > 移除联系人
+* `add_contact_from_chatroom(chatroom_wxid, wxid, msg)` > 添加群成员为好友
+* `add_unidirectional_contact_a(wxid, msg)`  > 添加单向好友(对方删除自己)
+* `add_unidirectional_contact_b(wxid)`  > 添加单向好友(自己删除对方)
 
 
 

@@ -5,7 +5,7 @@ class SpyError(Exception):
 
 class GetWeChatVersionError(SpyError):
     def __init__(self):
-        super(Exception, self).__init__("Get WeChat Version Failed")
+        super(Exception, self).__init__("Get WeChat Version Failed,Please Check Registry")
 
 
 class WrongWeChatVersionError(SpyError):
@@ -15,7 +15,7 @@ class WrongWeChatVersionError(SpyError):
 
 class GetWeChatPathError(SpyError):
     def __init__(self):
-        super(Exception, self).__init__("Get WeChat Install Path Failed")
+        super(Exception, self).__init__("Get WeChat Install Path Failed,,Please Check Registry")
 
 
 class CreateProcessError(SpyError):

@@ -19,7 +19,7 @@ sh.setLevel(logging.DEBUG)
 
 class WeChatSpy:
     def __init__(self, parser=None, error_handle=None, multi=False):
-        self.logger = logging.getLogger()
+        self.logger = logging.getLogger(__file__)
         self.logger.addHandler(sh)
         self.logger.setLevel(logging.DEBUG)
         # TODO: 异常处理函数
@@ -180,21 +180,102 @@ class WeChatSpy:
         self.__send(data, pid)
 
     def accept_new_contact(self, encryptusername, ticket, pid=None):
+        """
+        接受好友请求
+        :param encryptusername:
+        :param ticket:
+        :param pid:
+        :return:
+        """
         data = {"code": 7, "encryptusername": encryptusername, "ticket": ticket}
         self.__send(data, pid)
         
     def send_announcement(self, wxid, content, pid=None):
+        """
+        发送群公共
+        :param wxid: 群wxid
+        :param content: 公告内容
+        :param pid:
+        :return:
+        """
         if not wxid.endswith("chatroom"):
             return self.logger.warning("Can only send announcements to chatrooms")
         data = {"code": 8, "wxid": wxid, "content": content}
         self.__send(data, pid)
 
     def create_chatroom(self, wxid, pid=None):
+        """
+        创建群聊
+        :param wxid: wxid,以","分隔 至少需要两个
+        :param pid:
+        :return:
+        """
         if len(wxid.split(",")) < 2:
             return self.logger.warning("This function requires at least two wxids separated by ','")
         data = {"code": 9, "wxid": wxid}
         self.__send(data, pid)
 
     def share_chatroom(self, chatroom_wxid, wxid, pid=None):
+        """
+        分享群聊邀请链接
+        :param chatroom_wxid:
+        :param wxid:
+        :param pid:
+        :return:
+        """
         data = {"code": 10, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
+        self.__send(data, pid)
+
+    def remove_chatroom_member(self, chatroom_wxid, wxid, pid=None):
+        """
+        移除群成员
+        :param chatroom_wxid:
+        :param wxid:
+        :param pid:
+        :return:
+        """
+        data = {"code": 11, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
+        self.__send(data, pid)
+
+    def remove_contact(self, wxid, pid=None):
+        """
+        移除联系人
+        :param wxid:
+        :param pid:
+        :return:
+        """
+        data = {"code": 12, "wxid": wxid}
+        self.__send(data, pid)
+
+    def add_contact_from_chatroom(self, chatroom_wxid, wxid, msg, pid=None):
+        """
+        将群成员添加为好友
+        :param chatroom_wxid: 群wxid
+        :param wxid: 群成员wxid
+        :param msg: 好友申请信息
+        :param pid:
+        :return:
+        """
+        data = {"code": 13, "wxid": wxid, "chatroom_wxid": chatroom_wxid, "msg": msg}
+        self.__send(data, pid)
+
+    def add_unidirectional_contact_a(self, wxid, msg, pid=None):
+        """
+        添加单向好友(自己被对方删除)
+        :param wxid:
+        :param msg: 好友申请信息
+        :param pid:
+        :return:
+        """
+        data = {"code": 14, "wxid": wxid, "msg": msg}
+        self.__send(data, pid)
+
+    def add_unidirectional_contact_b(self, wxid, pid=None):
+        """
+        添加单向好友(对方被自己删除)
+        :param wxid:
+        :param pid:
+        :return:
+        """
+        data = {"code": 15, "wxid": wxid}
         self.__send(data, pid)
