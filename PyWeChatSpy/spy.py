@@ -18,7 +18,7 @@ sh.setLevel(logging.DEBUG)
 
 
 class WeChatSpy:
-    def __init__(self, parser=None, error_handle=None, multi=False):
+    def __init__(self, parser=None, error_handle=None, multi=False, key=None):
         self.logger = logging.getLogger(__file__)
         self.logger.addHandler(sh)
         self.logger.setLevel(logging.DEBUG)
@@ -26,6 +26,8 @@ class WeChatSpy:
         self.__error_handle = error_handle
         # 是否多开微信PC客户端
         self.__multi = multi
+        # 商用key
+        self.__key = key
         # socket数据处理函数
         self.__parser = parser
         self.__pid2client = {}
@@ -53,6 +55,10 @@ class WeChatSpy:
     def __start_server(self):
         while True:
             socket_client, client_address = self.__socket_server.accept()
+            if self.__key:
+                data = json.dumps({"code": 9527, "key": self.__key})
+                data_length_bytes = int.to_bytes(len(data.encode(encoding="utf8")), length=4, byteorder="little")
+                socket_client.send(data_length_bytes + data.encode(encoding="utf8"))
             t_socket_client_receive = Thread(target=self.receive, args=(socket_client, ))
             t_socket_client_receive.name = f"client {client_address[1]}"
             t_socket_client_receive.daemon = True

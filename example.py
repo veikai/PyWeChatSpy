@@ -42,5 +42,5 @@ def parser(data):
 
 
 if __name__ == '__main__':
-    spy = WeChatSpy(parser=parser)
+    spy = WeChatSpy(parser=parser, key="18d421169d93611a5584affac335e690")
     spy.run()
