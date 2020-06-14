@@ -18,7 +18,7 @@ sh.setLevel(logging.DEBUG)
 
 
 class WeChatSpy:
-    def __init__(self, parser=None, error_handle=None, multi=False, key=None):
+    def __init__(self, parser=None, parser_args=None, error_handle=None, multi=False, key=None):
         self.logger = logging.getLogger(__file__)
         self.logger.addHandler(sh)
         self.logger.setLevel(logging.DEBUG)
@@ -30,6 +30,7 @@ class WeChatSpy:
         self.__key = key
         # socket数据处理函数
         self.__parser = parser
+        self.__parser_args = parser_args
         self.__pid2client = {}
         self.__socket_server = socket(AF_INET, SOCK_STREAM)
         self.__socket_server.bind(("127.0.0.1", 9527))
@@ -88,7 +89,10 @@ class WeChatSpy:
                             self.__pid2client[data["pid"]] = socket_client
                             self.logger.info(f"A WeChat process (PID:{data['pid']}) successfully connected")
                         if callable(self.__parser):
-                            self.__parser(data)
+                            if self.__parser_args:
+                                self.__parser(*self.__parser_args, data)
+                            else:
+                                self.__parser(data)
                 data_str = ""
 
     def __send(self, data, pid):
