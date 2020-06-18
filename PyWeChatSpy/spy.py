@@ -285,3 +285,13 @@ class WeChatSpy:
         """
         data = {"code": 15, "wxid": wxid}
         self.__send(data, pid)
+
+    def check_contact_status(self, wxid, pid=None):
+        """
+        检查联系人状态
+        :param wxid:
+        :param pid:
+        :return:
+        """
+        data = {"code": 16, "wxid": wxid}
+        self.__send(data, pid)

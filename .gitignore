@@ -4,3 +4,4 @@ dist
 PyWeChatSpy.egg-info
 *.log
 *.xor
+*.toml
