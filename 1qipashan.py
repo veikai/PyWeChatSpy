@@ -20,8 +20,8 @@ def my_parser(data):
                     with open(msg["image_path"], "rb") as rf:  # 读取图片
                         base64_data = base64.b64encode(rf.read())  # 转化为base64
                         req.ImageBase64 = base64_data.decode()
-                    cred = credential.Credential("AKIDe4DxkJXlsiHZnlDwFINBixHKJ4gJwLyv",
-                                                 "py1ZrtfAWTGn3MQFnCQ0LQaU8WorHTkl")
+                    cred = credential.Credential("secretId",
+                                                 "secretKey")
                     client = ocr_client.OcrClient(cred, "ap-shanghai")
                     r = client.GeneralAccurateOCR(req)  # 识别图片
                     for item in r.TextDetections:
