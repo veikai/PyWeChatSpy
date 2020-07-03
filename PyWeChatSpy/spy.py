@@ -123,6 +123,10 @@ class WeChatSpy:
             while True:
                 sleep(86400)
 
+    def uninject(self, pid=None):
+        data = {"code": 1}
+        self.__send(data, pid)
+
     def query_contact_details(self, wxid, chatroom_wxid="", pid=None):
         """
         查询联系人详情
