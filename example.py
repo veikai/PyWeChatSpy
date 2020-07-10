@@ -17,8 +17,6 @@ def parser(data):
         # 登录信息
         print(data)
         # 查询联系人列表
-        import time
-        time.sleep(5)
         spy.query_contact_list()
     elif data["type"] == 203:
         # 微信登出
@@ -27,13 +25,6 @@ def parser(data):
         # 消息
         for item in data["data"]:
             print(item)
-            if item["msg_type"] == 37:
-                # 好友请求消息
-                obj = etree.XML(item["content"])
-                encryptusername, ticket = obj.xpath("/msg/@encryptusername")[0], obj.xpath("/msg/@ticket")[0]
-                # spy.accept_new_contact(encryptusername, ticket)
-            elif item["wxid1"] == "filehelper":
-                spy.uninject()
     elif data["type"] == 2:
         # 联系人详情
         print(data)
@@ -47,6 +38,4 @@ def parser(data):
 
 if __name__ == '__main__':
     spy = WeChatSpy(parser=parser, key="18d421169d93611a5584affac335e690")
-    # spy.run()
-    import time
-    time.sleep(30000)
+    spy.run()

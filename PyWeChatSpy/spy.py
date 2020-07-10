@@ -83,7 +83,7 @@ class WeChatSpy:
                         if not self.__pid2client.get(data["pid"]) and data["type"] == 200:
                             self.__pid2client[data["pid"]] = socket_client
                             self.logger.info(f"A WeChat process (PID:{data['pid']}) successfully connected")
-                            self.__parser(data)
+                        self.__parser(data)
                 data_str = ""
 
     def __send(self, data: dict, pid: int):
