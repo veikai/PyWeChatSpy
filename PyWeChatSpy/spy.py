@@ -5,23 +5,29 @@ from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
 from time import sleep
 from subprocess import Popen, PIPE
-from .exceptions import handle_error_code
+from .exceptions import handle_error_code, ParserError
 import logging
 import warnings
 import re
 
 pattern = '[\u4e00-\u9fa5]'
-formatter = logging.Formatter('%(asctime)s [%(threadName)s] %(levelname)s: %(message)s')
-sh = logging.StreamHandler()
-sh.setFormatter(formatter)
-sh.setLevel(logging.DEBUG)
 
 
 class WeChatSpy:
-    def __init__(self, parser=None, error_handle=None, multi=False, key=None):
-        self.logger = logging.getLogger(__file__)
-        self.logger.addHandler(sh)
-        self.logger.setLevel(logging.DEBUG)
+    def __init__(
+            self, parser=None, error_handle=None, multi: bool = False, key: str = None, logger: logging.Logger = None):
+        if isinstance(logger, logging.Logger):
+            # 使用自定义logger
+            self.logger = logger
+        else:
+            # 使用默认logger
+            self.logger = logging.getLogger(__file__)
+            formatter = logging.Formatter('%(asctime)s [%(threadName)s] %(levelname)s: %(message)s')
+            sh = logging.StreamHandler()
+            sh.setFormatter(formatter)
+            sh.setLevel(logging.DEBUG)
+            self.logger.addHandler(sh)
+            self.logger.setLevel(logging.DEBUG)
         # TODO: 异常处理函数
         self.__error_handle = error_handle
         # 是否多开微信PC客户端
@@ -29,7 +35,10 @@ class WeChatSpy:
         # 商用key
         self.__key = key
         # socket数据处理函数
-        self.__parser = parser
+        if callable(parser):
+            self.__parser = parser
+        else:
+            raise ParserError()
         self.__pid2client = {}
         self.__socket_server = socket(AF_INET, SOCK_STREAM)
         self.__socket_server.bind(("127.0.0.1", 9527))
@@ -38,19 +47,6 @@ class WeChatSpy:
         t_start_server.daemon = True
         t_start_server.name = "socket accept"
         t_start_server.start()
-
-    def add_log_output_file(self, filename="spy.log", mode='a', encoding="utf8", delay=False, level="WARNING"):
-        fh = logging.FileHandler(filename, mode=mode, encoding=encoding, delay=delay)
-        if level.upper() == "DEBUG":
-            fh.setLevel(logging.DEBUG)
-        elif level.upper() == "INFO":
-            fh.setLevel(logging.INFO)
-        elif level.upper() == "WARNING":
-            fh.setLevel(logging.WARNING)
-        elif level.upper() == "ERROR":
-            fh.setLevel(logging.ERROR)
-        fh.setFormatter(formatter)
-        self.logger.addHandler(fh)
 
     def __start_server(self):
         while True:
@@ -64,7 +60,7 @@ class WeChatSpy:
             t_socket_client_receive.daemon = True
             t_socket_client_receive.start()
 
-    def receive(self, socket_client):
+    def receive(self, socket_client: socket):
         data_str = ""
         _data_str = None
         while True:
@@ -87,11 +83,10 @@ class WeChatSpy:
                         if not self.__pid2client.get(data["pid"]) and data["type"] == 200:
                             self.__pid2client[data["pid"]] = socket_client
                             self.logger.info(f"A WeChat process (PID:{data['pid']}) successfully connected")
-                        if callable(self.__parser):
                             self.__parser(data)
                 data_str = ""
 
-    def __send(self, data, pid):
+    def __send(self, data: dict, pid: int):
         if pid:
             socket_client = self.__pid2client.get(pid)
         else:
@@ -111,7 +106,7 @@ class WeChatSpy:
                     pid = "unknown"
                     return self.logger.warning(f"A WeChat process (PID:{pid}) has disconnected: {e}")
 
-    def run(self, background=False):
+    def run(self, background: bool = False):
         current_path = os.path.split(os.path.abspath(__file__))[0]
         launcher_path = os.path.join(current_path, "Launcher.exe")
         cmd_str = f"{launcher_path} multi" if self.__multi else launcher_path
@@ -123,11 +118,7 @@ class WeChatSpy:
             while True:
                 sleep(86400)
 
-    def uninject(self, pid=None):
-        data = {"code": 1}
-        self.__send(data, pid)
-
-    def query_contact_details(self, wxid, chatroom_wxid="", pid=None):
+    def query_contact_details(self, wxid: str, chatroom_wxid: str = "", pid: int = 0):
         """
         查询联系人详情
         :param wxid: 联系人wxid
@@ -137,7 +128,7 @@ class WeChatSpy:
         data = {"code": 2, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
         self.__send(data, pid)
 
-    def query_contact_list(self, step=50, pid=None):
+    def query_contact_list(self, step: int = 50, pid: int = 0):
         """
         查询联系人详情
         :param step: 每次回调的联系人列表长度
@@ -147,7 +138,7 @@ class WeChatSpy:
         data = {"code": 3, "step": step}
         self.__send(data, pid)
 
-    def query_chatroom_member(self, wxid, pid=None):
+    def query_chatroom_member(self, wxid: str, pid: int = 0):
         """
         查询群成员列表
         :param wxid: 群wxid
@@ -157,7 +148,7 @@ class WeChatSpy:
         data = {"code": 4, "wxid": wxid}
         self.__send(data, pid)
 
-    def send_text(self, wxid, content, at_wxid="", pid=None):
+    def send_text(self, wxid: str, content: str, at_wxid: str = "", pid: int = 0):
         """
         发送文本消息
         :param wxid: 文本消息接收wxid
@@ -170,12 +161,12 @@ class WeChatSpy:
         data = {"code": 5, "wxid": wxid, "at_wxid": at_wxid, "content": content}
         self.__send(data, pid)
 
-    def send_image(self, wxid, image_path, pid=None):
+    def send_image(self, wxid: str, image_path: str, pid: int = 0):
         warnings.warn("The function 'send_image' is deprecated, and has been replaced by the function 'send_file'",
                       DeprecationWarning)
         self.send_file(wxid, image_path, pid)
 
-    def send_file(self, wxid, file_path, pid=None):
+    def send_file(self, wxid: str, file_path: str, pid: int = 0):
         """
         发送文件消息
         :param wxid: 文件消息接收wxid
@@ -189,7 +180,7 @@ class WeChatSpy:
         data = {"code": 6, "wxid": wxid, "file_path": file_path}
         self.__send(data, pid)
 
-    def accept_new_contact(self, encryptusername, ticket, pid=None):
+    def accept_new_contact(self, encryptusername: str, ticket: str, pid: int = 0):
         """
         接受好友请求
         :param encryptusername:
@@ -200,7 +191,7 @@ class WeChatSpy:
         data = {"code": 7, "encryptusername": encryptusername, "ticket": ticket}
         self.__send(data, pid)
         
-    def send_announcement(self, wxid, content, pid=None):
+    def send_announcement(self, wxid: str, content: str, pid: int = 0):
         """
         发送群公共
         :param wxid: 群wxid
@@ -213,7 +204,7 @@ class WeChatSpy:
         data = {"code": 8, "wxid": wxid, "content": content}
         self.__send(data, pid)
 
-    def create_chatroom(self, wxid, pid=None):
+    def create_chatroom(self, wxid: str, pid: int = 0):
         """
         创建群聊
         :param wxid: wxid,以","分隔 至少需要两个
@@ -225,7 +216,7 @@ class WeChatSpy:
         data = {"code": 9, "wxid": wxid}
         self.__send(data, pid)
 
-    def share_chatroom(self, chatroom_wxid, wxid, pid=None):
+    def share_chatroom(self, chatroom_wxid: str, wxid: str, pid: int = 0):
         """
         分享群聊邀请链接
         :param chatroom_wxid:
@@ -236,7 +227,7 @@ class WeChatSpy:
         data = {"code": 10, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
         self.__send(data, pid)
 
-    def remove_chatroom_member(self, chatroom_wxid, wxid, pid=None):
+    def remove_chatroom_member(self, chatroom_wxid: str, wxid: str, pid: int = 0):
         """
         移除群成员
         :param chatroom_wxid:
@@ -247,7 +238,7 @@ class WeChatSpy:
         data = {"code": 11, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
         self.__send(data, pid)
 
-    def remove_contact(self, wxid, pid=None):
+    def remove_contact(self, wxid: str, pid: int = 0):
         """
         移除联系人
         :param wxid:
@@ -257,7 +248,7 @@ class WeChatSpy:
         data = {"code": 12, "wxid": wxid}
         self.__send(data, pid)
 
-    def add_contact_from_chatroom(self, chatroom_wxid, wxid, msg, pid=None):
+    def add_contact_from_chatroom(self, chatroom_wxid: str, wxid: str, msg: str, pid: int = 0):
         """
         将群成员添加为好友
         :param chatroom_wxid: 群wxid
@@ -269,7 +260,7 @@ class WeChatSpy:
         data = {"code": 13, "wxid": wxid, "chatroom_wxid": chatroom_wxid, "msg": msg}
         self.__send(data, pid)
 
-    def add_unidirectional_contact_a(self, wxid, msg, pid=None):
+    def add_unidirectional_contact_a(self, wxid: str, msg: str, pid: int = 0):
         """
         添加单向好友(自己被对方删除)
         :param wxid:
@@ -280,7 +271,7 @@ class WeChatSpy:
         data = {"code": 14, "wxid": wxid, "msg": msg}
         self.__send(data, pid)
 
-    def add_unidirectional_contact_b(self, wxid, pid=None):
+    def add_unidirectional_contact_b(self, wxid: str, pid: int = 0):
         """
         添加单向好友(对方被自己删除)
         :param wxid:
@@ -290,7 +281,7 @@ class WeChatSpy:
         data = {"code": 15, "wxid": wxid}
         self.__send(data, pid)
 
-    def check_contact_status(self, wxid, pid=None):
+    def check_contact_status(self, wxid: str, pid: int = 0):
         """
         检查联系人状态
         :param wxid:
@@ -298,4 +289,25 @@ class WeChatSpy:
         :return:
         """
         data = {"code": 16, "wxid": wxid}
+        self.__send(data, pid)
+
+    def set_chatroom_name(self, wxid: str, name: str, pid: int = 0):
+        """
+        设置群聊名称
+        :param wxid:
+        :param name:
+        :param pid:
+        :return:
+        """
+        data = {"code": 17, "wxid": wxid, "name": name}
+        self.__send(data, pid)
+
+    def set_save_folder(self, folder: str, pid: int = 0):
+        """
+        设置保存路径
+        :param folder:
+        :param pid:
+        :return:
+        """
+        data = {"code": 18, "folder": folder}
         self.__send(data, pid)

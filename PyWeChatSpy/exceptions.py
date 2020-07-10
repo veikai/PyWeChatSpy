@@ -36,6 +36,11 @@ class InjectError(SpyError):
         super(Exception, self).__init__(err)
 
 
+class ParserError(SpyError):
+    def __init__(self):
+        super(Exception, self).__init__("Parser must be callable")
+
+
 def handle_error_code(error_code):
     error_code = str(error_code)
     if error_code == "-1":
