@@ -80,31 +80,37 @@ class WeChatSpy:
                 for data in data_str.split("*393545857*"):
                     if data:
                         data = literal_eval(data)
-                        if not self.__pid2client.get(data["pid"]) and data["type"] == 200:
+                        if data["type"] == 100:
                             self.__pid2client[data["pid"]] = socket_client
                             self.logger.info(f"A WeChat process (PID:{data['pid']}) successfully connected")
                         self.__parser(data)
                 data_str = ""
 
     def __send(self, data: dict, pid: int):
-        if pid:
-            socket_client = self.__pid2client.get(pid)
-        else:
-            socket_client_list = list(self.__pid2client.values())
-            socket_client = socket_client_list[0] if socket_client_list else None
-        if socket_client:
-            data = json.dumps(data)
-            data_length_bytes = int.to_bytes(len(data.encode(encoding="utf8")), length=4, byteorder="little")
-            try:
-                socket_client.send(data_length_bytes + data.encode(encoding="utf8"))
-            except Exception as e:
-                for pid, v in self.__pid2client.items():
-                    if v == socket_client:
-                        self.__pid2client.pop(pid)
+        for i in range(5):
+            if pid:
+                socket_client = self.__pid2client.get(pid)
+            else:
+                socket_client_list = list(self.__pid2client.values())
+                socket_client = socket_client_list[0] if socket_client_list else None
+            if socket_client:
+                data = json.dumps(data)
+                data_length_bytes = int.to_bytes(len(data.encode(encoding="utf8")), length=4, byteorder="little")
+                try:
+                    socket_client.send(data_length_bytes + data.encode(encoding="utf8"))
+                except Exception as e:
+                    for pid, v in self.__pid2client.items():
+                        if v == socket_client:
+                            self.__pid2client.pop(pid)
+                            return self.logger.warning(f"A WeChat process (PID:{pid}) has disconnected: {e}")
+                    else:
+                        pid = "unknown"
                         return self.logger.warning(f"A WeChat process (PID:{pid}) has disconnected: {e}")
-                else:
-                    pid = "unknown"
-                    return self.logger.warning(f"A WeChat process (PID:{pid}) has disconnected: {e}")
+                break
+            else:
+                sleep(1)
+        else:
+            return self.logger.error(f"Send Timeout: Socket connection not found")
 
     def run(self, background: bool = False):
         current_path = os.path.split(os.path.abspath(__file__))[0]
@@ -117,6 +123,15 @@ class WeChatSpy:
         if not background:
             while True:
                 sleep(86400)
+
+    def query_login_info(self, pid: int = 0):
+        """
+        查询当前登录信息
+        :param pid:
+        :return:
+        """
+        data = {"code": 1}
+        self.__send(data, pid)
 
     def query_contact_details(self, wxid: str, chatroom_wxid: str = "", pid: int = 0):
         """
@@ -310,4 +325,14 @@ class WeChatSpy:
         :return:
         """
         data = {"code": 18, "folder": folder}
+        self.__send(data, pid)
+
+    def show_qrcode(self, output_path: str = "", pid: int = 0):
+        """
+        显示登录二维码
+        :param output_path: 输出文件路径
+        :param pid:
+        :return:
+        """
+        data = {"code": 19, "output_path": output_path}
         self.__send(data, pid)

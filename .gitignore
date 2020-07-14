@@ -5,3 +5,4 @@ PyWeChatSpy.egg-info
 *.log
 *.xor
 *.toml
+qrcode.png

@@ -25,6 +25,7 @@ def parser(data):
         # 消息
         for item in data["data"]:
             print(item)
+        spy.query_login_info()
     elif data["type"] == 2:
         # 联系人详情
         print(data)
@@ -34,8 +35,13 @@ def parser(data):
             print(contact)
     elif data["type"] == 9527:
         spy.logger.warning(data)
+    elif data["type"] == 8:
+        print(data)
 
 
 if __name__ == '__main__':
     spy = WeChatSpy(parser=parser, key="18d421169d93611a5584affac335e690")
-    spy.run()
+    spy.run(background=True)
+    spy.show_qrcode(r"D:\qrcode.png")
+    input()
+
