@@ -1,5 +1,4 @@
 from PyWeChatSpy import WeChatSpy
-from lxml import etree
 import requests
 
 
@@ -12,12 +11,10 @@ def get_reply(data):
     return resp.text
 
 
-def parser(data):
+def my_parser(data):
     if data["type"] == 1:
         # 登录信息
         print(data)
-        # 查询联系人列表
-        spy.query_contact_list()
     elif data["type"] == 203:
         # 微信登出
         print("微信退出登录")
@@ -25,7 +22,6 @@ def parser(data):
         # 消息
         for item in data["data"]:
             print(item)
-        spy.query_login_info()
     elif data["type"] == 2:
         # 联系人详情
         print(data)
@@ -39,9 +35,9 @@ def parser(data):
         print(data)
 
 
+spy = WeChatSpy(parser=my_parser, key="18d421169d93611a5584affac335e690")
+
+
 if __name__ == '__main__':
-    spy = WeChatSpy(parser=parser, key="18d421169d93611a5584affac335e690")
-    spy.run(background=True)
-    spy.show_qrcode(r"D:\qrcode.png")
-    input()
+    spy.run()
 
