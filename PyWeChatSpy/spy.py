@@ -8,9 +8,6 @@ from subprocess import Popen, PIPE
 from .exceptions import handle_error_code, ParserError
 import logging
 import warnings
-import re
-
-pattern = '[\u4e00-\u9fa5]'
 
 
 class WeChatSpy:
@@ -190,8 +187,6 @@ class WeChatSpy:
         """
         if len(file_path.split("\\")) > 8:
             return self.logger.warning(f"File path is too long: {file_path}")
-        if re.findall(pattern, file_path):
-            return self.logger.warning(f"Chinese characters are not allowed in file path: {file_path}")
         data = {"code": 6, "wxid": wxid, "file_path": file_path}
         self.__send(data, pid)
 
