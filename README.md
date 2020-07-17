@@ -38,9 +38,9 @@ A spy program that helps people make better use of WeChat
 
 ## 功能列表
 * `query_login_info()`  >查询当前登录账号信息
-* `query_contact_details(wxid)` >查询联系人详情
-* `query_contact_list(step=50)` >查询联系人列表
-    * `step` 联系人异步分批回调 每批回调联系人个数
+* `query_contact_details(wxid, upload=False)` >查询联系人详情
+    * `upload` 是否从网络更新最新详情,需访问微信服务器
+* `query_contact_list()` >查询联系人列表
 * `query_chatroom_member(wxid)` >查询群成员列表
 * `send_text(wxid, content, at_wxid="")` >发送文本
     * `at_wxid` 被@群成员wxid
