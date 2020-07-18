@@ -22,7 +22,7 @@ setup(
     long_description_content_type="text/markdown",
     url='https://github.com/veikai/PyWeChatSpy.git',
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3.8",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: Microsoft :: Windows",

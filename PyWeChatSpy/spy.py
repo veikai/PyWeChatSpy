@@ -103,10 +103,9 @@ class WeChatSpy:
 
     def __send(self, data: dict, pid: int):
         for i in range(5):
-            socket_client = None
             if not pid and self.pid_list:
                 pid = self.pid_list[0]
-                socket_client = self.__pid2client.get(pid)
+            socket_client = self.__pid2client.get(pid)
             if socket_client:
                 uuid = uuid4().__str__()
                 data["uuid"] = uuid

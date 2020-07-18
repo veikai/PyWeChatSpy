@@ -1,44 +1,44 @@
 class SpyError(Exception):
     def __init__(self, err):
-        super(Exception, self).__init__(err)
+        super().__init__(err)
 
 
 class GetWeChatVersionError(SpyError):
     def __init__(self):
-        super(Exception, self).__init__("Get WeChat Version Failed,Please Check Registry")
+        super().__init__("Get WeChat Version Failed,Please Check Registry")
 
 
 class WrongWeChatVersionError(SpyError):
     def __init__(self):
-        super(Exception, self).__init__(f"Unsuitable WeChat Version")
+        super().__init__(f"Unsuitable WeChat Version")
 
 
 class GetWeChatPathError(SpyError):
     def __init__(self):
-        super(Exception, self).__init__("Get WeChat Install Path Failed,,Please Check Registry")
+        super().__init__("Get WeChat Install Path Failed,,Please Check Registry")
 
 
 class CreateProcessError(SpyError):
     def __init__(self, multi=True):
         if multi:
-            super(Exception, self).__init__("Create Multi WeChat Process Failed")
+            super().__init__("Create Multi WeChat Process Failed")
         else:
-            super(Exception, self).__init__("Create WeChat Process Failed")
+            super().__init__("Create WeChat Process Failed")
 
 
 class GetLoginWndHandleError(SpyError):
     def __init__(self):
-        super(Exception, self).__init__("Get WeChat Login Window Handle Failed")
+        super().__init__("Get WeChat Login Window Handle Failed")
 
 
 class InjectError(SpyError):
     def __init__(self, err):
-        super(Exception, self).__init__(err)
+        super().__init__(err)
 
 
 class ParserError(SpyError):
     def __init__(self):
-        super(Exception, self).__init__("Parser must be callable")
+        super().__init__("Parser must be callable")
 
 
 def handle_error_code(error_code):
