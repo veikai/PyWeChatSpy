@@ -1,6 +1,5 @@
 from PyWeChatSpy import WeChatSpy
 import logging
-import requests
 
 
 logger = logging.getLogger(__file__)
@@ -10,12 +9,6 @@ sh.setFormatter(formatter)
 sh.setLevel(logging.DEBUG)
 logger.addHandler(sh)
 logger.setLevel(logging.INFO)
-
-
-def get_reply(data):
-    url = f"http://api.douqq.com/?key=&msg={data}"  # key获取地址http://xiao.douqq.com/
-    resp = requests.get(url)
-    return resp.text
 
 
 def my_parser_async(data):
@@ -69,7 +62,7 @@ def my_parser_sync(data):
         print(status)
 
 
-spy = WeChatSpy(parser=my_parser_sync, key="18d421169d9361affac335e690", logger=logger)
+spy = WeChatSpy(parser=my_parser_sync, key="授权Key", logger=logger)
 
 
 if __name__ == '__main__':

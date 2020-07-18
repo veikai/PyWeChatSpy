@@ -6,3 +6,4 @@ PyWeChatSpy.egg-info
 *.xor
 *.toml
 qrcode.png
+venv
