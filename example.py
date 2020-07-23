@@ -62,8 +62,9 @@ def my_parser_sync(data):
         print(status)
 
 
-spy = WeChatSpy(parser=my_parser_sync, key="授权Key", logger=logger)
-
+spy = WeChatSpy(parser=my_parser_sync, key="授权Key", logger=logger)  # 同步处理
+# spy = WeChatSpy(parser=my_parser_async, key="授权Key", logger=logger)  # 异步处理
 
 if __name__ == '__main__':
-    spy.run(_async=False)
+    spy.run(_async=False)  # 同步处理
+    # spy.run()  # 异步处理
