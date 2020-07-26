@@ -1,23 +1,27 @@
-from ast import literal_eval
 import json
 import os
 from socket import socket, AF_INET, SOCK_STREAM
-from threading import Thread
+from threading import Thread, Lock
 from time import sleep
 from subprocess import Popen, PIPE
 from .exceptions import handle_error_code, ParserError
 import logging
 import warnings
 from uuid import uuid4
+from .proto import spy_pb2
+from queue import Queue
 
 
 class WeChatSpy:
     def __init__(
             self, parser=None, error_handle=None, multi: bool = False, key: str = None, logger: logging.Logger = None):
+        self.__byte_queue = Queue()
+        self.client_list = []
         # TODO: 异常处理函数
         self.__error_handle = error_handle
         # 是否多开微信PC客户端
         self.__multi = multi
+        self.__mutex = Lock()
         # 商用key
         self.__key = key
         # 日志模块
@@ -49,10 +53,18 @@ class WeChatSpy:
         t_start_server.daemon = True
         t_start_server.name = "socket accept"
         t_start_server.start()
+        t_parse = Thread(target=self.__parse)
+        t_parse.daemon = True
+        t_parse.name = "parser"
+        t_parse.start()
 
     def __start_server(self):
         while True:
             socket_client, client_address = self.__socket_server.accept()
+            if socket_client not in self.client_list:
+                self.client_list.append(socket_client)
+                self.__pid2client[self.pid_list[-1]] = socket_client
+                self.logger.info(f"A WeChat process successfully connected (PID:{self.pid_list[-1]})")
             if self.__key:
                 data = json.dumps({"code": 9527, "key": self.__key})
                 data_length_bytes = int.to_bytes(len(data.encode(encoding="utf8")), length=4, byteorder="little")
@@ -63,11 +75,13 @@ class WeChatSpy:
             t_socket_client_receive.start()
 
     def receive(self, socket_client: socket):
-        data_str = ""
-        _data_str = None
         while True:
             try:
-                _data_str = socket_client.recv(4096).decode(encoding="utf8", errors="ignore")
+                _bytes = socket_client.recv(4096)
+                self.__mutex.acquire()
+                for _byte in _bytes:
+                    self.__byte_queue.put(int.to_bytes(_byte, 1, "little"))
+                self.__mutex.release()
             except Exception as e:
                 for pid, client in self.__pid2client.items():
                     if client == socket_client:
@@ -76,30 +90,6 @@ class WeChatSpy:
                 else:
                     pid = "unknown"
                     return self.logger.warning(f"A WeChat process has disconnected (PID:{pid}) : {e}")
-            if _data_str:
-                data_str += _data_str
-            if data_str and data_str.endswith("*393545857*"):
-                for data in data_str.split("*393545857*"):
-                    if data:
-                        data = literal_eval(data)
-                        if _type := data.get("type"):
-                            self.logger.debug(f"Receive {data}")
-                            pid = data["pid"]
-                            if pid in self.__sync_list and data.get("uuid"):
-                                self.__response[data.pop("uuid")] = data
-                            if data["type"] == 9527:
-                                if sys_msg := data.get("info"):
-                                    self.logger.info(f"{sys_msg} (PID:{pid})")
-                                elif sys_msg := data.get("error"):
-                                    self.logger.error(f"{sys_msg} (PID:{pid})")
-                            else:
-                                if data["type"] == 100:
-                                    self.__pid2client[data["pid"]] = socket_client
-                                    self.logger.info(f"A WeChat process successfully connected (PID:{pid})")
-                                t_parser = Thread(target=self.__parser, args=(data,))
-                                t_parser.daemon = True
-                                t_parser.start()
-                data_str = ""
 
     def __send(self, data: dict, pid: int):
         for i in range(5):
@@ -150,6 +140,26 @@ class WeChatSpy:
         if not background:
             while True:
                 sleep(86400)
+
+    def __parse(self):
+        while True:
+            if self.__byte_queue.empty():
+                sleep(0.1)
+                continue
+            self.__mutex.acquire()
+            byte = b""
+            for i in range(4):
+                byte += self.__byte_queue.get()
+            length = int.from_bytes(byte, "little")
+            byte = b""
+            for i in range(length):
+                byte += self.__byte_queue.get()
+            response = spy_pb2.Response()
+            response.ParseFromString(byte)
+            t = Thread(target=self.__parser, args=(response, ))
+            t.daemon = True
+            t.start()
+            self.__mutex.release()
 
     def query_login_info(self, pid: int = 0):
         """
