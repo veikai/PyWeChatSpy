@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='spy',
   syntax='proto2',
   serialized_options=None,
-  serialized_pb=b'\n\tspy.proto\x12\x03spy\"b\n\tLoginInfo\x12\x10\n\x08nickname\x18\x01 \x02(\t\x12\x10\n\x08wechatid\x18\x02 \x02(\t\x12\x0c\n\x04wxid\x18\x03 \x02(\t\x12\r\n\x05phone\x18\x04 \x02(\t\x12\x14\n\x0cprofilephoto\x18\x05 \x02(\t\"\xea\x01\n\x07\x43ontact\x12\x0c\n\x04wxid\x18\x01 \x02(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x0e\n\x06remark\x18\x04 \x01(\t\x12\x14\n\x0cprofilephoto\x18\x05 \x01(\t\x12\x17\n\x0fprofilephoto_hd\x18\x06 \x01(\t\x12\x0b\n\x03sex\x18\x07 \x01(\x03\x12\x10\n\x08whats_up\x18\x08 \x01(\t\x12\x0f\n\x07\x63ountry\x18\t \x01(\t\x12\x10\n\x08province\x18\n \x01(\t\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x0e\n\x06source\x18\x0c \x01(\x03\x12\x0e\n\x06status\x18\r \x01(\x03\",\n\x0b\x43ontactList\x12\x1d\n\x07\x63ontact\x18\x01 \x03(\x0b\x32\x0c.spy.Contact\"A\n\x12\x43hatroomMemberList\x12\x0c\n\x04wxid\x18\x01 \x02(\t\x12\x1d\n\x07\x63ontact\x18\x02 \x03(\x0b\x32\x0c.spy.Contact\"\x8e\x01\n\x07Message\x12\x0c\n\x04type\x18\x01 \x02(\x03\x12\x0c\n\x04self\x18\x02 \x02(\x03\x12\x0c\n\x04head\x18\x03 \x01(\t\x12\r\n\x05wxid1\x18\x04 \x02(\t\x12\r\n\x05wxid2\x18\x05 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x06 \x02(\t\x12\r\n\x05image\x18\x07 \x01(\t\x12\x0c\n\x04\x66ile\x18\x08 \x01(\t\x12\r\n\x05vedio\x18\t \x01(\t\",\n\x0bMessageList\x12\x1d\n\x07message\x18\x01 \x03(\x0b\x32\x0c.spy.Message\")\n\x06Qrcode\x12\x0f\n\x07success\x18\x01 \x02(\x03\x12\x0e\n\x06qrcode\x18\x02 \x02(\t\"\xb8\x02\n\x08Response\x12\x0c\n\x04type\x18\x01 \x02(\x03\x12\x0b\n\x03pid\x18\x02 \x02(\x03\x12\x0c\n\x04uuid\x18\x03 \x02(\t\x12\"\n\nlogin_info\x18\x04 \x01(\x0b\x32\x0e.spy.LoginInfo\x12&\n\x0c\x63ontact_list\x18\x05 \x01(\x0b\x32\x10.spy.ContactList\x12\x35\n\x14\x63hatroom_member_list\x18\x06 \x01(\x0b\x32\x17.spy.ChatroomMemberList\x12&\n\x0cmessage_list\x18\x07 \x01(\x0b\x32\x10.spy.MessageList\x12\x1b\n\x06qrcode\x18\x08 \x01(\x0b\x32\x0b.spy.Qrcode\x12\r\n\x05\x64\x65\x62ug\x18\t \x01(\t\x12\x0c\n\x04info\x18\n \x01(\t\x12\x0f\n\x07warning\x18\x0b \x01(\t\x12\r\n\x05\x65rror\x18\x0c \x01(\t\"\x9c\x02\n\x07Request\x12\x0b\n\x03opt\x18\x01 \x02(\x03\x12\r\n\x05\x61sync\x18\x02 \x02(\x03\x12\x0c\n\x04uuid\x18\x03 \x02(\t\x12\x0c\n\x04wxid\x18\x04 \x01(\t\x12\x0f\n\x07\x61t_wxid\x18\x05 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x06 \x01(\t\x12\x0c\n\x04\x66ile\x18\x07 \x01(\t\x12\x17\n\x0f\x65ncryptusername\x18\x08 \x01(\t\x12\x0e\n\x06ticket\x18\t \x01(\t\x12\x15\n\rchatroom_wxid\x18\n \x01(\t\x12\x15\n\rapply_message\x18\x0b \x01(\t\x12\x0e\n\x06\x66older\x18\x0c \x01(\t\x12\x0e\n\x06output\x18\r \x01(\t\x12\x0b\n\x03key\x18\x0e \x01(\t\x12\x0e\n\x06update\x18\x0f \x01(\x03\x12\x15\n\rchatroom_name\x18\x10 \x01(\t'
+  serialized_pb=b'\n\tspy.proto\x12\x03spy\"b\n\tLoginInfo\x12\x10\n\x08nickname\x18\x01 \x02(\t\x12\x10\n\x08wechatid\x18\x02 \x02(\t\x12\x0c\n\x04wxid\x18\x03 \x02(\t\x12\r\n\x05phone\x18\x04 \x02(\t\x12\x14\n\x0cprofilephoto\x18\x05 \x02(\t\"\xea\x01\n\x07\x43ontact\x12\x0c\n\x04wxid\x18\x01 \x02(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x0e\n\x06remark\x18\x04 \x01(\t\x12\x14\n\x0cprofilephoto\x18\x05 \x01(\t\x12\x17\n\x0fprofilephoto_hd\x18\x06 \x01(\t\x12\x0b\n\x03sex\x18\x07 \x01(\x03\x12\x10\n\x08whats_up\x18\x08 \x01(\t\x12\x0f\n\x07\x63ountry\x18\t \x01(\t\x12\x10\n\x08province\x18\n \x01(\t\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x0e\n\x06source\x18\x0c \x01(\x03\x12\x0e\n\x06status\x18\r \x01(\x03\",\n\x0b\x43ontactList\x12\x1d\n\x07\x63ontact\x18\x01 \x03(\x0b\x32\x0c.spy.Contact\"A\n\x12\x43hatroomMemberList\x12\x0c\n\x04wxid\x18\x01 \x02(\t\x12\x1d\n\x07\x63ontact\x18\x02 \x03(\x0b\x32\x0c.spy.Contact\"b\n\x07Message\x12\x0c\n\x04type\x18\x01 \x02(\x03\x12\x0c\n\x04self\x18\x02 \x02(\x03\x12\x0c\n\x04head\x18\x03 \x01(\t\x12\r\n\x05wxid1\x18\x04 \x02(\t\x12\r\n\x05wxid2\x18\x05 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x06 \x02(\t\",\n\x0bMessageList\x12\x1d\n\x07message\x18\x01 \x03(\x0b\x32\x0c.spy.Message\")\n\x06Qrcode\x12\x0f\n\x07success\x18\x01 \x02(\x03\x12\x0e\n\x06qrcode\x18\x02 \x02(\t\"\xb8\x02\n\x08Response\x12\x0c\n\x04type\x18\x01 \x02(\x03\x12\x0b\n\x03pid\x18\x02 \x02(\x03\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x12\"\n\nlogin_info\x18\x04 \x01(\x0b\x32\x0e.spy.LoginInfo\x12&\n\x0c\x63ontact_list\x18\x05 \x01(\x0b\x32\x10.spy.ContactList\x12\x35\n\x14\x63hatroom_member_list\x18\x06 \x01(\x0b\x32\x17.spy.ChatroomMemberList\x12&\n\x0cmessage_list\x18\x07 \x01(\x0b\x32\x10.spy.MessageList\x12\x1b\n\x06qrcode\x18\x08 \x01(\x0b\x32\x0b.spy.Qrcode\x12\r\n\x05\x64\x65\x62ug\x18\t \x01(\t\x12\x0c\n\x04info\x18\n \x01(\t\x12\x0f\n\x07warning\x18\x0b \x01(\t\x12\r\n\x05\x65rror\x18\x0c \x01(\t\"\x9b\x02\n\x07Request\x12\x0b\n\x03\x63md\x18\x01 \x02(\x03\x12\x0c\n\x04sync\x18\x02 \x02(\x03\x12\x0c\n\x04uuid\x18\x03 \x02(\t\x12\x0c\n\x04wxid\x18\x04 \x01(\t\x12\x0f\n\x07\x61t_wxid\x18\x05 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x06 \x01(\t\x12\x0c\n\x04\x66ile\x18\x07 \x01(\t\x12\x17\n\x0f\x65ncryptusername\x18\x08 \x01(\t\x12\x0e\n\x06ticket\x18\t \x01(\t\x12\x15\n\rchatroom_wxid\x18\n \x01(\t\x12\x15\n\rapply_message\x18\x0b \x01(\t\x12\x0e\n\x06\x66older\x18\x0c \x01(\t\x12\x0e\n\x06output\x18\r \x01(\t\x12\x0b\n\x03key\x18\x0e \x01(\t\x12\x0e\n\x06update\x18\x0f \x01(\x03\x12\x15\n\rchatroom_name\x18\x10 \x01(\t'
 )
 
 
@@ -316,27 +316,6 @@ _MESSAGE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='image', full_name='spy.Message.image', index=6,
-      number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='file', full_name='spy.Message.file', index=7,
-      number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='vedio', full_name='spy.Message.vedio', index=8,
-      number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -349,8 +328,8 @@ _MESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=469,
-  serialized_end=611,
+  serialized_start=468,
+  serialized_end=566,
 )
 
 
@@ -380,8 +359,8 @@ _MESSAGELIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=613,
-  serialized_end=657,
+  serialized_start=568,
+  serialized_end=612,
 )
 
 
@@ -418,8 +397,8 @@ _QRCODE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=659,
-  serialized_end=700,
+  serialized_start=614,
+  serialized_end=655,
 )
 
 
@@ -446,7 +425,7 @@ _RESPONSE = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='uuid', full_name='spy.Response.uuid', index=2,
-      number=3, type=9, cpp_type=9, label=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -526,8 +505,8 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=703,
-  serialized_end=1015,
+  serialized_start=658,
+  serialized_end=970,
 )
 
 
@@ -539,14 +518,14 @@ _REQUEST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='opt', full_name='spy.Request.opt', index=0,
+      name='cmd', full_name='spy.Request.cmd', index=0,
       number=1, type=3, cpp_type=2, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='async', full_name='spy.Request.async', index=1,
+      name='sync', full_name='spy.Request.sync', index=1,
       number=2, type=3, cpp_type=2, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -662,8 +641,8 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1018,
-  serialized_end=1302,
+  serialized_start=973,
+  serialized_end=1256,
 )
 
 _CONTACTLIST.fields_by_name['contact'].message_type = _CONTACT

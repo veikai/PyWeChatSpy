@@ -1,4 +1,3 @@
-import json
 import os
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread, Lock
@@ -47,8 +46,6 @@ class WeChatSpy:
         self.__socket_server = socket(AF_INET, SOCK_STREAM)
         self.__socket_server.bind(("127.0.0.1", 9527))
         self.__socket_server.listen(1)
-        self.__sync_list = []
-        self.__response = {}
         t_start_server = Thread(target=self.__start_server)
         t_start_server.daemon = True
         t_start_server.name = "socket accept"
@@ -63,12 +60,19 @@ class WeChatSpy:
             socket_client, client_address = self.__socket_server.accept()
             if socket_client not in self.client_list:
                 self.client_list.append(socket_client)
+                while len(self.client_list) != len(self.pid_list):
+                    sleep(1)
                 self.__pid2client[self.pid_list[-1]] = socket_client
                 self.logger.info(f"A WeChat process successfully connected (PID:{self.pid_list[-1]})")
             if self.__key:
-                data = json.dumps({"code": 9527, "key": self.__key})
-                data_length_bytes = int.to_bytes(len(data.encode(encoding="utf8")), length=4, byteorder="little")
-                socket_client.send(data_length_bytes + data.encode(encoding="utf8"))
+                request = spy_pb2.Request()
+                request.cmd = 9527
+                request.key = self.__key
+                request.uuid = ""
+                request.sync = 0
+                data = request.SerializeToString()
+                data_length_bytes = int.to_bytes(len(data), length=4, byteorder="little")
+                socket_client.send(data_length_bytes + data)
             t_socket_client_receive = Thread(target=self.receive, args=(socket_client, ))
             t_socket_client_receive.name = f"client {client_address[1]}"
             t_socket_client_receive.daemon = True
@@ -91,26 +95,19 @@ class WeChatSpy:
                     pid = "unknown"
                     return self.logger.warning(f"A WeChat process has disconnected (PID:{pid}) : {e}")
 
-    def __send(self, data: dict, pid: int):
+    def __send(self, request: spy_pb2.Request, pid: int):
         for i in range(5):
             if not pid and self.pid_list:
                 pid = self.pid_list[0]
             socket_client = self.__pid2client.get(pid)
             if socket_client:
                 uuid = uuid4().__str__()
-                data["uuid"] = uuid
-                if pid in self.__sync_list:
-                    data["sync"] = True
-                self.logger.debug(f"Send {data}")
-                data = json.dumps(data)
-                data_length_bytes = int.to_bytes(len(data.encode(encoding="utf8")), length=4, byteorder="little")
+                request.uuid = uuid
+                request.sync = 0
+                data = request.SerializeToString()
+                data_length_bytes = int.to_bytes(len(data), length=4, byteorder="little")
                 try:
-                    socket_client.send(data_length_bytes + data.encode(encoding="utf8"))
-                    for i in range(30):
-                        if self.__response.get(uuid):
-                            return self.__response.pop(uuid)
-                        else:
-                            sleep(1)
+                    socket_client.send(data_length_bytes + data)
                 except Exception as e:
                     for pid, v in self.__pid2client.items():
                         if v == socket_client:
@@ -125,7 +122,7 @@ class WeChatSpy:
         else:
             return self.logger.error(f"Send Timeout: Socket connection not found")
 
-    def run(self, background: bool = False, _async: bool = True):
+    def run(self, background: bool = False):
         current_path = os.path.split(os.path.abspath(__file__))[0]
         launcher_path = os.path.join(current_path, "Launcher.exe")
         cmd_str = f"{launcher_path} multi" if self.__multi else launcher_path
@@ -135,8 +132,6 @@ class WeChatSpy:
         handle_error_code(res_code)
         res_code = int(res_code)
         self.pid_list.append(res_code)
-        if not _async:
-            self.__sync_list.append(int(res_code))
         if not background:
             while True:
                 sleep(86400)
@@ -167,8 +162,9 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        data = {"code": 1}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = 301
+        return self.__send(request, pid)
 
     def query_contact_details(self, wxid: str, update: bool = False, pid: int = 0):
         """
@@ -186,8 +182,9 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        data = {"code": 3}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = 303
+        return self.__send(request, pid)
 
     def query_chatroom_member(self, wxid: str, pid: int = 0):
         """
