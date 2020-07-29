@@ -1,4 +1,5 @@
 from PyWeChatSpy import WeChatSpy
+from PyWeChatSpy.command import *
 import logging
 
 
@@ -11,68 +12,32 @@ logger.addHandler(sh)
 logger.setLevel(logging.INFO)
 
 
-def my_parser_async(data):
-    if data["type"] == 1:
-        # 登录信息
-        print(data)
-    elif data["type"] == 2:
-        # 联系人详情
-        print(data)
-    elif data["type"] == 3:
-        # 联系人列表
-        for contact in data["data"]:
-            print(contact)
-    elif data["type"] == 4:
-        # 群成员列表
-        for member in data["data"]:
-            print(member)
-    elif data["type"] == 5:
-        # 消息
-        for item in data["data"]:
-            print(item)
-    elif data["type"] == 8:
-        # 二维码信息
-        print(data)
-    elif data["type"] == 202:
-        # 微信登录
-        print("微信登录")
-        spy.query_login_info()
-    elif data["type"] == 203:
-        # 微信登出
-        print("微信退出登录")
-
-
-def my_parser_sync(data):
-    if data["type"] == 100:
-        qrcode = spy.show_qrcode()
-        print(qrcode)
-    if data["type"] == 202:
-        # 微信登录
-        print("微信登录")
-        login_info = spy.query_login_info()
-        print(login_info)
-        contact_info = spy.query_contact_list()
-        for contact in contact_info["data"]:
-            print(contact)
-            details = spy.query_contact_details(contact["wxid"])
-            print(details)
-            break
-        print(contact_info["data"][2])
-        status = spy.check_contact_status(contact_info["data"][2]["wxid"])
-        print(status)
-
-
 def my_proto_parser(data):
-    print(str(data))
-    if data.type == 100:
+    if data.type == WECHAT_CONNECTED:
         print("微信连接成功")
-    elif data.type == 200:
+    elif data.type == WECHAT_LOGIN:
         print("微信登录成功")
         spy.query_login_info()
-    elif data.type == 201:
+    elif data.type == WECHAT_LOGOUT:
         print("微信登出")
-    elif data.type == 301:
+    elif data.type == LOGIN_INFO:
+        print("登录信息")
+        print(str(data))
         spy.query_contact_list()
+    elif data.type == CONTACT_LIST:
+        print("联系人列表")
+        for contact in data.contact_list.contact:
+            print(contact.wxid)
+            print(contact.nickname)
+    elif data.type == MESSAGE:
+        # 消息
+        for message in data.message_list.message:
+            if message.type == 1:
+                print("文本消息")
+                print(message.content)
+            elif message.type == 3:
+                print("图片消息")
+                print
 
 
 spy = WeChatSpy(parser=my_proto_parser, key="18d421169d93611a5584affac335e690", logger=logger)  # 同步处理

@@ -183,7 +183,7 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = 303
+        request.cmd = 302
         return self.__send(request, pid)
 
     def query_chatroom_member(self, wxid: str, pid: int = 0):
