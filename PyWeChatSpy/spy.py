@@ -9,6 +9,7 @@ import warnings
 from uuid import uuid4
 from .proto import spy_pb2
 from queue import Queue
+from .command import *
 
 
 class WeChatSpy:
@@ -67,9 +68,8 @@ class WeChatSpy:
             if self.__key:
                 request = spy_pb2.Request()
                 request.cmd = 9527
-                request.key = self.__key
+                request.content = self.__key
                 request.uuid = ""
-                request.sync = 0
                 data = request.SerializeToString()
                 data_length_bytes = int.to_bytes(len(data), length=4, byteorder="little")
                 socket_client.send(data_length_bytes + data)
@@ -103,7 +103,6 @@ class WeChatSpy:
             if socket_client:
                 uuid = uuid4().__str__()
                 request.uuid = uuid
-                request.sync = 0
                 data = request.SerializeToString()
                 data_length_bytes = int.to_bytes(len(data), length=4, byteorder="little")
                 try:
@@ -156,45 +155,74 @@ class WeChatSpy:
             t.start()
             self.__mutex.release()
 
-    def query_login_info(self, pid: int = 0):
+    def get_login_info(self, pid: int = 0):
         """
-        查询当前登录信息
+        获取当前登录信息
         :param pid:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = 301
+        request.cmd = LOGIN_INFO
         return self.__send(request, pid)
 
-    def query_contact_details(self, wxid: str, update: bool = False, pid: int = 0):
+    def query_login_info(self, pid: int = 0):
+        warnings.warn(
+            "The function 'query_login_info' is deprecated, and has been replaced by the function 'get_login_info'",
+            DeprecationWarning)
+        return self.get_login_info(pid)
+
+    def get_contacts(self, pid: int = 0):
         """
-        查询联系人详情
+        获取联系人详情
+        :param pid:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.cmd = CONTACT_LIST
+        return self.__send(request, pid)
+
+    def query_contact_list(self, pid: int = 0):
+        warnings.warn(
+            "The function 'query_contact_list' is deprecated, and has been replaced by the function 'get_contact_list'",
+            DeprecationWarning)
+        return self.get_contacts(pid)
+
+    def get_contact_details(self, wxid: str, update: bool = False, pid: int = 0):
+        """
+        获取联系人详情
         :param wxid: 联系人wxid
         :param update: 是否更新最新详情(需请求微信服务器 速度较慢)
         :param pid:
         """
-        data = {"code": 2, "wxid": wxid, "update": update}
-        return self.__send(data, pid)
-
-    def query_contact_list(self, pid: int = 0):
-        """
-        查询联系人详情
-        :param pid:
-        :return:
-        """
         request = spy_pb2.Request()
-        request.cmd = 302
+        request.cmd = CONTACT_DETAILS
+        request.wxid = wxid
+        request.update = 1 if update else 0
         return self.__send(request, pid)
 
-    def query_chatroom_member(self, wxid: str, pid: int = 0):
+    def query_contact_details(self, wxid: str, update: bool = False, pid: int = 0):
+        warnings.warn(
+            "The function 'query_contact_details' is deprecated, "
+            "and has been replaced by the function 'get_contact_details'", DeprecationWarning)
+        return self.get_contact_details(wxid, update, pid)
+
+    def get_chatroom_members(self, wxid: str, pid: int = 0):
         """
-        查询群成员列表
+        获取群成员列表
         :param wxid: 群wxid
         :param pid:
         :return:
         """
-        data = {"code": 4, "wxid": wxid}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = CHATROOM_MEMBER_LIST
+        request.wxid = wxid
+        return self.__send(request, pid)
+
+    def query_chatroom_member(self, wxid: str, pid: int = 0):
+        warnings.warn(
+            "The function 'query_chatroom_member' is deprecated, "
+            "and has been replaced by the function 'get_chatroom_members'", DeprecationWarning)
+        return self.get_chatroom_members(wxid, pid)
 
     def send_text(self, wxid: str, content: str, at_wxid: str = "", pid: int = 0):
         """
@@ -206,8 +234,12 @@ class WeChatSpy:
         """
         if not wxid.endswith("chatroom"):
             at_wxid = ""
-        data = {"code": 5, "wxid": wxid, "at_wxid": at_wxid, "content": content}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = SEND_TEXT
+        request.wxid = wxid
+        request.at_wxid = at_wxid
+        request.content = content
+        return self.__send(request, pid)
 
     def send_image(self, wxid: str, image_path: str, pid: int = 0):
         warnings.warn("The function 'send_image' is deprecated, and has been replaced by the function 'send_file'",
@@ -223,8 +255,11 @@ class WeChatSpy:
         """
         if len(file_path.split("\\")) > 8:
             return self.logger.warning(f"File path is too long: {file_path}")
-        data = {"code": 6, "wxid": wxid, "file_path": file_path}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = SEND_FILE
+        request.wxid = wxid
+        request.content = file_path
+        return self.__send(request, pid)
 
     def accept_new_contact(self, encryptusername: str, ticket: str, pid: int = 0):
         """
@@ -234,8 +269,11 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        data = {"code": 7, "encryptusername": encryptusername, "ticket": ticket}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = ACCEPT_CONTACT
+        request.encryptusername = encryptusername
+        request.ticket = ticket
+        return self.__send(request, pid)
         
     def send_announcement(self, wxid: str, content: str, pid: int = 0):
         """
@@ -247,8 +285,11 @@ class WeChatSpy:
         """
         if not wxid.endswith("chatroom"):
             return self.logger.warning("Can only send announcements to chatrooms")
-        data = {"code": 8, "wxid": wxid, "content": content}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = SEND_ANNOUNCEMENT
+        request.wxid = wxid
+        request.content = content
+        return self.__send(request, pid)
 
     def create_chatroom(self, wxid: str, pid: int = 0):
         """
@@ -259,8 +300,10 @@ class WeChatSpy:
         """
         if len(wxid.split(",")) < 2:
             return self.logger.warning("This function requires at least two wxids separated by ','")
-        data = {"code": 9, "wxid": wxid}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = CREATE_CHATROOM
+        request.wxid = wxid
+        return self.__send(request, pid)
 
     def share_chatroom(self, chatroom_wxid: str, wxid: str, pid: int = 0):
         """
@@ -270,8 +313,11 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        data = {"code": 10, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = SHARE_CHATROOM
+        request.wxid = wxid
+        request.chatroom_wxid = chatroom_wxid
+        return self.__send(request, pid)
 
     def remove_chatroom_member(self, chatroom_wxid: str, wxid: str, pid: int = 0):
         """
@@ -281,8 +327,11 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        data = {"code": 11, "wxid": wxid, "chatroom_wxid": chatroom_wxid}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = REMOVE_CHATROOM_MEMBER
+        request.wxid = wxid
+        request.chatroom_wxid = chatroom_wxid
+        return self.__send(request, pid)
 
     def remove_contact(self, wxid: str, pid: int = 0):
         """
@@ -291,51 +340,64 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        data = {"code": 12, "wxid": wxid}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = REMOVE_CONTACT
+        request.wxid = wxid
+        return self.__send(request, pid)
+
+    def add_contact(self, wxid: str, chatroom_wxid: str = "", greeting: str = "", add_type: int = 1, pid: int = 0):
+        """
+        添加联系人
+        add_type = 313: wxid、chatroom_wxid、greeting必填
+        add_type = 314: wxid, greeting必填
+        add_type = 315: wxid 必填
+        :param wxid: 目标用户wxid
+        :param chatroom_wxid: 目标用户所在群
+        :param greeting: 招呼
+        :param add_type: 添加类型 313:从群聊中添加 314:自己被对方删除 315:对方被自己删除
+        :param pid:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.wxid = wxid
+        if add_type == 1 and not chatroom_wxid:
+            return
+        request.cmd = add_type
+        request.chatroom_wxid = chatroom_wxid
+        request.content = greeting
+        return self.__send(request, pid)
 
     def add_contact_from_chatroom(self, chatroom_wxid: str, wxid: str, msg: str, pid: int = 0):
-        """
-        将群成员添加为好友
-        :param chatroom_wxid: 群wxid
-        :param wxid: 群成员wxid
-        :param msg: 好友申请信息
-        :param pid:
-        :return:
-        """
-        data = {"code": 13, "wxid": wxid, "chatroom_wxid": chatroom_wxid, "msg": msg}
-        return self.__send(data, pid)
+        warnings.warn("The function 'add_contact_from_chatroom' is deprecated, "
+                      "and has been replaced by the function 'add_contact'", DeprecationWarning)
+        return self.add_contact(wxid, chatroom_wxid, msg, ADD_CONTACT_A, pid)
 
     def add_unidirectional_contact_a(self, wxid: str, msg: str, pid: int = 0):
-        """
-        添加单向好友(自己被对方删除)
-        :param wxid:
-        :param msg: 好友申请信息
-        :param pid:
-        :return:
-        """
-        data = {"code": 14, "wxid": wxid, "msg": msg}
-        return self.__send(data, pid)
+        warnings.warn("The function 'add_unidirectional_contact_a' is deprecated, "
+                      "and has been replaced by the function 'add_contact'", DeprecationWarning)
+        return self.add_contact(wxid, "", msg, ADD_CONTACT_B, pid)
 
     def add_unidirectional_contact_b(self, wxid: str, pid: int = 0):
+        warnings.warn("The function 'add_unidirectional_contact_b' is deprecated, "
+                      "and has been replaced by the function 'add_contact'", DeprecationWarning)
+        return self.add_contact(wxid, "", "", ADD_CONTACT_C, pid)
+
+    def get_contact_status(self, wxid: str, pid: int = 0):
         """
-        添加单向好友(对方被自己删除)
+        获取联系人状态
         :param wxid:
         :param pid:
         :return:
         """
-        data = {"code": 15, "wxid": wxid}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = CONTACT_STATUS
+        request.wxid = wxid
+        return self.__send(request, pid)
 
     def check_contact_status(self, wxid: str, pid: int = 0):
-        """
-        检查联系人状态
-        :param wxid:
-        :param pid:
-        :return:
-        """
-        data = {"code": 16, "wxid": wxid}
-        return self.__send(data, pid)
+        warnings.warn("The function 'check_contact_status' is deprecated, "
+                      "and has been replaced by the function 'get_contact_status'", DeprecationWarning)
+        return self.get_contact_status(wxid, pid)
 
     def set_chatroom_name(self, wxid: str, name: str, pid: int = 0):
         """
@@ -345,8 +407,11 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        data = {"code": 17, "wxid": wxid, "name": name}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = SET_CHATROOM_NAME
+        request.wxid = wxid
+        request.content = name
+        return self.__send(request, pid)
 
     def set_save_folder(self, folder: str, pid: int = 0):
         """
@@ -355,8 +420,10 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        data = {"code": 18, "folder": folder}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = SET_SAVE_FOLDER
+        request.content = folder
+        return self.__send(request, pid)
 
     def show_qrcode(self, output_path: str = "", pid: int = 0):
         """
@@ -365,5 +432,7 @@ class WeChatSpy:
         :param pid:
         :return:
         """
-        data = {"code": 19, "output_path": output_path}
-        return self.__send(data, pid)
+        request = spy_pb2.Request()
+        request.cmd = QRCODE
+        request.content = output_path
+        return self.__send(request, pid)
