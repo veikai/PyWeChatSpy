@@ -178,7 +178,7 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = CONTACT_LIST
+        request.cmd = CONTACTS
         return self.__send(request, pid)
 
     def query_contact_list(self, pid: int = 0):
@@ -214,7 +214,7 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = CHATROOM_MEMBER_LIST
+        request.cmd = CHATROOM_MEMBERS
         request.wxid = wxid
         return self.__send(request, pid)
 

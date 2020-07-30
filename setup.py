@@ -15,6 +15,9 @@ setup(
         ]
     },
     python_requires='>=3.8.0',
+    install_requires=[
+        "protobuf==3.11.0"
+    ],
     author="veikai",
     author_email="veikai@126.com",
     description="A spy program that helps people make better use of WeChat",
