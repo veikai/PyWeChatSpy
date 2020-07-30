@@ -136,24 +136,33 @@ class WeChatSpy:
                 sleep(86400)
 
     def __parse(self):
+        # 解析socket收到的数据
         while True:
             if self.__byte_queue.empty():
                 sleep(0.1)
                 continue
-            self.__mutex.acquire()
             byte = b""
             for i in range(4):
-                byte += self.__byte_queue.get()
+                byte += self.__pop()
             length = int.from_bytes(byte, "little")
             byte = b""
             for i in range(length):
-                byte += self.__byte_queue.get()
+                byte += self.__pop()
             response = spy_pb2.Response()
             response.ParseFromString(byte)
             t = Thread(target=self.__parser, args=(response, ))
             t.daemon = True
             t.start()
-            self.__mutex.release()
+
+    def __pop(self):
+        while True:
+            if not self.__byte_queue.empty():
+                self.__mutex.acquire()
+                byte = self.__byte_queue.get()
+                self.__mutex.release()
+                return byte
+            else:
+                sleep(0.1)
 
     def get_login_info(self, pid: int = 0):
         """

@@ -19,8 +19,8 @@ chatroom_list = []
 def my_proto_parser(data):
     if data.type == WECHAT_CONNECTED:
         print("-"*10, "微信连接成功", "-"*10)
-        print("-"*10, "展示登录二维码", "-"*10)
-        spy.show_qrcode()
+        # print("-"*10, "展示登录二维码", "-"*10)
+        # spy.show_qrcode()
     elif data.type == WECHAT_LOGIN:
         print("-"*10, "微信登录成功", "-"*10)
         spy.get_login_info()
