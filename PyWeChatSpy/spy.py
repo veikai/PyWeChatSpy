@@ -129,11 +129,12 @@ class WeChatSpy:
         res_code, err = p.communicate()
         res_code = res_code.decode()
         handle_error_code(res_code)
-        res_code = int(res_code)
-        self.pid_list.append(res_code)
+        pid = int(res_code)
+        self.pid_list.append(pid)
         if not background:
             while True:
                 sleep(86400)
+        return pid
 
     def __parse(self):
         # 解析socket收到的数据
