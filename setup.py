@@ -11,7 +11,8 @@ setup(
     package_data={
         "PyWeChatSpy": [
             "Launcher.exe",
-            "1644691589/WeChatSpy.dll"
+            "1644691589/WeChatSpy.dll",
+            "proto/*"
         ]
     },
     python_requires='>=3.8.0',
