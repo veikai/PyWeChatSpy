@@ -117,6 +117,9 @@ def my_proto_parser(data):
             print(details.province)
             print(details.city)
             print(details.source)
+    elif data.type == HEART_BEAT:
+        # 心跳
+        pass
 
 
 spy = WeChatSpy(parser=my_proto_parser, key="授权Key", logger=logger)
