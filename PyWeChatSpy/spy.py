@@ -67,7 +67,7 @@ class WeChatSpy:
                 self.logger.info(f"A WeChat process successfully connected (PID:{self.pid_list[-1]})")
             if self.__key:
                 request = spy_pb2.Request()
-                request.cmd = 9527
+                request.cmd = SYSTEM
                 request.content = self.__key
                 request.uuid = ""
                 data = request.SerializeToString()
@@ -92,8 +92,7 @@ class WeChatSpy:
                         self.__pid2client.pop(pid)
                         return self.logger.warning(f"A WeChat process has disconnected (PID:{pid}) : {e}")
                 else:
-                    pid = "unknown"
-                    return self.logger.warning(f"A WeChat process has disconnected (PID:{pid}) : {e}")
+                    return self.logger.warning(f"A WeChat process has disconnected (PID:0) : {e}")
 
     def __send(self, request: spy_pb2.Request, pid: int):
         for i in range(5):
@@ -151,9 +150,17 @@ class WeChatSpy:
                 byte += self.__pop()
             response = spy_pb2.Response()
             response.ParseFromString(byte)
-            t = Thread(target=self.__parser, args=(response, ))
-            t.daemon = True
-            t.start()
+            if response.type == SYSTEM:
+                if response.info:
+                    self.logger.info(f"{response.info} (PID:{response.pid})")
+                elif response.warning:
+                    self.logger.warning(f"{response.warning} (PID:{response.pid})")
+                elif response.error:
+                    self.logger.error(f"{response.error} (PID:{response.pid})")
+            else:
+                t = Thread(target=self.__parser, args=(response, ))
+                t.daemon = True
+                t.start()
 
     def __pop(self):
         while True:
