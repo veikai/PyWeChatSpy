@@ -122,7 +122,7 @@ def my_proto_parser(data):
         pass
 
 
-spy = WeChatSpy(parser=my_proto_parser, key="授权Key", logger=logger)
+spy = WeChatSpy(parser=my_proto_parser, key="18d421169d93611a5584affac335e690", logger=logger)
 
 
 if __name__ == '__main__':
