@@ -1,7 +1,9 @@
 from PyWeChatSpy import WeChatSpy
 from PyWeChatSpy.command import *
 # from lxml import etree
+import time
 import logging
+import base64
 
 
 logger = logging.getLogger(__file__)
@@ -37,6 +39,21 @@ def my_proto_parser(data):
         spy.get_contacts()
     elif data.type == CONTACTS:
         print("-"*10, "联系人列表", "-"*10)
+        # type: 302
+        # pid: 5688
+        # uuid: "a8252e86-4a6a-42ff-a158-45fe708a8eed"
+        # contact_list {
+        #   contact {
+        #     wxid: "qmessage"
+        #     nickname: "QQ\347\246\273\347\272\277\346\266\210\346\201\257"
+        #     remark: ""
+        #   }
+        #   contact {
+        #     wxid: "qqmail"
+        #     nickname: "QQ\351\202\256\347\256\261\346\217\220\351\206\222"
+        #     remark: ""
+        #   }
+        # }
         for contact in data.contact_list.contact:
             print(contact.wxid, contact.nickname)
             if contact.wxid.startswith("gh_"):
@@ -68,6 +85,8 @@ def my_proto_parser(data):
                     spy.send_text("filehelper", "Hello PyWeChatSpy")
             elif message.type == 3:
                 print("-"*10, "图片消息", "-"*10)
+                with open("{}.jpg".format(int(time.time() * 1000)), "wb") as wf:
+                    wf.write(base64.b64decode(message.content))
             elif message.type == 37:
                 print("-"*10, "好友请求消息", "-"*10)
                 # 好友请求消息
@@ -90,6 +109,29 @@ def my_proto_parser(data):
         print(data)
     elif data.type == CHATROOM_MEMBERS:
         print("-"*10, "群成员列表", "-"*10)
+        # type: 304
+        # pid: 11384
+        # uuid: "c072113b-3920-4de0-ba1e-6445bde68f2a"
+        # chatroom_member_list {
+        #   wxid: "******41@chatroom"
+        #   contact {
+        #     wxid: "wxid_d******11"
+        #     nickname: "CC"
+        #     wechatid: "j******"
+        #   }
+        #   contact {
+        #     wxid: "******"
+        #     nickname: "Xia"
+        #   }
+        #   contact {
+        #     wxid: "wxid_9b******12"
+        #     nickname: "******"
+        #   }
+        #   contact {
+        #     wxid: "********"
+        #     nickname: "*******"
+        #   }
+        # }
         member_list = data.chatroom_member_list
         chatroom_wxid = member_list.wxid
         print(chatroom_wxid)
