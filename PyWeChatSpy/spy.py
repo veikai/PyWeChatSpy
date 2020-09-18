@@ -1,6 +1,6 @@
 import os
 from socket import socket, AF_INET, SOCK_STREAM
-from threading import Thread, Lock
+from threading import Thread
 from time import sleep
 from subprocess import Popen, PIPE
 from .exceptions import handle_error_code, ParserError
@@ -8,20 +8,20 @@ import logging
 import warnings
 from uuid import uuid4
 from .proto import spy_pb2
-from queue import Queue
 from .command import *
 
 
 class WeChatSpy:
-    def __init__(
-            self, parser=None, error_handle=None, multi: bool = False, key: str = None, logger: logging.Logger = None):
-        self.__byte_queue = Queue()
-        self.client_list = []
-        # TODO: 异常处理函数
-        self.__error_handle = error_handle
+    def __init__(self,
+                 parser=None,
+                 multi: bool = False,
+                 key: str = None,
+                 logger: logging.Logger = None,
+                 host: str = "127.0.0.1",
+                 port: int = 9527
+                 ):
         # 是否多开微信PC客户端
         self.__multi = multi
-        self.__mutex = Lock()
         # 商用key
         self.__key = key
         # 日志模块
@@ -39,32 +39,25 @@ class WeChatSpy:
             self.logger.setLevel(logging.DEBUG)
         # socket数据处理函数
         if callable(parser):
-            self.__parser = parser
+            if parser.__code__.co_argcount == 1:
+                self.__parser = parser
+            else:
+                raise ParserError("The parser function can have only one argument")
         else:
-            raise ParserError()
-        self.pid_list = []
-        self.__pid2client = {}
+            raise ParserError("Parser must be callable")
+        self.__port2client = {}
         self.__socket_server = socket(AF_INET, SOCK_STREAM)
-        self.__socket_server.bind(("127.0.0.1", 9527))
+        self.__socket_server.bind((host, port))
         self.__socket_server.listen(1)
         t_start_server = Thread(target=self.__start_server)
         t_start_server.daemon = True
         t_start_server.name = "socket accept"
         t_start_server.start()
-        t_parse = Thread(target=self.__parse)
-        t_parse.daemon = True
-        t_parse.name = "parser"
-        t_parse.start()
 
     def __start_server(self):
         while True:
             socket_client, client_address = self.__socket_server.accept()
-            if socket_client not in self.client_list:
-                self.client_list.append(socket_client)
-                while len(self.client_list) != len(self.pid_list):
-                    sleep(1)
-                self.__pid2client[self.pid_list[-1]] = socket_client
-                self.logger.info(f"A WeChat process successfully connected (PID:{self.pid_list[-1]})")
+            self.logger.info(f"A WeChat process from {client_address} successfully connected")
             if self.__key:
                 request = spy_pb2.Request()
                 request.cmd = SYSTEM
@@ -73,52 +66,60 @@ class WeChatSpy:
                 data = request.SerializeToString()
                 data_length_bytes = int.to_bytes(len(data), length=4, byteorder="little")
                 socket_client.send(data_length_bytes + data)
-            t_socket_client_receive = Thread(target=self.receive, args=(socket_client, ))
-            t_socket_client_receive.name = f"client {client_address[1]}"
+            t_socket_client_receive = Thread(target=self.receive, args=(socket_client, client_address))
+            t_socket_client_receive.name = f"receive {client_address}"
             t_socket_client_receive.daemon = True
             t_socket_client_receive.start()
 
-    def receive(self, socket_client: socket):
+    def receive(self, socket_client: socket, client_address: tuple):
+        recv_byte = b""
+        data_size = 0
         while True:
             try:
                 _bytes = socket_client.recv(4096)
-                self.__mutex.acquire()
-                for _byte in _bytes:
-                    self.__byte_queue.put(int.to_bytes(_byte, 1, "little"))
-                self.__mutex.release()
             except Exception as e:
-                for pid, client in self.__pid2client.items():
-                    if client == socket_client:
-                        self.__pid2client.pop(pid)
-                        return self.logger.warning(f"A WeChat process has disconnected (PID:{pid}) : {e}")
-                else:
-                    return self.logger.warning(f"A WeChat process has disconnected (PID:0) : {e}")
-
-    def __send(self, request: spy_pb2.Request, pid: int):
-        for i in range(5):
-            if not pid and self.pid_list:
-                pid = self.pid_list[0]
-            socket_client = self.__pid2client.get(pid)
-            if socket_client:
-                uuid = uuid4().__str__()
-                request.uuid = uuid
-                data = request.SerializeToString()
-                data_length_bytes = int.to_bytes(len(data), length=4, byteorder="little")
-                try:
-                    socket_client.send(data_length_bytes + data)
-                except Exception as e:
-                    for pid, v in self.__pid2client.items():
-                        if v == socket_client:
-                            self.__pid2client.pop(pid)
-                            return self.logger.warning(f"A WeChat process has disconnected (PID:{pid}) : {e}")
+                return self.logger.warning(f"The WeChat process has disconnected: {e}")
+            recv_byte += _bytes
+            while True:
+                if not data_size:
+                    if len(recv_byte) > 3:
+                        data_size = int.from_bytes(recv_byte[:4], "little")
                     else:
-                        pid = "unknown"
-                        return self.logger.warning(f"A WeChat process has disconnected (PID:{pid}) : {e}")
-                break
-            else:
-                sleep(1)
+                        break
+                elif data_size <= len(recv_byte) - 4:
+                    data_byte = recv_byte[4: data_size + 4]
+                    response = spy_pb2.Response()
+                    response.ParseFromString(data_byte)
+                    recv_byte = recv_byte[data_size + 4:]
+                    data_size = 0
+                    if response.type == SYSTEM:
+                        if response.info:
+                            self.logger.info(f"{response.info}")
+                        elif response.warning:
+                            self.logger.warning(f"{response.warning}")
+                        elif response.error:
+                            self.logger.error(f"{response.error}")
+                    else:
+                        t = Thread(target=self.__parser, args=(response,))
+                        t.name = f"parse {client_address}"
+                        t.daemon = True
+                        t.start()
+
+    def __send(self, request: spy_pb2.Request, port: int = 0):
+        if not port and self.__port2client:
+            socket_client = list(self.__port2client.values())[0]
         else:
-            return self.logger.error(f"Send Timeout: Socket connection not found")
+            socket_client = self.__port2client.get(port)
+        if not socket_client:
+            self.logger.error(f"Socket client(port: {port}) not found")
+            return
+        request.uuid = uuid4().__str__()
+        data = request.SerializeToString()
+        data_length_bytes = int.to_bytes(len(data), length=4, byteorder="little")
+        try:
+            socket_client.send(data_length_bytes + data)
+        except Exception as e:
+            return self.logger.warning(f"The WeChat process {port} has disconnected: {e}")
 
     def run(self, background: bool = False):
         current_path = os.path.split(os.path.abspath(__file__))[0]
@@ -129,48 +130,10 @@ class WeChatSpy:
         res_code = res_code.decode()
         handle_error_code(res_code)
         pid = int(res_code)
-        self.pid_list.append(pid)
         if not background:
             while True:
                 sleep(86400)
         return pid
-
-    def __parse(self):
-        # 解析socket收到的数据
-        while True:
-            if self.__byte_queue.empty():
-                sleep(0.1)
-                continue
-            byte = b""
-            for i in range(4):
-                byte += self.__pop()
-            length = int.from_bytes(byte, "little")
-            byte = b""
-            for i in range(length):
-                byte += self.__pop()
-            response = spy_pb2.Response()
-            response.ParseFromString(byte)
-            if response.type == SYSTEM:
-                if response.info:
-                    self.logger.info(f"{response.info} (PID:{response.pid})")
-                elif response.warning:
-                    self.logger.warning(f"{response.warning} (PID:{response.pid})")
-                elif response.error:
-                    self.logger.error(f"{response.error} (PID:{response.pid})")
-            else:
-                t = Thread(target=self.__parser, args=(response, ))
-                t.daemon = True
-                t.start()
-
-    def __pop(self):
-        while True:
-            if not self.__byte_queue.empty():
-                self.__mutex.acquire()
-                byte = self.__byte_queue.get()
-                self.__mutex.release()
-                return byte
-            else:
-                sleep(0.1)
 
     def get_login_info(self, pid: int = 0):
         """
