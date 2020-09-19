@@ -132,7 +132,7 @@ class WeChatSpy:
             self.logger.warning(f"The WeChat process {port} has disconnected: {e}")
             return False
 
-    def run(self, bit: int = 64):
+    def run(self, wechat: str, bit: int = 64):
         current_path = os.path.split(os.path.abspath(__file__))[0]
         if bit == 64:
             dll_path = os.path.join(current_path, "SpyHelper_x64.dll")
@@ -145,11 +145,11 @@ class WeChatSpy:
             return 0
         except OSError as e:
             if e.errno == 8:
-                return self.run(64) if bit != 64 else self.run(32)
+                return self.run(wechat, 64) if bit != 64 else self.run(wechat, 32)
             self.logger.error(e)
             return 0
-        pid = dll.OpenWeChat(c_char_p(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe".encode()))
-        print(pid)
+        pid = dll.OpenWeChat(c_char_p(wechat.encode()))
+        return pid
 
     def set_commercial(self, key: str, pid: int = 0, port: int = 0):
         request = spy_pb2.Request()
