@@ -37,11 +37,11 @@ A spy program that helps people make better use of WeChat
 * `{"type":9527, "content":""}`  >系统提示
 
 ## 功能列表
-* `query_login_info()`  >查询当前登录账号信息
-* `query_contact_details(wxid, upload=False)` >查询联系人详情
+* `get_login_info()`  >查询当前登录账号信息
+* `get_contact_details(wxid, upload=False)` >查询联系人详情
     * `upload` 是否从网络更新最新详情,需访问微信服务器
-* `query_contact_list()` >查询联系人列表
-* `query_chatroom_member(wxid)` >查询群成员列表
+* `get_contacts()` >查询联系人列表
+* `get_chatroom_members(wxid)` >查询群成员列表
 * `send_text(wxid, content, at_wxid="")` >发送文本
     * `at_wxid` 被@群成员wxid
 * `send_file(wxid, file_path)` >发送文件
@@ -52,10 +52,9 @@ A spy program that helps people make better use of WeChat
 * `share_chatroom(chatroom_wxid, "wxid1,wxid2,...,wxidn")` >分享群聊邀请链接`
 * `remove_chatroom_member(chatroom_wxid, "wxid1,wxid2,...,wxidn")`  >移除群成员
 * `remove_contact(wxid)` >移除联系人
-* `add_contact_from_chatroom(chatroom_wxid, wxid, msg)` >添加群成员为好友
-* `add_unidirectional_contact_a(wxid, msg)`  >添加单向好友(对方删除自己)
-* `add_unidirectional_contact_b(wxid)`  >添加单向好友(自己删除对方)
-* `check_contact_status(wxid)`  >检查联系人状态(僵尸粉检测)
+* `add_contact(wxid, chatroom_wxid, greeting, add_type)` >添加群成员为好友
+    * add_type 添加类型 313:从群聊中添加 314:自己被对方删除 315:对方被自己删除
+* `get_contact_status(wxid)`  >检查联系人状态(僵尸粉检测)
 * `set_chatroom_name(wxid, name)`  >设置群聊名称
 * `set_save_folder(folder)`  >手动同步微信下载文件保存路径
 * `show_qrcode(output_path="")`  >展示登录二维码并将二维码图片保存到指定路径(默认当前工作路径)
