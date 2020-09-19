@@ -1,9 +1,7 @@
 import os
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
-from time import sleep
-from subprocess import Popen, PIPE
-from .exceptions import handle_error_code, ParserError
+from .exceptions import ParserError
 import logging
 import warnings
 from uuid import uuid4
