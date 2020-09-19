@@ -11,16 +11,7 @@ from ctypes import cdll, c_char_p
 
 
 class WeChatSpy:
-    def __init__(self,
-                 parser=None,
-                 multi: bool = False,
-                 key: str = None,
-                 logger: logging.Logger = None,
-                 host: str = "127.0.0.1",
-                 port: int = 9527
-                 ):
-        # 是否多开微信PC客户端
-        self.__multi = multi
+    def __init__(self, parser=None, key: str = None, logger: logging.Logger = None):
         # 商用key
         self.__key = key
         # 日志模块
@@ -43,6 +34,8 @@ class WeChatSpy:
             raise ParserError("Parser must be callable")
         self.__port2client = dict()
         self.__pid2port = dict()
+        host = "127.0.0.1"
+        port = 9527
         self.__socket_server = socket(AF_INET, SOCK_STREAM)
         self.__socket_server.bind((host, port))
         self.__socket_server.listen(1)
