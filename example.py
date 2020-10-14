@@ -66,24 +66,21 @@ def my_proto_parser(data):
                 # 普通联系人
                 contact_list.append(contact.wxid)
         print("-"*10, f"共{len(contact_list)}个联系人,{len(chatroom_list)}个群", "-"*10)
-        # print("-"*10, "获取联系人详情(部分付费)", contact_list[5], "-"*10)
-        # spy.get_contact_details(contact_list[5], True)
-        # print("设置群名称(付费)", chatroom_list[0])
-        # spy.set_chatroom_name(chatroom_list[0], "PyWeChatSpy")
-        # print("发送群公告", chatroom_list[0])
-        # spy.send_announcement(chatroom_list[0], "本条消息由PyWeChatSpy发出(https://zhuanlan.zhihu.com/p/118674498)")
-        # print("创建群聊(付费)")
-        # spy.create_chatroom(f"{contact_list[1]},{contact_list[2]},{contact_list[3]}")
-        # print("-"*10, "获取群成员列表(付费)", chatroom_list[0], "-"*10)
-        # spy.get_chatroom_members(chatroom_list[0])
     elif data.type == MESSAGE:
         # 消息
         for message in data.message_list.message:
             if message.type == 1:
                 print("-"*10, "文本消息", "-"*10)
                 if message.wxid1 == "filehelper":
-                    # spy.send_text("filehelper", "Hello PyWeChatSpy")
-                    spy.set_remark("wxid_asfasfasdfa", "PyWeChatSpy")  # 设置备注
+                    spy.send_text("filehelper", "Hello PyWeChatSpy")
+                    # spy.set_remark("wxid_*******tzz12", "PyWeChatSpy")  # 设置备注
+                    # spy.get_contact_status("wxid_*******tzz12")  # 获取联系人状态(清理僵尸粉)
+                    # spy.get_contact_details("wxid_*******tzz12", True)  # 获取联系人详情
+                    # spy.set_chatroom_name("sdfasdf@chatroom", "PyWeChatSpy")  # 修改群聊名称
+                    # spy.send_announcement(chatroom_list[0],
+                    #                       "本条消息由PyWeChatSpy发出(https://zhuanlan.zhihu.com/p/118674498)")  # 发送群公告
+                    # spy.create_chatroom("wxid_*******tzz12,wxid_*******tzz12")  # 创建群聊
+                    # spy.get_chatroom_members("sdfasdf@chatroom")  # 获取群成员列表
             elif message.type == 3:
                 print("-"*10, "图片消息", "-"*10)
                 with open("{}.jpg".format(int(time.time() * 1000)), "wb") as wf:
@@ -165,6 +162,9 @@ def my_proto_parser(data):
         pass
     elif data.type == SET_REMARK:
         print("-" * 10, "备注设置完成", "-" * 10)
+        print(data)
+    elif data.type == CONTACT_STATUS:
+        print("-" * 10, "联系人状态", "-" * 10)
         print(data)
 
 
