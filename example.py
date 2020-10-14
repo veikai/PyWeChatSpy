@@ -1,6 +1,6 @@
 from PyWeChatSpy import WeChatSpy
 from PyWeChatSpy.command import *
-# from lxml import etree
+from lxml import etree
 import time
 import logging
 import base64
@@ -82,7 +82,8 @@ def my_proto_parser(data):
             if message.type == 1:
                 print("-"*10, "文本消息", "-"*10)
                 if message.wxid1 == "filehelper":
-                    spy.send_text("filehelper", "Hello PyWeChatSpy")
+                    # spy.send_text("filehelper", "Hello PyWeChatSpy")
+                    spy.set_remark("wxid_asfasfasdfa", "PyWeChatSpy")  # 设置备注
             elif message.type == 3:
                 print("-"*10, "图片消息", "-"*10)
                 with open("{}.jpg".format(int(time.time() * 1000)), "wb") as wf:
@@ -90,8 +91,8 @@ def my_proto_parser(data):
             elif message.type == 37:
                 print("-"*10, "好友请求消息", "-"*10)
                 # 好友请求消息
-                # obj = etree.XML(message.content)
-                # encryptusername, ticket = obj.xpath("/msg/@encryptusername")[0], obj.xpath("/msg/@ticket")[0]
+                obj = etree.XML(message.content)
+                encryptusername, ticket = obj.xpath("/msg/@encryptusername")[0], obj.xpath("/msg/@ticket")[0]
                 # 接收好友请求(付费)
                 # spy.accept_new_contact(encryptusername, ticket)
             else:
@@ -162,6 +163,9 @@ def my_proto_parser(data):
     elif data.type == HEART_BEAT:
         # 心跳
         pass
+    elif data.type == SET_REMARK:
+        print("-" * 10, "备注设置完成", "-" * 10)
+        print(data)
 
 
 if __name__ == '__main__':

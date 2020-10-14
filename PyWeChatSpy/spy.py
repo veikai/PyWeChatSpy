@@ -448,3 +448,18 @@ class WeChatSpy:
         request.cmd = QRCODE
         request.content = output_path
         return self.__send(request, pid, port)
+
+    def set_remark(self, wxid: str, remark: str, pid: int = 0, port: int = 0):
+        """
+        设置联系人备注
+        :param wxid:
+        :param remark:
+        :param pid:
+        :param port:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.cmd = SET_REMARK
+        request.wxid = wxid
+        request.content = remark
+        return self.__send(request, pid, port)
