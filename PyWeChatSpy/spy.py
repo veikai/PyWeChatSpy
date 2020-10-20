@@ -452,8 +452,8 @@ class WeChatSpy:
     def set_remark(self, wxid: str, remark: str, pid: int = 0, port: int = 0):
         """
         设置联系人备注
-        :param wxid:
-        :param remark:
+        :param wxid: 需要设置备注的联系人的wxid
+        :param remark: 备注内容
         :param pid:
         :param port:
         :return:
@@ -462,4 +462,19 @@ class WeChatSpy:
         request.cmd = SET_REMARK
         request.wxid = wxid
         request.content = remark
+        return self.__send(request, pid, port)
+
+    def get_chatroom_invite_url(self, wxid: str, url: str, pid: int = 0, port: int = 0):
+        """
+        获取群邀请链接
+        :param wxid: 发送群邀请链接的人的wxid
+        :param url: 群邀请解析出来的url
+        :param pid:
+        :param port:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.cmd = GET_CHATROOM_INVITATION_URL
+        request.wxid = wxid
+        request.content = url
         return self.__send(request, pid, port)

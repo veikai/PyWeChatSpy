@@ -1,6 +1,7 @@
 from PyWeChatSpy import WeChatSpy
 from PyWeChatSpy.command import *
 from lxml import etree
+import requests
 import time
 import logging
 import base64
@@ -35,8 +36,6 @@ def my_proto_parser(data):
         print(data.login_info.wechatid)
         print(data.login_info.phone)
         print(data.login_info.profilephoto)
-        # 查询联系人列表(付费)
-        spy.get_contacts()
     elif data.type == CONTACTS:
         print("-"*10, "联系人列表", "-"*10)
         # type: 302
@@ -72,7 +71,8 @@ def my_proto_parser(data):
             if message.type == 1:
                 print("-"*10, "文本消息", "-"*10)
                 if message.wxid1 == "filehelper":
-                    spy.send_text("filehelper", "Hello PyWeChatSpy")
+                    spy.send_text("filehelper", f"Hello PyWeChatSpy\n{message.content}")
+                    # spy.get_contacts()  # 获取联系人列表
                     # spy.set_remark("wxid_*******tzz12", "PyWeChatSpy")  # 设置备注
                     # spy.get_contact_status("wxid_*******tzz12")  # 获取联系人状态(清理僵尸粉)
                     # spy.get_contact_details("wxid_*******tzz12", True)  # 获取联系人详情
@@ -83,18 +83,29 @@ def my_proto_parser(data):
                     # spy.get_chatroom_members("sdfasdf@chatroom")  # 获取群成员列表
             elif message.type == 3:
                 print("-"*10, "图片消息", "-"*10)
-                with open("{}.jpg".format(int(time.time() * 1000)), "wb") as wf:
+                with open("images/{}.jpg".format(int(time.time() * 1000)), "wb") as wf:
                     wf.write(base64.b64decode(message.content))
+                continue
             elif message.type == 37:
                 print("-"*10, "好友请求消息", "-"*10)
                 # 好友请求消息
                 obj = etree.XML(message.content)
                 encryptusername, ticket = obj.xpath("/msg/@encryptusername")[0], obj.xpath("/msg/@ticket")[0]
-                # 接收好友请求(付费)
-                # spy.accept_new_contact(encryptusername, ticket)
+                # spy.accept_new_contact(encryptusername, ticket)  # 接收好友请求(付费)
+                continue
+            elif message.type == 49 and "邀请你加入群聊" in message.content:
+                print("-" * 10, "群邀请", "-" * 10)
+                # xml = etree.XML(message.content)
+                # url = xml.xpath("/msg/appmsg/url/text()")
+                # if url:
+                #     url = url[0]
+                #     print(url)
+                #     spy.get_chatroom_invite_url(message.wxid1, url)  # 自动进群(尚未实现)
+                # else:
+                #     print("群邀请链接获取失败：解析xml失败")
+                continue
             else:
-                print("-"*10, "其他消息", "-"*10)
-                return
+                print("-"*10, f"其他消息:{message.type}", "-"*10)
             print("来源1:", message.wxid1)
             print("来源2:", message.wxid2)
             print("消息头:", message.head)
@@ -136,11 +147,11 @@ def my_proto_parser(data):
         for member in member_list.contact:
             print(member.wxid, member.nickname)
             # 添加群成员为好友(付费)
-            # 高风险操作 频率较高容易引发微信风控
+            # 高风险操作 容易引发微信风控
             # spy.add_contact(
             #     member.wxid,
             #     chatroom_wxid,
-            #     "来自PyWeChatSpy(https://zhuanlan.zhihu.com/p/118674498)的问候",
+            #     f"你好{member.nickname},这是来自PyWeChatSpy(https://zhuanlan.zhihu.com/p/118674498)的问候",
             #     ADD_CONTACT_A)
     elif data.type == CONTACT_DETAILS:
         print("-"*10, "联系人详情", "-"*10)
@@ -166,6 +177,18 @@ def my_proto_parser(data):
     elif data.type == CONTACT_STATUS:
         print("-" * 10, "联系人状态", "-" * 10)
         print(data)
+    elif data.type == GET_CHATROOM_INVITATION_URL:
+        print("-" * 10, "群邀请链接", "-" * 10)
+        for message in data.message_list.message:
+            if message.type == 321:
+                url = message.content
+                try:
+                    requests.post(url, allow_redirects=False)
+                except requests.exceptions.InvalidSchema:
+                    pass
+                except Exception as e:
+                    #: TODO 网络异常处理
+                    print(e)
 
 
 if __name__ == '__main__':
