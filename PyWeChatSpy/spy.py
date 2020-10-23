@@ -478,3 +478,23 @@ class WeChatSpy:
         request.wxid = wxid
         request.content = url
         return self.__send(request, pid, port)
+
+    def send_link_card(
+            self, receive_wxid: str, send_wxid: str, content: str, image_path: str, pid: int = 0, port: int = 0):
+        """
+        发送链接卡片
+        :param receive_wxid:
+        :param send_wxid:
+        :param content:
+        :param image_path:
+        :param pid:
+        :param port:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.cmd = SEND_LINK_CARD
+        request.wxid = receive_wxid
+        request.content = content
+        request.at_wxid = send_wxid
+        request.ticket = image_path
+        return self.__send(request, pid, port)

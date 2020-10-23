@@ -24,5 +24,6 @@ SET_SAVE_FOLDER = 318  # 设置保存位置
 QRCODE = 319  # 显示二维码
 SET_REMARK = 320  # 修改联系人备注
 GET_CHATROOM_INVITATION_URL = 321  # 获取群邀请链接
+SEND_LINK_CARD = 322  # 发送链接卡片
 MESSAGE = 401  # 消息信息
 CONTACT_EVENT = 402  # 联系人变动事件

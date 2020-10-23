@@ -81,10 +81,13 @@ def my_proto_parser(data):
                     #                       "本条消息由PyWeChatSpy发出(https://zhuanlan.zhihu.com/p/118674498)")  # 发送群公告
                     # spy.create_chatroom("wxid_*******tzz12,wxid_*******tzz12")  # 创建群聊
                     # spy.get_chatroom_members("sdfasdf@chatroom")  # 获取群成员列表
+                    # with open(r"D:\新建文本文档.txt", "r", encoding="utf8") as rf:
+                    #     content = rf.read()
+                    # spy.send_link_card("filehelper", "wxid_*******6212f21", content, r"D:\a.jpg")
             elif message.type == 3:
                 print("-"*10, "图片消息", "-"*10)
-                with open("images/{}.jpg".format(int(time.time() * 1000)), "wb") as wf:
-                    wf.write(base64.b64decode(message.content))
+                # with open("images/{}.jpg".format(int(time.time() * 1000)), "wb") as wf:
+                #     wf.write(base64.b64decode(message.content))
                 continue
             elif message.type == 37:
                 print("-"*10, "好友请求消息", "-"*10)
