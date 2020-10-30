@@ -5,6 +5,7 @@ import requests
 import time
 import logging
 import base64
+import os
 
 
 logger = logging.getLogger(__file__)
@@ -53,7 +54,7 @@ def my_proto_parser(data):
         #     remark: ""
         #   }
         # }
-        for contact in data.contact_list.contact:
+        for contact in data.contact:
             print(contact.wxid, contact.nickname)
             if contact.wxid.startswith("gh_"):
                 # 过滤公众号
@@ -67,7 +68,7 @@ def my_proto_parser(data):
         print("-"*10, f"共{len(contact_list)}个联系人,{len(chatroom_list)}个群", "-"*10)
     elif data.type == MESSAGE:
         # 消息
-        for message in data.message_list.message:
+        for message in data.message:
             if message.type == 1:
                 print("-"*10, "文本消息", "-"*10)
                 if message.wxid1 == "filehelper":
@@ -86,8 +87,14 @@ def my_proto_parser(data):
                     # spy.send_link_card("filehelper", "wxid_*******6212f21", content, r"D:\a.jpg")
             elif message.type == 3:
                 print("-"*10, "图片消息", "-"*10)
-                with open("images/{}.jpg".format(int(time.time() * 1000)), "wb") as wf:
-                    wf.write(base64.b64decode(message.content))
+                xml = etree.XML(message.content)
+                md5 = xml.xpath("/msg/img/@md5")[0]
+                file = message.file
+                if xml.xpath("/msg/img/@hdlength"):
+                    time.sleep(10)
+                elif xml.xpath("/msg/img/@length"):
+                    time.sleep(5)
+                spy.decrypt_image(md5, file)
                 continue
             elif message.type == 37:
                 print("-"*10, "好友请求消息", "-"*10)
@@ -124,7 +131,7 @@ def my_proto_parser(data):
         # type: 304
         # pid: 11384
         # uuid: "c072113b-3920-4de0-ba1e-6445bde68f2a"
-        # chatroom_member_list {
+        # chatroom_member {
         #   wxid: "******41@chatroom"
         #   contact {
         #     wxid: "wxid_d******11"
@@ -144,10 +151,10 @@ def my_proto_parser(data):
         #     nickname: "*******"
         #   }
         # }
-        member_list = data.chatroom_member_list
-        chatroom_wxid = member_list.wxid
+        chatroom_member = data.chatroom_member
+        chatroom_wxid = chatroom_member.wxid
         print(chatroom_wxid)
-        for member in member_list.contact:
+        for member in chatroom_member.contact:
             print(member.wxid, member.nickname)
             # 添加群成员为好友(付费)
             # 高风险操作 容易引发微信风控
@@ -158,7 +165,7 @@ def my_proto_parser(data):
             #     ADD_CONTACT_A)
     elif data.type == CONTACT_DETAILS:
         print("-"*10, "联系人详情", "-"*10)
-        for details in data.contact_list.contact:
+        for details in data.contact:
             print(details.wxid)
             print(details.nickname)
             print(details.wechatid)
@@ -171,6 +178,9 @@ def my_proto_parser(data):
             print(details.province)
             print(details.city)
             print(details.source)
+    elif data.type == CONTACT_STATUS:
+        print("-"*10, "联系人状态", "-"*10)
+        print(data)
     elif data.type == HEART_BEAT:
         # 心跳
         pass
@@ -182,7 +192,7 @@ def my_proto_parser(data):
         print(data)
     elif data.type == GET_CHATROOM_INVITATION_URL:
         print("-" * 10, "群邀请链接", "-" * 10)
-        for message in data.message_list.message:
+        for message in data.message:
             if message.type == 321:
                 url = message.content
                 try:
@@ -192,6 +202,14 @@ def my_proto_parser(data):
                 except Exception as e:
                     #: TODO 网络异常处理
                     print(e)
+    elif data.type == DECRYPT_IMAGE:
+        print("-" * 10, "解密后的图片", "-" * 10)
+        for message in data.message:
+            md5 = message.wxid1
+            content = message.content
+            with open(f"image_cache/{md5}.jpg", "wb") as wf:
+                content = base64.b64decode(content)
+                wf.write(content)
 
 
 if __name__ == '__main__':

@@ -145,7 +145,7 @@ class WeChatSpy:
     def set_commercial(self, key: str, pid: int = 0, port: int = 0):
         request = spy_pb2.Request()
         request.cmd = SYSTEM
-        request.content = key
+        request.param1 = key
         request.uuid = ""
         self.__send(request, pid, port)
 
@@ -193,8 +193,8 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = CONTACT_DETAILS
-        request.wxid = wxid
-        request.update = 1 if update else 0
+        request.param1 = wxid
+        request.param2 = "1" if update else "0"
         return self.__send(request, pid, port)
 
     def query_contact_details(self, wxid: str, update: bool = False, pid: int = 0, port: int = 0):
@@ -213,7 +213,7 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = CHATROOM_MEMBERS
-        request.wxid = wxid
+        request.param1 = wxid
         return self.__send(request, pid, port)
 
     def query_chatroom_member(self, wxid: str, pid: int = 0, port: int = 0):
@@ -235,9 +235,9 @@ class WeChatSpy:
             at_wxid = ""
         request = spy_pb2.Request()
         request.cmd = SEND_TEXT
-        request.wxid = wxid
-        request.at_wxid = at_wxid
-        request.content = content
+        request.param1 = wxid
+        request.param2 = content
+        request.param3 = at_wxid
         return self.__send(request, pid, port)
 
     def send_image(self, wxid: str, image_path: str, pid: int = 0, port: int = 0):
@@ -257,8 +257,8 @@ class WeChatSpy:
             return self.logger.warning(f"File path is too long: {file_path}")
         request = spy_pb2.Request()
         request.cmd = SEND_FILE
-        request.wxid = wxid
-        request.content = file_path
+        request.param1 = wxid
+        request.param2 = file_path
         return self.__send(request, pid, port)
 
     def accept_new_contact(self, encryptusername: str, ticket: str, pid: int = 0, port: int = 0):
@@ -272,8 +272,8 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = ACCEPT_CONTACT
-        request.encryptusername = encryptusername
-        request.ticket = ticket
+        request.param1 = encryptusername
+        request.param2 = ticket
         return self.__send(request, pid, port)
 
     def send_announcement(self, wxid: str, content: str, pid: int = 0, port: int = 0):
@@ -289,8 +289,8 @@ class WeChatSpy:
             return self.logger.warning("Can only send announcements to chatrooms")
         request = spy_pb2.Request()
         request.cmd = SEND_ANNOUNCEMENT
-        request.wxid = wxid
-        request.content = content
+        request.param1 = wxid
+        request.param2 = content
         return self.__send(request, pid, port)
 
     def create_chatroom(self, wxid: str, pid: int = 0, port: int = 0):
@@ -305,7 +305,7 @@ class WeChatSpy:
             return self.logger.warning("This function requires at least two wxids separated by ','")
         request = spy_pb2.Request()
         request.cmd = CREATE_CHATROOM
-        request.wxid = wxid
+        request.param1 = wxid
         return self.__send(request, pid, port)
 
     def share_chatroom(self, chatroom_wxid: str, wxid: str, pid: int = 0, port: int = 0):
@@ -319,8 +319,8 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = SHARE_CHATROOM
-        request.wxid = wxid
-        request.chatroom_wxid = chatroom_wxid
+        request.param1 = wxid
+        request.param2 = chatroom_wxid
         return self.__send(request, pid, port)
 
     def remove_chatroom_member(self, chatroom_wxid: str, wxid: str, pid: int = 0, port: int = 0):
@@ -334,8 +334,8 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = REMOVE_CHATROOM_MEMBER
-        request.wxid = wxid
-        request.chatroom_wxid = chatroom_wxid
+        request.param1 = wxid
+        request.param2 = chatroom_wxid
         return self.__send(request, pid, port)
 
     def remove_contact(self, wxid: str, pid: int = 0, port: int = 0):
@@ -348,11 +348,11 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = REMOVE_CONTACT
-        request.wxid = wxid
+        request.param1 = wxid
         return self.__send(request, pid, port)
 
     def add_contact(self, wxid: str, chatroom_wxid: str = "", greeting: str = "",
-                    add_type: int = 1, pid: int = 0, port: int = 0):
+                    add_type: int = 0, pid: int = 0, port: int = 0):
         """
         添加联系人
         add_type = 313: wxid、chatroom_wxid、greeting必填
@@ -367,12 +367,12 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.wxid = wxid
+        request.cmd = add_type
+        request.param1 = wxid
         if add_type == 1 and not chatroom_wxid:
             return
-        request.cmd = add_type
-        request.chatroom_wxid = chatroom_wxid
-        request.content = greeting
+        request.param2 = chatroom_wxid
+        request.param3 = greeting
         return self.__send(request, pid, port)
 
     def add_contact_from_chatroom(self, chatroom_wxid: str, wxid: str, msg: str, pid: int = 0, port: int = 0):
@@ -400,7 +400,7 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = CONTACT_STATUS
-        request.wxid = wxid
+        request.param1 = wxid
         return self.__send(request, pid, port)
 
     def check_contact_status(self, wxid: str, pid: int = 0, port: int = 0):
@@ -419,8 +419,8 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = SET_CHATROOM_NAME
-        request.wxid = wxid
-        request.content = name
+        request.param1 = wxid
+        request.param2 = name
         return self.__send(request, pid, port)
 
     def set_save_folder(self, folder: str, pid: int = 0, port: int = 0):
@@ -433,7 +433,7 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = SET_SAVE_FOLDER
-        request.content = folder
+        request.param1 = folder
         return self.__send(request, pid, port)
 
     def show_qrcode(self, output_path: str = "", pid: int = 0, port: int = 0):
@@ -446,7 +446,7 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = QRCODE
-        request.content = output_path
+        request.param1 = output_path
         return self.__send(request, pid, port)
 
     def set_remark(self, wxid: str, remark: str, pid: int = 0, port: int = 0):
@@ -460,8 +460,8 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = SET_REMARK
-        request.wxid = wxid
-        request.content = remark
+        request.param1 = wxid
+        request.param2 = remark
         return self.__send(request, pid, port)
 
     def get_chatroom_invite_url(self, wxid: str, url: str, pid: int = 0, port: int = 0):
@@ -475,8 +475,8 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = GET_CHATROOM_INVITATION_URL
-        request.wxid = wxid
-        request.content = url
+        request.param1 = wxid
+        request.param2 = url
         return self.__send(request, pid, port)
 
     def send_link_card(
@@ -493,8 +493,23 @@ class WeChatSpy:
         """
         request = spy_pb2.Request()
         request.cmd = SEND_LINK_CARD
-        request.wxid = receive_wxid
-        request.content = content
-        request.at_wxid = send_wxid
-        request.ticket = image_path
+        request.param1 = receive_wxid
+        request.param2 = content
+        request.param3 = send_wxid
+        request.param4 = image_path
+        return self.__send(request, pid, port)
+
+    def decrypt_image(self, md5: str, file: str, pid: int = 0, port: int = 0):
+        """
+        解密图片
+        :param md5:
+        :param file:
+        :param pid:
+        :param port:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.cmd = DECRYPT_IMAGE
+        request.param1 = md5
+        request.param2 = file
         return self.__send(request, pid, port)

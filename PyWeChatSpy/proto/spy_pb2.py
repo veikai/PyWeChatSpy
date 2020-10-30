@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='spy',
   syntax='proto2',
   serialized_options=None,
-  serialized_pb=b'\n\tspy.proto\x12\x03spy\"b\n\tLoginInfo\x12\x10\n\x08nickname\x18\x01 \x02(\t\x12\x10\n\x08wechatid\x18\x02 \x02(\t\x12\x0c\n\x04wxid\x18\x03 \x02(\t\x12\r\n\x05phone\x18\x04 \x02(\t\x12\x14\n\x0cprofilephoto\x18\x05 \x02(\t\"\xea\x01\n\x07\x43ontact\x12\x0c\n\x04wxid\x18\x01 \x02(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x0e\n\x06remark\x18\x04 \x01(\t\x12\x14\n\x0cprofilephoto\x18\x05 \x01(\t\x12\x17\n\x0fprofilephoto_hd\x18\x06 \x01(\t\x12\x0b\n\x03sex\x18\x07 \x01(\x03\x12\x10\n\x08whats_up\x18\x08 \x01(\t\x12\x0f\n\x07\x63ountry\x18\t \x01(\t\x12\x10\n\x08province\x18\n \x01(\t\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x0e\n\x06source\x18\x0c \x01(\x03\x12\x0e\n\x06status\x18\r \x01(\x03\",\n\x0b\x43ontactList\x12\x1d\n\x07\x63ontact\x18\x01 \x03(\x0b\x32\x0c.spy.Contact\"A\n\x12\x43hatroomMemberList\x12\x0c\n\x04wxid\x18\x01 \x02(\t\x12\x1d\n\x07\x63ontact\x18\x02 \x03(\x0b\x32\x0c.spy.Contact\"b\n\x07Message\x12\x0c\n\x04type\x18\x01 \x02(\x03\x12\x0c\n\x04self\x18\x02 \x02(\x03\x12\x0c\n\x04head\x18\x03 \x01(\t\x12\r\n\x05wxid1\x18\x04 \x02(\t\x12\r\n\x05wxid2\x18\x05 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x06 \x02(\t\",\n\x0bMessageList\x12\x1d\n\x07message\x18\x01 \x03(\x0b\x32\x0c.spy.Message\")\n\x06Qrcode\x12\x0f\n\x07success\x18\x01 \x02(\x03\x12\x0e\n\x06qrcode\x18\x02 \x02(\t\"\xc6\x02\n\x08Response\x12\x0c\n\x04type\x18\x01 \x02(\x03\x12\x0b\n\x03pid\x18\x02 \x02(\x03\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x12\"\n\nlogin_info\x18\x04 \x01(\x0b\x32\x0e.spy.LoginInfo\x12&\n\x0c\x63ontact_list\x18\x05 \x01(\x0b\x32\x10.spy.ContactList\x12\x35\n\x14\x63hatroom_member_list\x18\x06 \x01(\x0b\x32\x17.spy.ChatroomMemberList\x12&\n\x0cmessage_list\x18\x07 \x01(\x0b\x32\x10.spy.MessageList\x12\x1b\n\x06qrcode\x18\x08 \x01(\x0b\x32\x0b.spy.Qrcode\x12\r\n\x05\x64\x65\x62ug\x18\t \x01(\t\x12\x0c\n\x04info\x18\n \x01(\t\x12\x0f\n\x07warning\x18\x0b \x01(\t\x12\r\n\x05\x65rror\x18\x0c \x01(\t\x12\x0c\n\x04port\x18\r \x01(\x03\"\xa4\x01\n\x07Request\x12\x0b\n\x03\x63md\x18\x01 \x02(\x03\x12\x0c\n\x04uuid\x18\x02 \x02(\t\x12\x0c\n\x04wxid\x18\x03 \x01(\t\x12\x15\n\rchatroom_wxid\x18\x04 \x01(\t\x12\x0f\n\x07\x61t_wxid\x18\x05 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x06 \x01(\t\x12\x17\n\x0f\x65ncryptusername\x18\x07 \x01(\t\x12\x0e\n\x06ticket\x18\x08 \x01(\t\x12\x0e\n\x06update\x18\t \x01(\x03'
+  serialized_pb=b'\n\tspy.proto\x12\x03spy\"b\n\tLoginInfo\x12\x10\n\x08nickname\x18\x01 \x02(\t\x12\x10\n\x08wechatid\x18\x02 \x02(\t\x12\x0c\n\x04wxid\x18\x03 \x02(\t\x12\r\n\x05phone\x18\x04 \x02(\t\x12\x14\n\x0cprofilephoto\x18\x05 \x02(\t\"\xea\x01\n\x07\x43ontact\x12\x0c\n\x04wxid\x18\x01 \x02(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x0e\n\x06remark\x18\x04 \x01(\t\x12\x14\n\x0cprofilephoto\x18\x05 \x01(\t\x12\x17\n\x0fprofilephoto_hd\x18\x06 \x01(\t\x12\x0b\n\x03sex\x18\x07 \x01(\x03\x12\x10\n\x08whats_up\x18\x08 \x01(\t\x12\x0f\n\x07\x63ountry\x18\t \x01(\t\x12\x10\n\x08province\x18\n \x01(\t\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x0e\n\x06source\x18\x0c \x01(\x03\x12\x0e\n\x06status\x18\r \x01(\x03\"=\n\x0e\x43hatroomMember\x12\x0c\n\x04wxid\x18\x01 \x02(\t\x12\x1d\n\x07\x63ontact\x18\x02 \x03(\x0b\x32\x0c.spy.Contact\"p\n\x07Message\x12\x0c\n\x04type\x18\x01 \x02(\x03\x12\x0c\n\x04self\x18\x02 \x02(\x03\x12\x0c\n\x04head\x18\x03 \x01(\t\x12\r\n\x05wxid1\x18\x04 \x02(\t\x12\r\n\x05wxid2\x18\x05 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x06 \x02(\t\x12\x0c\n\x04\x66ile\x18\x07 \x01(\t\")\n\x06Qrcode\x12\x0f\n\x07success\x18\x01 \x02(\x03\x12\x0e\n\x06qrcode\x18\x02 \x02(\t\"\xab\x02\n\x08Response\x12\x0c\n\x04type\x18\x01 \x02(\x03\x12\x0b\n\x03pid\x18\x02 \x02(\x03\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x12\"\n\nlogin_info\x18\x04 \x01(\x0b\x32\x0e.spy.LoginInfo\x12\x1d\n\x07\x63ontact\x18\x05 \x03(\x0b\x32\x0c.spy.Contact\x12,\n\x0f\x63hatroom_member\x18\x06 \x01(\x0b\x32\x13.spy.ChatroomMember\x12\x1d\n\x07message\x18\x07 \x03(\x0b\x32\x0c.spy.Message\x12\x1b\n\x06qrcode\x18\x08 \x01(\x0b\x32\x0b.spy.Qrcode\x12\r\n\x05\x64\x65\x62ug\x18\t \x01(\t\x12\x0c\n\x04info\x18\n \x01(\t\x12\x0f\n\x07warning\x18\x0b \x01(\t\x12\r\n\x05\x65rror\x18\x0c \x01(\t\x12\x0c\n\x04port\x18\r \x01(\x03\"\x84\x01\n\x07Request\x12\x0b\n\x03\x63md\x18\x01 \x02(\x03\x12\x0c\n\x04uuid\x18\x02 \x02(\t\x12\x0e\n\x06param1\x18\x03 \x01(\t\x12\x0e\n\x06param2\x18\x04 \x01(\t\x12\x0e\n\x06param3\x18\x05 \x01(\t\x12\x0e\n\x06param4\x18\x06 \x01(\t\x12\x0e\n\x06param5\x18\x07 \x01(\t\x12\x0e\n\x06param6\x18\x08 \x01(\t'
 )
 
 
@@ -198,53 +198,22 @@ _CONTACT = _descriptor.Descriptor(
 )
 
 
-_CONTACTLIST = _descriptor.Descriptor(
-  name='ContactList',
-  full_name='spy.ContactList',
+_CHATROOMMEMBER = _descriptor.Descriptor(
+  name='ChatroomMember',
+  full_name='spy.ChatroomMember',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='contact', full_name='spy.ContactList.contact', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto2',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=355,
-  serialized_end=399,
-)
-
-
-_CHATROOMMEMBERLIST = _descriptor.Descriptor(
-  name='ChatroomMemberList',
-  full_name='spy.ChatroomMemberList',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='wxid', full_name='spy.ChatroomMemberList.wxid', index=0,
+      name='wxid', full_name='spy.ChatroomMember.wxid', index=0,
       number=1, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='contact', full_name='spy.ChatroomMemberList.contact', index=1,
+      name='contact', full_name='spy.ChatroomMember.contact', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -262,8 +231,8 @@ _CHATROOMMEMBERLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=401,
-  serialized_end=466,
+  serialized_start=355,
+  serialized_end=416,
 )
 
 
@@ -316,34 +285,10 @@ _MESSAGE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto2',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=468,
-  serialized_end=566,
-)
-
-
-_MESSAGELIST = _descriptor.Descriptor(
-  name='MessageList',
-  full_name='spy.MessageList',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
     _descriptor.FieldDescriptor(
-      name='message', full_name='spy.MessageList.message', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
+      name='file', full_name='spy.Message.file', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -359,8 +304,8 @@ _MESSAGELIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=568,
-  serialized_end=612,
+  serialized_start=418,
+  serialized_end=530,
 )
 
 
@@ -397,8 +342,8 @@ _QRCODE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=614,
-  serialized_end=655,
+  serialized_start=532,
+  serialized_end=573,
 )
 
 
@@ -438,23 +383,23 @@ _RESPONSE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='contact_list', full_name='spy.Response.contact_list', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='contact', full_name='spy.Response.contact', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='chatroom_member_list', full_name='spy.Response.chatroom_member_list', index=5,
+      name='chatroom_member', full_name='spy.Response.chatroom_member', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='message_list', full_name='spy.Response.message_list', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='message', full_name='spy.Response.message', index=6,
+      number=7, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -512,8 +457,8 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=658,
-  serialized_end=984,
+  serialized_start=576,
+  serialized_end=875,
 )
 
 
@@ -539,51 +484,44 @@ _REQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='wxid', full_name='spy.Request.wxid', index=2,
+      name='param1', full_name='spy.Request.param1', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='chatroom_wxid', full_name='spy.Request.chatroom_wxid', index=3,
+      name='param2', full_name='spy.Request.param2', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='at_wxid', full_name='spy.Request.at_wxid', index=4,
+      name='param3', full_name='spy.Request.param3', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='content', full_name='spy.Request.content', index=5,
+      name='param4', full_name='spy.Request.param4', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='encryptusername', full_name='spy.Request.encryptusername', index=6,
+      name='param5', full_name='spy.Request.param5', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='ticket', full_name='spy.Request.ticket', index=7,
+      name='param6', full_name='spy.Request.param6', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='update', full_name='spy.Request.update', index=8,
-      number=9, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -599,24 +537,20 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=987,
-  serialized_end=1151,
+  serialized_start=878,
+  serialized_end=1010,
 )
 
-_CONTACTLIST.fields_by_name['contact'].message_type = _CONTACT
-_CHATROOMMEMBERLIST.fields_by_name['contact'].message_type = _CONTACT
-_MESSAGELIST.fields_by_name['message'].message_type = _MESSAGE
+_CHATROOMMEMBER.fields_by_name['contact'].message_type = _CONTACT
 _RESPONSE.fields_by_name['login_info'].message_type = _LOGININFO
-_RESPONSE.fields_by_name['contact_list'].message_type = _CONTACTLIST
-_RESPONSE.fields_by_name['chatroom_member_list'].message_type = _CHATROOMMEMBERLIST
-_RESPONSE.fields_by_name['message_list'].message_type = _MESSAGELIST
+_RESPONSE.fields_by_name['contact'].message_type = _CONTACT
+_RESPONSE.fields_by_name['chatroom_member'].message_type = _CHATROOMMEMBER
+_RESPONSE.fields_by_name['message'].message_type = _MESSAGE
 _RESPONSE.fields_by_name['qrcode'].message_type = _QRCODE
 DESCRIPTOR.message_types_by_name['LoginInfo'] = _LOGININFO
 DESCRIPTOR.message_types_by_name['Contact'] = _CONTACT
-DESCRIPTOR.message_types_by_name['ContactList'] = _CONTACTLIST
-DESCRIPTOR.message_types_by_name['ChatroomMemberList'] = _CHATROOMMEMBERLIST
+DESCRIPTOR.message_types_by_name['ChatroomMember'] = _CHATROOMMEMBER
 DESCRIPTOR.message_types_by_name['Message'] = _MESSAGE
-DESCRIPTOR.message_types_by_name['MessageList'] = _MESSAGELIST
 DESCRIPTOR.message_types_by_name['Qrcode'] = _QRCODE
 DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
 DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
@@ -636,19 +570,12 @@ Contact = _reflection.GeneratedProtocolMessageType('Contact', (_message.Message,
   })
 _sym_db.RegisterMessage(Contact)
 
-ContactList = _reflection.GeneratedProtocolMessageType('ContactList', (_message.Message,), {
-  'DESCRIPTOR' : _CONTACTLIST,
+ChatroomMember = _reflection.GeneratedProtocolMessageType('ChatroomMember', (_message.Message,), {
+  'DESCRIPTOR' : _CHATROOMMEMBER,
   '__module__' : 'spy_pb2'
-  # @@protoc_insertion_point(class_scope:spy.ContactList)
+  # @@protoc_insertion_point(class_scope:spy.ChatroomMember)
   })
-_sym_db.RegisterMessage(ContactList)
-
-ChatroomMemberList = _reflection.GeneratedProtocolMessageType('ChatroomMemberList', (_message.Message,), {
-  'DESCRIPTOR' : _CHATROOMMEMBERLIST,
-  '__module__' : 'spy_pb2'
-  # @@protoc_insertion_point(class_scope:spy.ChatroomMemberList)
-  })
-_sym_db.RegisterMessage(ChatroomMemberList)
+_sym_db.RegisterMessage(ChatroomMember)
 
 Message = _reflection.GeneratedProtocolMessageType('Message', (_message.Message,), {
   'DESCRIPTOR' : _MESSAGE,
@@ -656,13 +583,6 @@ Message = _reflection.GeneratedProtocolMessageType('Message', (_message.Message,
   # @@protoc_insertion_point(class_scope:spy.Message)
   })
 _sym_db.RegisterMessage(Message)
-
-MessageList = _reflection.GeneratedProtocolMessageType('MessageList', (_message.Message,), {
-  'DESCRIPTOR' : _MESSAGELIST,
-  '__module__' : 'spy_pb2'
-  # @@protoc_insertion_point(class_scope:spy.MessageList)
-  })
-_sym_db.RegisterMessage(MessageList)
 
 Qrcode = _reflection.GeneratedProtocolMessageType('Qrcode', (_message.Message,), {
   'DESCRIPTOR' : _QRCODE,
