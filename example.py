@@ -73,7 +73,7 @@ def my_proto_parser(data):
                 print("-"*10, "文本消息", "-"*10)
                 if message.wxid1 == "filehelper":
                     spy.send_text("filehelper", f"Hello PyWeChatSpy\n{message.content}")
-                    # spy.get_contacts()  # 获取联系人列表
+                    spy.get_contacts()  # 获取联系人列表
                     # spy.set_remark("wxid_*******tzz12", "PyWeChatSpy")  # 设置备注
                     # spy.get_contact_status("wxid_*******tzz12")  # 获取联系人状态(清理僵尸粉)
                     # spy.get_contact_details("wxid_*******tzz12", True)  # 获取联系人详情
@@ -213,6 +213,6 @@ def my_proto_parser(data):
 
 
 if __name__ == '__main__':
-    spy = WeChatSpy(parser=my_proto_parser, key="18d421169d93611a5584affac335e690", logger=logger)
+    spy = WeChatSpy(parser=my_proto_parser, key="3ea954244f76a8cfb7e5f8f544cf6878", logger=logger)
     spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     input()
