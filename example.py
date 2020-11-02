@@ -90,9 +90,10 @@ def my_proto_parser(data):
                 xml = etree.XML(message.content)
                 md5 = xml.xpath("/msg/img/@md5")[0]
                 file = message.file
-                if xml.xpath("/msg/img/@hdlength"):
+                # 等待时间自行根据网速调整
+                if xml.xpath("/msg/img/@hdlength"):  # 高清原图
                     time.sleep(10)
-                elif xml.xpath("/msg/img/@length"):
+                elif xml.xpath("/msg/img/@length"):  # 压缩图
                     time.sleep(5)
                 spy.decrypt_image(md5, file)
                 continue

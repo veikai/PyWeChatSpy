@@ -431,6 +431,7 @@ class WeChatSpy:
         :param port:
         :return:
         """
+        warnings.warn("The function 'set_save_folder' is deprecated", DeprecationWarning)
         request = spy_pb2.Request()
         request.cmd = SET_SAVE_FOLDER
         request.param1 = folder
