@@ -1,4 +1,4 @@
-SYSTEM = 9527  # 系统设置
+PROFESSIONAL_KEY = 9527  # 系统设置
 WECHAT_CONNECTED = 100  # socket连接
 HEART_BEAT = 101  # 心跳
 WECHAT_LOGIN = 200  # 微信登入

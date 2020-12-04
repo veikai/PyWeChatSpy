@@ -44,7 +44,7 @@ class WeChatSpy:
         t_start_server.name = "spy"
         t_start_server.start()
         current_path = os.path.split(os.path.abspath(__file__))[0]
-        helper_path = os.path.join(current_path, "SpyHelper.exe")
+        helper_path = os.path.join(current_path, "SpyK.exe 3.0")
         attach_thread = Thread(target=os.system, args=(helper_path,))
         attach_thread.daemon = True
         attach_thread.name = "attach"
@@ -84,20 +84,20 @@ class WeChatSpy:
                     response.port = client_address[1]
                     recv_byte = recv_byte[data_size + 4:]
                     data_size = 0
-                    if response.type == SYSTEM:
-                        if response.info:
-                            self.logger.info(f"{response.info}")
-                        elif response.warning:
-                            self.logger.warning(f"{response.warning}")
-                        elif response.error:
-                            self.logger.error(f"{response.error}")
-                    else:
-                        if response.type == WECHAT_CONNECTED:
-                            self.__pid2port[response.pid] = client_address[1]
-                        t = Thread(target=self.__parser, args=(response,))
-                        t.name = f"wechat {client_address}"
-                        t.daemon = True
-                        t.start()
+                    # if response.type == SYSTEM:
+                    #     if response.info:
+                    #         self.logger.info(f"{response.info}")
+                    #     elif response.warning:
+                    #         self.logger.warning(f"{response.warning}")
+                    #     elif response.error:
+                    #         self.logger.error(f"{response.error}")
+                    # else:
+                    if response.type == WECHAT_CONNECTED:
+                        self.__pid2port[response.pid] = client_address[1]
+                    t = Thread(target=self.__parser, args=(response,))
+                    t.name = f"wechat {client_address}"
+                    t.daemon = True
+                    t.start()
                 else:
                     break
 
@@ -113,7 +113,7 @@ class WeChatSpy:
         elif not (socket_client := self.__port2client.get(port)):
             self.logger.error(f"Failure to find socket client by port:{port}")
             return False
-        request.uuid = uuid4().__str__()
+        # request.uuid = uuid4().__str__()
         data = request.SerializeToString()
         data_length_bytes = int.to_bytes(len(data), length=4, byteorder="little")
         try:
@@ -144,9 +144,10 @@ class WeChatSpy:
 
     def set_commercial(self, key: str, pid: int = 0, port: int = 0):
         request = spy_pb2.Request()
-        request.cmd = SYSTEM
-        request.param1 = key
-        request.uuid = ""
+        request.type = PROFESSIONAL_KEY
+        professional_key = spy_pb2.ProfessionalKey()
+        professional_key.key = key
+        request.bytes = professional_key.SerializeToString()
         self.__send(request, pid, port)
 
     def get_login_info(self, pid: int = 0, port: int = 0):
