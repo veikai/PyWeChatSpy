@@ -11,165 +11,146 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-
+# import wx_pb2 as wx__pb2
+from . import wx_pb2 as wx__pb2
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='spy.proto',
   package='spy',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\tspy.proto\x12\x03spy\">\n\x0cWeChatString\x12\x0b\n\x03str\x18\x01 \x01(\t\x12\x0e\n\x06strLen\x18\x02 \x01(\x05\x12\x11\n\tstrLenMax\x18\x03 \x01(\x05\"\xc0\x02\n\x0f\x41\x63\x63ountDetails1\x12\x1f\n\x04wxid\x18\x02 \x01(\x0b\x32\x11.spy.WeChatString\x12#\n\x08nickname\x18\x03 \x01(\x0b\x32\x11.spy.WeChatString\x12\n\n\x02QQ\x18\x04 \x01(\x03\x12 \n\x05\x65mail\x18\x05 \x01(\x0b\x32\x11.spy.WeChatString\x12 \n\x05phone\x18\x06 \x01(\x0b\x32\x11.spy.WeChatString\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12\x10\n\x08unknown8\x18\x08 \x01(\x05\x12\x10\n\x08unknown9\x18\t \x01(\x0c\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x10\n\x08province\x18\x0b \x01(\t\x12\x0c\n\x04\x63ity\x18\x0c \x01(\t\x12\x11\n\tautograph\x18\r \x01(\t\x12\x10\n\x08wechatId\x18\x1b \x01(\t\x12\x0f\n\x07\x63ountry\x18& \x01(\t\"8\n\rWeChatMoments\x12\x0c\n\x04\x66lag\x18\x01 \x01(\x05\x12\x19\n\x11momentsBackground\x18\x02 \x01(\t\"j\n\x0f\x41\x63\x63ountDetails2\x12)\n\rwechatMoments\x18\x01 \x01(\x0b\x32\x12.spy.WeChatMoments\x12\x16\n\x0eprofilePhotoHD\x18\t \x01(\t\x12\x14\n\x0cprofilePhoto\x18\n \x01(\t\"\x87\x01\n\x15\x41\x63\x63ountDetailsMessage\x12\x10\n\x08unknown1\x18\x01 \x01(\x0c\x12-\n\x0f\x61\x63\x63ountDetails1\x18\x02 \x01(\x0b\x32\x14.spy.AccountDetails1\x12-\n\x0f\x61\x63\x63ountDetails2\x18\x03 \x01(\x0b\x32\x14.spy.AccountDetails2\"\x1e\n\x0fProfessionalKey\x12\x0b\n\x03key\x18\x01 \x01(\t\"B\n\x08Response\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\x0b\n\x03pid\x18\x03 \x01(\x05\x12\x0c\n\x04port\x18\x04 \x01(\x05\"&\n\x07Request\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x62\x06proto3'
-)
+  serialized_pb=b'\n\tspy.proto\x12\x03spy\x1a\x08wx.proto\"/\n\x0b\x43hatMessage\x12 \n\x07message\x18\x01 \x03(\x0b\x32\x0f.wx.ChatMessage\"\xeb\x01\n\x0e\x41\x63\x63ountDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x11\n\tautograph\x18\x04 \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\x05 \x01(\t\x12\x14\n\x0cprofilePhoto\x18\x06 \x01(\t\x12\r\n\x05phone\x18\x07 \x01(\t\x12\r\n\x05\x65mail\x18\x08 \x01(\t\x12\n\n\x02qq\x18\t \x01(\x03\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x10\n\x08province\x18\x0c \x01(\t\x12\x0f\n\x07\x63ountry\x18\r \x01(\t\"6\n\x08\x43ontacts\x12*\n\x0e\x63ontactDetails\x18\x01 \x03(\x0b\x32\x12.wx.ContactsDetail\"9\n\x0bTextMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x0e\n\x06wxidAt\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\"-\n\x0b\x46ileMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08\x66ilePath\x18\x02 \x01(\t\"\\\n\nXmlMessage\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\x0e\n\x06wxidTo\x18\x02 \x01(\t\x12\x10\n\x08wxidFrom\x18\x03 \x01(\t\x12\x0b\n\x03xml\x18\x04 \x01(\t\x12\x11\n\timagePath\x18\x05 \x01(\t\"m\n\x08Response\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\x0b\n\x03pid\x18\x03 \x01(\x05\x12\x0c\n\x04port\x18\x04 \x01(\x05\x12\n\n\x02id\x18\x05 \x01(\t\x12\x0c\n\x04\x63ode\x18\x06 \x01(\x05\x12\x0f\n\x07message\x18\x07 \x01(\t\"2\n\x07Request\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\n\n\x02id\x18\x03 \x01(\tb\x06proto3'
+  ,
+  dependencies=[wx__pb2.DESCRIPTOR,])
 
 
 
 
-_WECHATSTRING = _descriptor.Descriptor(
-  name='WeChatString',
-  full_name='spy.WeChatString',
+_CHATMESSAGE = _descriptor.Descriptor(
+  name='ChatMessage',
+  full_name='spy.ChatMessage',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='str', full_name='spy.WeChatString.str', index=0,
+      name='message', full_name='spy.ChatMessage.message', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=28,
+  serialized_end=75,
+)
+
+
+_ACCOUNTDETAILS = _descriptor.Descriptor(
+  name='AccountDetails',
+  full_name='spy.AccountDetails',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='wxid', full_name='spy.AccountDetails.wxid', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='strLen', full_name='spy.WeChatString.strLen', index=1,
-      number=2, type=5, cpp_type=1, label=1,
+      name='nickname', full_name='spy.AccountDetails.nickname', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='wechatid', full_name='spy.AccountDetails.wechatid', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='autograph', full_name='spy.AccountDetails.autograph', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='profilePhotoHD', full_name='spy.AccountDetails.profilePhotoHD', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='profilePhoto', full_name='spy.AccountDetails.profilePhoto', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='phone', full_name='spy.AccountDetails.phone', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='email', full_name='spy.AccountDetails.email', index=7,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='qq', full_name='spy.AccountDetails.qq', index=8,
+      number=9, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='strLenMax', full_name='spy.WeChatString.strLenMax', index=2,
-      number=3, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=18,
-  serialized_end=80,
-)
-
-
-_ACCOUNTDETAILS1 = _descriptor.Descriptor(
-  name='AccountDetails1',
-  full_name='spy.AccountDetails1',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='wxid', full_name='spy.AccountDetails1.wxid', index=0,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='nickname', full_name='spy.AccountDetails1.nickname', index=1,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='QQ', full_name='spy.AccountDetails1.QQ', index=2,
-      number=4, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='email', full_name='spy.AccountDetails1.email', index=3,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='phone', full_name='spy.AccountDetails1.phone', index=4,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='unknown7', full_name='spy.AccountDetails1.unknown7', index=5,
-      number=7, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='unknown8', full_name='spy.AccountDetails1.unknown8', index=6,
-      number=8, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='unknown9', full_name='spy.AccountDetails1.unknown9', index=7,
-      number=9, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='sex', full_name='spy.AccountDetails1.sex', index=8,
+      name='sex', full_name='spy.AccountDetails.sex', index=9,
       number=10, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='province', full_name='spy.AccountDetails1.province', index=9,
+      name='city', full_name='spy.AccountDetails.city', index=10,
       number=11, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='city', full_name='spy.AccountDetails1.city', index=10,
+      name='province', full_name='spy.AccountDetails.province', index=11,
       number=12, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='autograph', full_name='spy.AccountDetails1.autograph', index=11,
+      name='country', full_name='spy.AccountDetails.country', index=12,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='wechatId', full_name='spy.AccountDetails1.wechatId', index=12,
-      number=27, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='country', full_name='spy.AccountDetails1.country', index=13,
-      number=38, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -186,27 +167,103 @@ _ACCOUNTDETAILS1 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=83,
-  serialized_end=403,
+  serialized_start=78,
+  serialized_end=313,
 )
 
 
-_WECHATMOMENTS = _descriptor.Descriptor(
-  name='WeChatMoments',
-  full_name='spy.WeChatMoments',
+_CONTACTS = _descriptor.Descriptor(
+  name='Contacts',
+  full_name='spy.Contacts',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='flag', full_name='spy.WeChatMoments.flag', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      name='contactDetails', full_name='spy.Contacts.contactDetails', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=315,
+  serialized_end=369,
+)
+
+
+_TEXTMESSAGE = _descriptor.Descriptor(
+  name='TextMessage',
+  full_name='spy.TextMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='wxid', full_name='spy.TextMessage.wxid', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='momentsBackground', full_name='spy.WeChatMoments.momentsBackground', index=1,
+      name='wxidAt', full_name='spy.TextMessage.wxidAt', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='text', full_name='spy.TextMessage.text', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=371,
+  serialized_end=428,
+)
+
+
+_FILEMESSAGE = _descriptor.Descriptor(
+  name='FileMessage',
+  full_name='spy.FileMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='wxid', full_name='spy.FileMessage.wxid', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='filePath', full_name='spy.FileMessage.filePath', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -224,35 +281,49 @@ _WECHATMOMENTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=405,
-  serialized_end=461,
+  serialized_start=430,
+  serialized_end=475,
 )
 
 
-_ACCOUNTDETAILS2 = _descriptor.Descriptor(
-  name='AccountDetails2',
-  full_name='spy.AccountDetails2',
+_XMLMESSAGE = _descriptor.Descriptor(
+  name='XmlMessage',
+  full_name='spy.XmlMessage',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='wechatMoments', full_name='spy.AccountDetails2.wechatMoments', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='type', full_name='spy.XmlMessage.type', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='profilePhotoHD', full_name='spy.AccountDetails2.profilePhotoHD', index=1,
-      number=9, type=9, cpp_type=9, label=1,
+      name='wxidTo', full_name='spy.XmlMessage.wxidTo', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='profilePhoto', full_name='spy.AccountDetails2.profilePhoto', index=2,
-      number=10, type=9, cpp_type=9, label=1,
+      name='wxidFrom', full_name='spy.XmlMessage.wxidFrom', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='xml', full_name='spy.XmlMessage.xml', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='imagePath', full_name='spy.XmlMessage.imagePath', index=4,
+      number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -269,84 +340,8 @@ _ACCOUNTDETAILS2 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=463,
+  serialized_start=477,
   serialized_end=569,
-)
-
-
-_ACCOUNTDETAILSMESSAGE = _descriptor.Descriptor(
-  name='AccountDetailsMessage',
-  full_name='spy.AccountDetailsMessage',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='unknown1', full_name='spy.AccountDetailsMessage.unknown1', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='accountDetails1', full_name='spy.AccountDetailsMessage.accountDetails1', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='accountDetails2', full_name='spy.AccountDetailsMessage.accountDetails2', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=572,
-  serialized_end=707,
-)
-
-
-_PROFESSIONALKEY = _descriptor.Descriptor(
-  name='ProfessionalKey',
-  full_name='spy.ProfessionalKey',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='spy.ProfessionalKey.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=709,
-  serialized_end=739,
 )
 
 
@@ -385,6 +380,27 @@ _RESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='spy.Response.id', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='code', full_name='spy.Response.code', index=5,
+      number=6, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='spy.Response.message', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -397,8 +413,8 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=741,
-  serialized_end=807,
+  serialized_start=571,
+  serialized_end=680,
 )
 
 
@@ -423,6 +439,13 @@ _REQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='spy.Request.id', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -435,68 +458,63 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=809,
-  serialized_end=847,
+  serialized_start=682,
+  serialized_end=732,
 )
 
-_ACCOUNTDETAILS1.fields_by_name['wxid'].message_type = _WECHATSTRING
-_ACCOUNTDETAILS1.fields_by_name['nickname'].message_type = _WECHATSTRING
-_ACCOUNTDETAILS1.fields_by_name['email'].message_type = _WECHATSTRING
-_ACCOUNTDETAILS1.fields_by_name['phone'].message_type = _WECHATSTRING
-_ACCOUNTDETAILS2.fields_by_name['wechatMoments'].message_type = _WECHATMOMENTS
-_ACCOUNTDETAILSMESSAGE.fields_by_name['accountDetails1'].message_type = _ACCOUNTDETAILS1
-_ACCOUNTDETAILSMESSAGE.fields_by_name['accountDetails2'].message_type = _ACCOUNTDETAILS2
-DESCRIPTOR.message_types_by_name['WeChatString'] = _WECHATSTRING
-DESCRIPTOR.message_types_by_name['AccountDetails1'] = _ACCOUNTDETAILS1
-DESCRIPTOR.message_types_by_name['WeChatMoments'] = _WECHATMOMENTS
-DESCRIPTOR.message_types_by_name['AccountDetails2'] = _ACCOUNTDETAILS2
-DESCRIPTOR.message_types_by_name['AccountDetailsMessage'] = _ACCOUNTDETAILSMESSAGE
-DESCRIPTOR.message_types_by_name['ProfessionalKey'] = _PROFESSIONALKEY
+_CHATMESSAGE.fields_by_name['message'].message_type = wx__pb2._CHATMESSAGE
+_CONTACTS.fields_by_name['contactDetails'].message_type = wx__pb2._CONTACTSDETAIL
+DESCRIPTOR.message_types_by_name['ChatMessage'] = _CHATMESSAGE
+DESCRIPTOR.message_types_by_name['AccountDetails'] = _ACCOUNTDETAILS
+DESCRIPTOR.message_types_by_name['Contacts'] = _CONTACTS
+DESCRIPTOR.message_types_by_name['TextMessage'] = _TEXTMESSAGE
+DESCRIPTOR.message_types_by_name['FileMessage'] = _FILEMESSAGE
+DESCRIPTOR.message_types_by_name['XmlMessage'] = _XMLMESSAGE
 DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
 DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-WeChatString = _reflection.GeneratedProtocolMessageType('WeChatString', (_message.Message,), {
-  'DESCRIPTOR' : _WECHATSTRING,
+ChatMessage = _reflection.GeneratedProtocolMessageType('ChatMessage', (_message.Message,), {
+  'DESCRIPTOR' : _CHATMESSAGE,
   '__module__' : 'spy_pb2'
-  # @@protoc_insertion_point(class_scope:spy.WeChatString)
+  # @@protoc_insertion_point(class_scope:spy.ChatMessage)
   })
-_sym_db.RegisterMessage(WeChatString)
+_sym_db.RegisterMessage(ChatMessage)
 
-AccountDetails1 = _reflection.GeneratedProtocolMessageType('AccountDetails1', (_message.Message,), {
-  'DESCRIPTOR' : _ACCOUNTDETAILS1,
+AccountDetails = _reflection.GeneratedProtocolMessageType('AccountDetails', (_message.Message,), {
+  'DESCRIPTOR' : _ACCOUNTDETAILS,
   '__module__' : 'spy_pb2'
-  # @@protoc_insertion_point(class_scope:spy.AccountDetails1)
+  # @@protoc_insertion_point(class_scope:spy.AccountDetails)
   })
-_sym_db.RegisterMessage(AccountDetails1)
+_sym_db.RegisterMessage(AccountDetails)
 
-WeChatMoments = _reflection.GeneratedProtocolMessageType('WeChatMoments', (_message.Message,), {
-  'DESCRIPTOR' : _WECHATMOMENTS,
+Contacts = _reflection.GeneratedProtocolMessageType('Contacts', (_message.Message,), {
+  'DESCRIPTOR' : _CONTACTS,
   '__module__' : 'spy_pb2'
-  # @@protoc_insertion_point(class_scope:spy.WeChatMoments)
+  # @@protoc_insertion_point(class_scope:spy.Contacts)
   })
-_sym_db.RegisterMessage(WeChatMoments)
+_sym_db.RegisterMessage(Contacts)
 
-AccountDetails2 = _reflection.GeneratedProtocolMessageType('AccountDetails2', (_message.Message,), {
-  'DESCRIPTOR' : _ACCOUNTDETAILS2,
+TextMessage = _reflection.GeneratedProtocolMessageType('TextMessage', (_message.Message,), {
+  'DESCRIPTOR' : _TEXTMESSAGE,
   '__module__' : 'spy_pb2'
-  # @@protoc_insertion_point(class_scope:spy.AccountDetails2)
+  # @@protoc_insertion_point(class_scope:spy.TextMessage)
   })
-_sym_db.RegisterMessage(AccountDetails2)
+_sym_db.RegisterMessage(TextMessage)
 
-AccountDetailsMessage = _reflection.GeneratedProtocolMessageType('AccountDetailsMessage', (_message.Message,), {
-  'DESCRIPTOR' : _ACCOUNTDETAILSMESSAGE,
+FileMessage = _reflection.GeneratedProtocolMessageType('FileMessage', (_message.Message,), {
+  'DESCRIPTOR' : _FILEMESSAGE,
   '__module__' : 'spy_pb2'
-  # @@protoc_insertion_point(class_scope:spy.AccountDetailsMessage)
+  # @@protoc_insertion_point(class_scope:spy.FileMessage)
   })
-_sym_db.RegisterMessage(AccountDetailsMessage)
+_sym_db.RegisterMessage(FileMessage)
 
-ProfessionalKey = _reflection.GeneratedProtocolMessageType('ProfessionalKey', (_message.Message,), {
-  'DESCRIPTOR' : _PROFESSIONALKEY,
+XmlMessage = _reflection.GeneratedProtocolMessageType('XmlMessage', (_message.Message,), {
+  'DESCRIPTOR' : _XMLMESSAGE,
   '__module__' : 'spy_pb2'
-  # @@protoc_insertion_point(class_scope:spy.ProfessionalKey)
+  # @@protoc_insertion_point(class_scope:spy.XmlMessage)
   })
-_sym_db.RegisterMessage(ProfessionalKey)
+_sym_db.RegisterMessage(XmlMessage)
 
 Response = _reflection.GeneratedProtocolMessageType('Response', (_message.Message,), {
   'DESCRIPTOR' : _RESPONSE,
