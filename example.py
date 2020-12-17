@@ -85,7 +85,7 @@ def my_proto_parser(data):
 
 if __name__ == '__main__':
     spy = WeChatSpy(parser=my_proto_parser, key="18d421169d93611a5584affac335e690 ", logger=logger)
-    # spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
+    spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     while True:
         cmd = int(input())
         print(cmd)
