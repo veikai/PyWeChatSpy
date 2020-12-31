@@ -168,46 +168,40 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.type = ACCOUNT_DETAILS
+        request.type = GET_ACCOUNT_DETAILS
         return self.__send(request, port)
 
     def get_contacts(self, port: int = 0):
         """
         获取联系人详情
-        :param pid:
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.type = CONTACTS_LIST
+        request.type = GET_CONTACTS_LIST
         return self.__send(request, port)
 
-    def get_contact_details(self, wxid: str, update: bool = False, port: int = 0):
+    def get_contact_details(self, wxid: str, port: int = 0):
         """
         获取联系人详情
         :param wxid: 联系人wxid
-        :param update: 是否更新最新详情(需请求微信服务器 速度较慢)
-        :param pid:
         :param port:
         """
         request = spy_pb2.Request()
-        request.cmd = CONTACT_DETAILS
-        request.param1 = wxid
-        request.param2 = "1" if update else "0"
+        request.type = GET_CONTACT_DETAILS
+        request.bytes = bytes(wxid, encoding="utf8")
         return self.__send(request, port)
 
     def get_chatroom_members(self, wxid: str, port: int = 0):
         """
         获取群成员列表
         :param wxid: 群wxid
-        :param pid:
         :param port:
         :return:
         """
-        request = spy_pb2.Request()
-        request.cmd = CHATROOM_MEMBERS
-        request.param1 = wxid
-        return self.__send(request, port)
+        warnings.warn("The function 'get_chatroom_members' is deprecated, "
+                      "and has been replaced by the function 'get_contact_details'", DeprecationWarning)
+        return self.get_contact_details(wxid, port)
 
     def send_text(self, wxid: str, text: str, at_wxid: str = "", port: int = 0):
         """
@@ -233,7 +227,6 @@ class WeChatSpy:
         发送文件消息
         :param wxid: 文件消息接收wxid
         :param file_path: 文件路径
-        :param pid:
         :param port:
         """
         if len(file_path.split("\\")) > 8:
@@ -246,7 +239,7 @@ class WeChatSpy:
         request.bytes = file_message.SerializeToString()
         return self.__send(request, port)
 
-    def send_xml(self, _type: int, wxid_to: str, wxid_from: str, xml: str, image_path: str):
+    def send_xml(self, _type: int, wxid_to: str, wxid_from: str, xml: str, image_path: str, port: int = 0):
         request = spy_pb2.Request()
         request.type = SEND_XML
         xml_message = spy_pb2.XmlMessage()
@@ -263,14 +256,15 @@ class WeChatSpy:
         接受好友请求
         :param encryptusername:
         :param ticket:
-        :param pid:
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = ACCEPT_CONTACT
-        request.param1 = encryptusername
-        request.param2 = ticket
+        request.type = ACCEPT_NEW_CONTACT
+        application = spy_pb2.ContactApplication()
+        application.encryptusername = encryptusername
+        application.ticket = ticket
+        request.bytes = application.SerializeToString()
         return self.__send(request, port)
 
     def send_announcement(self, wxid: str, content: str, port: int = 0):
@@ -278,16 +272,18 @@ class WeChatSpy:
         发送群公共
         :param wxid: 群wxid
         :param content: 公告内容
-        :param pid:
         :param port:
         :return:
         """
         if not wxid.endswith("chatroom"):
             return self.logger.warning("Can only send announcements to chatrooms")
         request = spy_pb2.Request()
-        request.cmd = SEND_ANNOUNCEMENT
-        request.param1 = wxid
-        request.param2 = content
+        request.type = SEND_ANNOUNCEMENT
+        request.type = SEND_TEXT
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = content
+        request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
     def create_chatroom(self, wxid: str, port: int = 0):

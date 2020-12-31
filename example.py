@@ -17,6 +17,8 @@ sh.setLevel(logging.DEBUG)
 logger.addHandler(sh)
 logger.setLevel(logging.INFO)
 
+groups = []
+
 
 def my_proto_parser(data):
     if data.type == PROFESSIONAL_KEY:
@@ -72,11 +74,20 @@ def my_proto_parser(data):
                 remark = contact.remark.str  # 联系人备注
                 print(wxid, nickname, remark)
                 if wxid.endswith("chatroom"):  # 群聊
-                    member_count = contact.groupMemberList.memberCount  # 群成员数量
-                    print(member_count)
-                    for group_member in contact.groupMemberList.groupMember:
-                        member_wxid = group_member.wxid  # 群成员wxid
-                        print(member_wxid)
+                    groups.append(wxid)
+            wxid = groups.pop()
+            print(wxid)
+            spy.get_contact_details("13377920475@chatroom")
+        else:
+            logger.error(data.message)
+    elif data.type == CONTACT_DETAILS:
+        if data.code:
+            contact_details_list = spy_pb2.Contacts()
+            contact_details_list.ParseFromString(data.bytes)
+            for contact_details in contact_details_list.contactDetails:
+                wxid = contact_details.wxid.str  # 联系人wxid
+                nickname = contact_details.nickname.str  # 联系人昵称
+                remark = contact_details.remark.str  # 联系人备注
         else:
             logger.error(data.message)
     else:
@@ -84,10 +95,12 @@ def my_proto_parser(data):
 
 
 if __name__ == '__main__':
-    spy = WeChatSpy(parser=my_proto_parser, key="18d421169d93611a5584affac335e690 ", logger=logger)
+    spy = WeChatSpy(parser=my_proto_parser, key="18d421169d93611a5584affac335e690", logger=logger)
     spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     while True:
         cmd = int(input())
         print(cmd)
         if cmd == ACCOUNT_DETAILS:
             spy.get_account_details()
+        elif cmd == SEND_TEXT:
+            spy.send_text("13377920475@chatroom", "@Hello LingXi", "wxid_wbgerrlnz6kt22", 0)

@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='spy',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\tspy.proto\x12\x03spy\x1a\x08wx.proto\"/\n\x0b\x43hatMessage\x12 \n\x07message\x18\x01 \x03(\x0b\x32\x0f.wx.ChatMessage\"\xeb\x01\n\x0e\x41\x63\x63ountDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x11\n\tautograph\x18\x04 \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\x05 \x01(\t\x12\x14\n\x0cprofilePhoto\x18\x06 \x01(\t\x12\r\n\x05phone\x18\x07 \x01(\t\x12\r\n\x05\x65mail\x18\x08 \x01(\t\x12\n\n\x02qq\x18\t \x01(\x03\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x10\n\x08province\x18\x0c \x01(\t\x12\x0f\n\x07\x63ountry\x18\r \x01(\t\"6\n\x08\x43ontacts\x12*\n\x0e\x63ontactDetails\x18\x01 \x03(\x0b\x32\x12.wx.ContactsDetail\"9\n\x0bTextMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x0e\n\x06wxidAt\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\"-\n\x0b\x46ileMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08\x66ilePath\x18\x02 \x01(\t\"\\\n\nXmlMessage\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\x0e\n\x06wxidTo\x18\x02 \x01(\t\x12\x10\n\x08wxidFrom\x18\x03 \x01(\t\x12\x0b\n\x03xml\x18\x04 \x01(\t\x12\x11\n\timagePath\x18\x05 \x01(\t\"m\n\x08Response\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\x0b\n\x03pid\x18\x03 \x01(\x05\x12\x0c\n\x04port\x18\x04 \x01(\x05\x12\n\n\x02id\x18\x05 \x01(\t\x12\x0c\n\x04\x63ode\x18\x06 \x01(\x05\x12\x0f\n\x07message\x18\x07 \x01(\t\"2\n\x07Request\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\n\n\x02id\x18\x03 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\tspy.proto\x12\x03spy\x1a\x08wx.proto\"/\n\x0b\x43hatMessage\x12 \n\x07message\x18\x01 \x03(\x0b\x32\x0f.wx.ChatMessage\"\xeb\x01\n\x0e\x41\x63\x63ountDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x11\n\tautograph\x18\x04 \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\x05 \x01(\t\x12\x14\n\x0cprofilePhoto\x18\x06 \x01(\t\x12\r\n\x05phone\x18\x07 \x01(\t\x12\r\n\x05\x65mail\x18\x08 \x01(\t\x12\n\n\x02qq\x18\t \x01(\x03\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x10\n\x08province\x18\x0c \x01(\t\x12\x0f\n\x07\x63ountry\x18\r \x01(\t\"6\n\x08\x43ontacts\x12*\n\x0e\x63ontactDetails\x18\x01 \x03(\x0b\x32\x12.wx.ContactDetails\"9\n\x0bTextMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x0e\n\x06wxidAt\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\"-\n\x0b\x46ileMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08\x66ilePath\x18\x02 \x01(\t\"\\\n\nXmlMessage\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\x0e\n\x06wxidTo\x18\x02 \x01(\t\x12\x10\n\x08wxidFrom\x18\x03 \x01(\t\x12\x0b\n\x03xml\x18\x04 \x01(\t\x12\x11\n\timagePath\x18\x05 \x01(\t\"=\n\x12\x43ontactApplication\x12\x17\n\x0f\x65ncryptusername\x18\x01 \x01(\t\x12\x0e\n\x06ticket\x18\x02 \x01(\t\"m\n\x08Response\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\x0b\n\x03pid\x18\x03 \x01(\x05\x12\x0c\n\x04port\x18\x04 \x01(\x05\x12\n\n\x02id\x18\x05 \x01(\t\x12\x0c\n\x04\x63ode\x18\x06 \x01(\x05\x12\x0f\n\x07message\x18\x07 \x01(\t\"2\n\x07Request\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\n\n\x02id\x18\x03 \x01(\tb\x06proto3'
   ,
   dependencies=[wx__pb2.DESCRIPTOR,])
 
@@ -345,6 +345,44 @@ _XMLMESSAGE = _descriptor.Descriptor(
 )
 
 
+_CONTACTAPPLICATION = _descriptor.Descriptor(
+  name='ContactApplication',
+  full_name='spy.ContactApplication',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='encryptusername', full_name='spy.ContactApplication.encryptusername', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ticket', full_name='spy.ContactApplication.ticket', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=571,
+  serialized_end=632,
+)
+
+
 _RESPONSE = _descriptor.Descriptor(
   name='Response',
   full_name='spy.Response',
@@ -413,8 +451,8 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=571,
-  serialized_end=680,
+  serialized_start=634,
+  serialized_end=743,
 )
 
 
@@ -458,18 +496,19 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=682,
-  serialized_end=732,
+  serialized_start=745,
+  serialized_end=795,
 )
 
 _CHATMESSAGE.fields_by_name['message'].message_type = wx__pb2._CHATMESSAGE
-_CONTACTS.fields_by_name['contactDetails'].message_type = wx__pb2._CONTACTSDETAIL
+_CONTACTS.fields_by_name['contactDetails'].message_type = wx__pb2._CONTACTDETAILS
 DESCRIPTOR.message_types_by_name['ChatMessage'] = _CHATMESSAGE
 DESCRIPTOR.message_types_by_name['AccountDetails'] = _ACCOUNTDETAILS
 DESCRIPTOR.message_types_by_name['Contacts'] = _CONTACTS
 DESCRIPTOR.message_types_by_name['TextMessage'] = _TEXTMESSAGE
 DESCRIPTOR.message_types_by_name['FileMessage'] = _FILEMESSAGE
 DESCRIPTOR.message_types_by_name['XmlMessage'] = _XMLMESSAGE
+DESCRIPTOR.message_types_by_name['ContactApplication'] = _CONTACTAPPLICATION
 DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
 DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -515,6 +554,13 @@ XmlMessage = _reflection.GeneratedProtocolMessageType('XmlMessage', (_message.Me
   # @@protoc_insertion_point(class_scope:spy.XmlMessage)
   })
 _sym_db.RegisterMessage(XmlMessage)
+
+ContactApplication = _reflection.GeneratedProtocolMessageType('ContactApplication', (_message.Message,), {
+  'DESCRIPTOR' : _CONTACTAPPLICATION,
+  '__module__' : 'spy_pb2'
+  # @@protoc_insertion_point(class_scope:spy.ContactApplication)
+  })
+_sym_db.RegisterMessage(ContactApplication)
 
 Response = _reflection.GeneratedProtocolMessageType('Response', (_message.Message,), {
   'DESCRIPTOR' : _RESPONSE,

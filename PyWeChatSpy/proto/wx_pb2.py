@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='wx',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x08wx.proto\x12\x02wx\">\n\x0cWeChatString\x12\x0b\n\x03str\x18\x01 \x01(\t\x12\x0e\n\x06strLen\x18\x02 \x01(\x05\x12\x11\n\tstrLenMax\x18\x03 \x01(\x05\"\xbc\x02\n\x0f\x41\x63\x63ountDetails1\x12\x1e\n\x04wxid\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\n\n\x02QQ\x18\x04 \x01(\x03\x12\x1f\n\x05\x65mail\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x1f\n\x05phone\x18\x06 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12\x10\n\x08unknown8\x18\x08 \x01(\x05\x12\x10\n\x08unknown9\x18\t \x01(\x0c\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x10\n\x08province\x18\x0b \x01(\t\x12\x0c\n\x04\x63ity\x18\x0c \x01(\t\x12\x11\n\tautograph\x18\r \x01(\t\x12\x10\n\x08wechatId\x18\x1b \x01(\t\x12\x0f\n\x07\x63ountry\x18& \x01(\t\"8\n\rWeChatMoments\x12\x0c\n\x04\x66lag\x18\x01 \x01(\x05\x12\x19\n\x11momentsBackground\x18\x02 \x01(\t\"i\n\x0f\x41\x63\x63ountDetails2\x12(\n\rwechatMoments\x18\x01 \x01(\x0b\x32\x11.wx.WeChatMoments\x12\x16\n\x0eprofilePhotoHD\x18\t \x01(\t\x12\x14\n\x0cprofilePhoto\x18\n \x01(\t\"\x82\x01\n\x12\x41\x63\x63ountDetailsData\x12\x10\n\x08unknown1\x18\x01 \x01(\x0c\x12,\n\x0f\x61\x63\x63ountDetails1\x18\x02 \x01(\x0b\x32\x13.wx.AccountDetails1\x12,\n\x0f\x61\x63\x63ountDetails2\x18\x03 \x01(\x0b\x32\x13.wx.AccountDetails2\":\n\rMessageDetail\x12\x13\n\x0bmessageSize\x18\x01 \x01(\x05\x12\x14\n\x0cmessageBytes\x18\x02 \x01(\x0c\"H\n\x07Message\x12\x13\n\x0bmessageType\x18\x01 \x01(\x05\x12(\n\rmessageDetail\x18\x02 \x01(\x0b\x32\x11.wx.MessageDetail\"A\n\x0bMessageList\x12\x14\n\x0cmessageCount\x18\x01 \x01(\x05\x12\x1c\n\x07message\x18\x02 \x03(\x0b\x32\x0b.wx.Message\"E\n\x0bMessageData\x12\x10\n\x08unknown1\x18\x01 \x01(\x05\x12$\n\x0bmessageList\x18\x02 \x01(\x0b\x32\x0f.wx.MessageList\"6\n\rImageOverview\x12\x11\n\timageSize\x18\x01 \x01(\x05\x12\x12\n\nimageBytes\x18\x02 \x01(\x0c\"\x85\x02\n\x0b\x43hatMessage\x12\"\n\x08wxidFrom\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12 \n\x06wxidTo\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0c\n\x04type\x18\x04 \x01(\x05\x12!\n\x07\x63ontent\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown6\x18\x06 \x01(\x05\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12(\n\rimageOverview\x18\x08 \x01(\x0b\x32\x11.wx.ImageOverview\x12\x11\n\ttimestamp\x18\t \x01(\x03\x12\x0c\n\x04head\x18\n \x01(\t\x12\x10\n\x08overview\x18\x0b \x01(\t\"-\n\x0bGroupMember\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\"\x82\x01\n\x0fGroupMemberList\x12\x13\n\x0bmemberCount\x18\x01 \x01(\x05\x12$\n\x0bgroupMember\x18\x02 \x03(\x0b\x32\x0f.wx.GroupMember\x12\x10\n\x08unknown1\x18\x03 \x01(\x05\x12\x10\n\x08unknown2\x18\x04 \x01(\t\x12\x10\n\x08unknown3\x18\x05 \x01(\x05\"C\n\x0c\x43ontactPhone\x12\x12\n\nphoneCount\x18\x01 \x01(\x05\x12\x1f\n\x05phone\x18\x02 \x03(\x0b\x32\x10.wx.WeChatString\"\xc1\x05\n\x0e\x43ontactsDetail\x12\x1e\n\x04wxid\x18\x01 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\x31\n\x17nicknamePinyinUppercase\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12(\n\x0enicknamePinyin\x18\x04 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0b\n\x03sex\x18\x05 \x01(\x05\x12 \n\x06remark\x18\n \x01(\x0b\x32\x10.wx.WeChatString\x12/\n\x15remarkPinyinUppercase\x18\x0b \x01(\x0b\x32\x10.wx.WeChatString\x12&\n\x0cremarkPinyin\x18\x0c \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08province\x18\x13 \x01(\t\x12\x0c\n\x04\x63ity\x18\x14 \x01(\t\x12\x11\n\tautograph\x18\x15 \x01(\t\x12\x10\n\x08wechatId\x18\x1e \x01(\t\x12\x16\n\x0egroupOwnerWxid\x18\x1f \x01(\t\x12(\n\rweChatMoments\x18% \x03(\x0b\x32\x11.wx.WeChatMoments\x12\x0f\n\x07\x63ountry\x18& \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\' \x01(\t\x12\x14\n\x0cprofilePhoto\x18( \x01(\t\x12\x11\n\tbrandList\x18) \x01(\t\x12\x0b\n\x03md5\x18, \x01(\t\x12\x17\n\x0f\x65ncryptusername\x18- \x01(\t\x12,\n\x0fgroupMemberList\x18\x39 \x01(\x0b\x32\x13.wx.GroupMemberList\x12\x13\n\x0b\x64\x65scription\x18; \x01(\t\x12\r\n\x05tagId\x18= \x01(\t\x12&\n\x0c\x63ontactPhone\x18> \x01(\x0b\x32\x10.wx.ContactPhone\x12\r\n\x05wxid2\x18G \x01(\tb\x06proto3'
+  serialized_pb=b'\n\x08wx.proto\x12\x02wx\">\n\x0cWeChatString\x12\x0b\n\x03str\x18\x01 \x01(\t\x12\x0e\n\x06strLen\x18\x02 \x01(\x05\x12\x11\n\tstrLenMax\x18\x03 \x01(\x05\"\xbc\x02\n\x0f\x41\x63\x63ountDetails1\x12\x1e\n\x04wxid\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\n\n\x02QQ\x18\x04 \x01(\x03\x12\x1f\n\x05\x65mail\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x1f\n\x05phone\x18\x06 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12\x10\n\x08unknown8\x18\x08 \x01(\x05\x12\x10\n\x08unknown9\x18\t \x01(\x0c\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x10\n\x08province\x18\x0b \x01(\t\x12\x0c\n\x04\x63ity\x18\x0c \x01(\t\x12\x11\n\tautograph\x18\r \x01(\t\x12\x10\n\x08wechatId\x18\x1b \x01(\t\x12\x0f\n\x07\x63ountry\x18& \x01(\t\"8\n\rWeChatMoments\x12\x0c\n\x04\x66lag\x18\x01 \x01(\x05\x12\x19\n\x11momentsBackground\x18\x02 \x01(\t\"i\n\x0f\x41\x63\x63ountDetails2\x12(\n\rwechatMoments\x18\x01 \x01(\x0b\x32\x11.wx.WeChatMoments\x12\x16\n\x0eprofilePhotoHD\x18\t \x01(\t\x12\x14\n\x0cprofilePhoto\x18\n \x01(\t\"\x82\x01\n\x12\x41\x63\x63ountDetailsData\x12\x10\n\x08unknown1\x18\x01 \x01(\x0c\x12,\n\x0f\x61\x63\x63ountDetails1\x18\x02 \x01(\x0b\x32\x13.wx.AccountDetails1\x12,\n\x0f\x61\x63\x63ountDetails2\x18\x03 \x01(\x0b\x32\x13.wx.AccountDetails2\":\n\rMessageDetail\x12\x13\n\x0bmessageSize\x18\x01 \x01(\x05\x12\x14\n\x0cmessageBytes\x18\x02 \x01(\x0c\"H\n\x07Message\x12\x13\n\x0bmessageType\x18\x01 \x01(\x05\x12(\n\rmessageDetail\x18\x02 \x01(\x0b\x32\x11.wx.MessageDetail\"A\n\x0bMessageList\x12\x14\n\x0cmessageCount\x18\x01 \x01(\x05\x12\x1c\n\x07message\x18\x02 \x03(\x0b\x32\x0b.wx.Message\"E\n\x0bMessageData\x12\x10\n\x08unknown1\x18\x01 \x01(\x05\x12$\n\x0bmessageList\x18\x02 \x01(\x0b\x32\x0f.wx.MessageList\"6\n\rImageOverview\x12\x11\n\timageSize\x18\x01 \x01(\x05\x12\x12\n\nimageBytes\x18\x02 \x01(\x0c\"\x85\x02\n\x0b\x43hatMessage\x12\"\n\x08wxidFrom\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12 \n\x06wxidTo\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0c\n\x04type\x18\x04 \x01(\x05\x12!\n\x07\x63ontent\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown6\x18\x06 \x01(\x05\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12(\n\rimageOverview\x18\x08 \x01(\x0b\x32\x11.wx.ImageOverview\x12\x11\n\ttimestamp\x18\t \x01(\x03\x12\x0c\n\x04head\x18\n \x01(\t\x12\x10\n\x08overview\x18\x0b \x01(\t\"-\n\x0bGroupMember\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\"\x82\x01\n\x0fGroupMemberList\x12\x13\n\x0bmemberCount\x18\x01 \x01(\x05\x12$\n\x0bgroupMember\x18\x02 \x03(\x0b\x32\x0f.wx.GroupMember\x12\x10\n\x08unknown1\x18\x03 \x01(\x05\x12\x10\n\x08unknown2\x18\x04 \x01(\t\x12\x10\n\x08unknown3\x18\x05 \x01(\x05\"C\n\x0c\x43ontactPhone\x12\x12\n\nphoneCount\x18\x01 \x01(\x05\x12\x1f\n\x05phone\x18\x02 \x03(\x0b\x32\x10.wx.WeChatString\"\xc1\x05\n\x0e\x43ontactDetails\x12\x1e\n\x04wxid\x18\x01 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\x31\n\x17nicknamePinyinUppercase\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12(\n\x0enicknamePinyin\x18\x04 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0b\n\x03sex\x18\x05 \x01(\x05\x12 \n\x06remark\x18\n \x01(\x0b\x32\x10.wx.WeChatString\x12/\n\x15remarkPinyinUppercase\x18\x0b \x01(\x0b\x32\x10.wx.WeChatString\x12&\n\x0cremarkPinyin\x18\x0c \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08province\x18\x13 \x01(\t\x12\x0c\n\x04\x63ity\x18\x14 \x01(\t\x12\x11\n\tautograph\x18\x15 \x01(\t\x12\x10\n\x08wechatId\x18\x1e \x01(\t\x12\x16\n\x0egroupOwnerWxid\x18\x1f \x01(\t\x12(\n\rweChatMoments\x18% \x03(\x0b\x32\x11.wx.WeChatMoments\x12\x0f\n\x07\x63ountry\x18& \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\' \x01(\t\x12\x14\n\x0cprofilePhoto\x18( \x01(\t\x12\x11\n\tbrandList\x18) \x01(\t\x12\x0b\n\x03md5\x18, \x01(\t\x12\x17\n\x0f\x65ncryptusername\x18- \x01(\t\x12,\n\x0fgroupMemberList\x18\x39 \x01(\x0b\x32\x13.wx.GroupMemberList\x12\x13\n\x0b\x64\x65scription\x18; \x01(\t\x12\r\n\x05tagId\x18= \x01(\t\x12&\n\x0c\x63ontactPhone\x18> \x01(\x0b\x32\x10.wx.ContactPhone\x12\r\n\x05wxid2\x18G \x01(\t\"@\n\x12\x43ontactDetailsData\x12*\n\x0e\x63ontactDetails\x18\x03 \x01(\x0b\x32\x12.wx.ContactDetailsb\x06proto3'
 )
 
 
@@ -738,183 +738,183 @@ _CONTACTPHONE = _descriptor.Descriptor(
 )
 
 
-_CONTACTSDETAIL = _descriptor.Descriptor(
-  name='ContactsDetail',
-  full_name='wx.ContactsDetail',
+_CONTACTDETAILS = _descriptor.Descriptor(
+  name='ContactDetails',
+  full_name='wx.ContactDetails',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='wxid', full_name='wx.ContactsDetail.wxid', index=0,
+      name='wxid', full_name='wx.ContactDetails.wxid', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='nickname', full_name='wx.ContactsDetail.nickname', index=1,
+      name='nickname', full_name='wx.ContactDetails.nickname', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='nicknamePinyinUppercase', full_name='wx.ContactsDetail.nicknamePinyinUppercase', index=2,
+      name='nicknamePinyinUppercase', full_name='wx.ContactDetails.nicknamePinyinUppercase', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='nicknamePinyin', full_name='wx.ContactsDetail.nicknamePinyin', index=3,
+      name='nicknamePinyin', full_name='wx.ContactDetails.nicknamePinyin', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='sex', full_name='wx.ContactsDetail.sex', index=4,
+      name='sex', full_name='wx.ContactDetails.sex', index=4,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='remark', full_name='wx.ContactsDetail.remark', index=5,
+      name='remark', full_name='wx.ContactDetails.remark', index=5,
       number=10, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='remarkPinyinUppercase', full_name='wx.ContactsDetail.remarkPinyinUppercase', index=6,
+      name='remarkPinyinUppercase', full_name='wx.ContactDetails.remarkPinyinUppercase', index=6,
       number=11, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='remarkPinyin', full_name='wx.ContactsDetail.remarkPinyin', index=7,
+      name='remarkPinyin', full_name='wx.ContactDetails.remarkPinyin', index=7,
       number=12, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='province', full_name='wx.ContactsDetail.province', index=8,
+      name='province', full_name='wx.ContactDetails.province', index=8,
       number=19, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='city', full_name='wx.ContactsDetail.city', index=9,
+      name='city', full_name='wx.ContactDetails.city', index=9,
       number=20, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='autograph', full_name='wx.ContactsDetail.autograph', index=10,
+      name='autograph', full_name='wx.ContactDetails.autograph', index=10,
       number=21, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='wechatId', full_name='wx.ContactsDetail.wechatId', index=11,
+      name='wechatId', full_name='wx.ContactDetails.wechatId', index=11,
       number=30, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='groupOwnerWxid', full_name='wx.ContactsDetail.groupOwnerWxid', index=12,
+      name='groupOwnerWxid', full_name='wx.ContactDetails.groupOwnerWxid', index=12,
       number=31, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='weChatMoments', full_name='wx.ContactsDetail.weChatMoments', index=13,
+      name='weChatMoments', full_name='wx.ContactDetails.weChatMoments', index=13,
       number=37, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='country', full_name='wx.ContactsDetail.country', index=14,
+      name='country', full_name='wx.ContactDetails.country', index=14,
       number=38, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='profilePhotoHD', full_name='wx.ContactsDetail.profilePhotoHD', index=15,
+      name='profilePhotoHD', full_name='wx.ContactDetails.profilePhotoHD', index=15,
       number=39, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='profilePhoto', full_name='wx.ContactsDetail.profilePhoto', index=16,
+      name='profilePhoto', full_name='wx.ContactDetails.profilePhoto', index=16,
       number=40, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='brandList', full_name='wx.ContactsDetail.brandList', index=17,
+      name='brandList', full_name='wx.ContactDetails.brandList', index=17,
       number=41, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='md5', full_name='wx.ContactsDetail.md5', index=18,
+      name='md5', full_name='wx.ContactDetails.md5', index=18,
       number=44, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='encryptusername', full_name='wx.ContactsDetail.encryptusername', index=19,
+      name='encryptusername', full_name='wx.ContactDetails.encryptusername', index=19,
       number=45, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='groupMemberList', full_name='wx.ContactsDetail.groupMemberList', index=20,
+      name='groupMemberList', full_name='wx.ContactDetails.groupMemberList', index=20,
       number=57, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='description', full_name='wx.ContactsDetail.description', index=21,
+      name='description', full_name='wx.ContactDetails.description', index=21,
       number=59, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='tagId', full_name='wx.ContactsDetail.tagId', index=22,
+      name='tagId', full_name='wx.ContactDetails.tagId', index=22,
       number=61, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='contactPhone', full_name='wx.ContactsDetail.contactPhone', index=23,
+      name='contactPhone', full_name='wx.ContactDetails.contactPhone', index=23,
       number=62, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='wxid2', full_name='wx.ContactsDetail.wxid2', index=24,
+      name='wxid2', full_name='wx.ContactDetails.wxid2', index=24,
       number=71, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -936,6 +936,37 @@ _CONTACTSDETAIL = _descriptor.Descriptor(
   serialized_end=2244,
 )
 
+
+_CONTACTDETAILSDATA = _descriptor.Descriptor(
+  name='ContactDetailsData',
+  full_name='wx.ContactDetailsData',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='contactDetails', full_name='wx.ContactDetailsData.contactDetails', index=0,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2246,
+  serialized_end=2310,
+)
+
 _ACCOUNTDETAILS1.fields_by_name['wxid'].message_type = _WECHATSTRING
 _ACCOUNTDETAILS1.fields_by_name['nickname'].message_type = _WECHATSTRING
 _ACCOUNTDETAILS1.fields_by_name['email'].message_type = _WECHATSTRING
@@ -952,16 +983,17 @@ _CHATMESSAGE.fields_by_name['content'].message_type = _WECHATSTRING
 _CHATMESSAGE.fields_by_name['imageOverview'].message_type = _IMAGEOVERVIEW
 _GROUPMEMBERLIST.fields_by_name['groupMember'].message_type = _GROUPMEMBER
 _CONTACTPHONE.fields_by_name['phone'].message_type = _WECHATSTRING
-_CONTACTSDETAIL.fields_by_name['wxid'].message_type = _WECHATSTRING
-_CONTACTSDETAIL.fields_by_name['nickname'].message_type = _WECHATSTRING
-_CONTACTSDETAIL.fields_by_name['nicknamePinyinUppercase'].message_type = _WECHATSTRING
-_CONTACTSDETAIL.fields_by_name['nicknamePinyin'].message_type = _WECHATSTRING
-_CONTACTSDETAIL.fields_by_name['remark'].message_type = _WECHATSTRING
-_CONTACTSDETAIL.fields_by_name['remarkPinyinUppercase'].message_type = _WECHATSTRING
-_CONTACTSDETAIL.fields_by_name['remarkPinyin'].message_type = _WECHATSTRING
-_CONTACTSDETAIL.fields_by_name['weChatMoments'].message_type = _WECHATMOMENTS
-_CONTACTSDETAIL.fields_by_name['groupMemberList'].message_type = _GROUPMEMBERLIST
-_CONTACTSDETAIL.fields_by_name['contactPhone'].message_type = _CONTACTPHONE
+_CONTACTDETAILS.fields_by_name['wxid'].message_type = _WECHATSTRING
+_CONTACTDETAILS.fields_by_name['nickname'].message_type = _WECHATSTRING
+_CONTACTDETAILS.fields_by_name['nicknamePinyinUppercase'].message_type = _WECHATSTRING
+_CONTACTDETAILS.fields_by_name['nicknamePinyin'].message_type = _WECHATSTRING
+_CONTACTDETAILS.fields_by_name['remark'].message_type = _WECHATSTRING
+_CONTACTDETAILS.fields_by_name['remarkPinyinUppercase'].message_type = _WECHATSTRING
+_CONTACTDETAILS.fields_by_name['remarkPinyin'].message_type = _WECHATSTRING
+_CONTACTDETAILS.fields_by_name['weChatMoments'].message_type = _WECHATMOMENTS
+_CONTACTDETAILS.fields_by_name['groupMemberList'].message_type = _GROUPMEMBERLIST
+_CONTACTDETAILS.fields_by_name['contactPhone'].message_type = _CONTACTPHONE
+_CONTACTDETAILSDATA.fields_by_name['contactDetails'].message_type = _CONTACTDETAILS
 DESCRIPTOR.message_types_by_name['WeChatString'] = _WECHATSTRING
 DESCRIPTOR.message_types_by_name['AccountDetails1'] = _ACCOUNTDETAILS1
 DESCRIPTOR.message_types_by_name['WeChatMoments'] = _WECHATMOMENTS
@@ -976,7 +1008,8 @@ DESCRIPTOR.message_types_by_name['ChatMessage'] = _CHATMESSAGE
 DESCRIPTOR.message_types_by_name['GroupMember'] = _GROUPMEMBER
 DESCRIPTOR.message_types_by_name['GroupMemberList'] = _GROUPMEMBERLIST
 DESCRIPTOR.message_types_by_name['ContactPhone'] = _CONTACTPHONE
-DESCRIPTOR.message_types_by_name['ContactsDetail'] = _CONTACTSDETAIL
+DESCRIPTOR.message_types_by_name['ContactDetails'] = _CONTACTDETAILS
+DESCRIPTOR.message_types_by_name['ContactDetailsData'] = _CONTACTDETAILSDATA
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 WeChatString = _reflection.GeneratedProtocolMessageType('WeChatString', (_message.Message,), {
@@ -1077,12 +1110,19 @@ ContactPhone = _reflection.GeneratedProtocolMessageType('ContactPhone', (_messag
   })
 _sym_db.RegisterMessage(ContactPhone)
 
-ContactsDetail = _reflection.GeneratedProtocolMessageType('ContactsDetail', (_message.Message,), {
-  'DESCRIPTOR' : _CONTACTSDETAIL,
+ContactDetails = _reflection.GeneratedProtocolMessageType('ContactDetails', (_message.Message,), {
+  'DESCRIPTOR' : _CONTACTDETAILS,
   '__module__' : 'wx_pb2'
-  # @@protoc_insertion_point(class_scope:wx.ContactsDetail)
+  # @@protoc_insertion_point(class_scope:wx.ContactDetails)
   })
-_sym_db.RegisterMessage(ContactsDetail)
+_sym_db.RegisterMessage(ContactDetails)
+
+ContactDetailsData = _reflection.GeneratedProtocolMessageType('ContactDetailsData', (_message.Message,), {
+  'DESCRIPTOR' : _CONTACTDETAILSDATA,
+  '__module__' : 'wx_pb2'
+  # @@protoc_insertion_point(class_scope:wx.ContactDetailsData)
+  })
+_sym_db.RegisterMessage(ContactDetailsData)
 
 
 # @@protoc_insertion_point(module_scope)
