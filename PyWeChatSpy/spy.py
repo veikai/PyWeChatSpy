@@ -279,7 +279,6 @@ class WeChatSpy:
             return self.logger.warning("Can only send announcements to chatrooms")
         request = spy_pb2.Request()
         request.type = SEND_ANNOUNCEMENT
-        request.type = SEND_TEXT
         text_message = spy_pb2.TextMessage()
         text_message.wxid = wxid
         text_message.text = content
@@ -287,6 +286,7 @@ class WeChatSpy:
         return self.__send(request, port)
 
     def create_chatroom(self, wxid: str, port: int = 0):
+        # TODO
         """
         创建群聊
         :param wxid: wxid,以","分隔 至少需要两个
@@ -297,7 +297,7 @@ class WeChatSpy:
         if len(wxid.split(",")) < 2:
             return self.logger.warning("This function requires at least two wxids separated by ','")
         request = spy_pb2.Request()
-        request.cmd = CREATE_CHATROOM
+        # request.cmd = CREATE_CHATROOM
         request.param1 = wxid
         return self.__send(request, port)
 
@@ -311,9 +311,11 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = SHARE_CHATROOM
-        request.param1 = wxid
-        request.param2 = chatroom_wxid
+        request.type = SHARE_CHATROOM
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = chatroom_wxid
+        request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
     def remove_chatroom_member(self, chatroom_wxid: str, wxid: str, port: int = 0):
@@ -326,9 +328,11 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = REMOVE_CHATROOM_MEMBER
-        request.param1 = wxid
-        request.param2 = chatroom_wxid
+        request.type = REMOVE_CHATROOM_MEMBER
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = chatroom_wxid
+        request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
     def remove_contact(self, wxid: str, port: int = 0):
@@ -340,8 +344,8 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = REMOVE_CONTACT
-        request.param1 = wxid
+        request.type = REMOVE_CONTACT
+        request.bytes = bytes(wxid, encoding="utf8")
         return self.__send(request, port)
 
     def add_contact(self, wxid: str, chatroom_wxid: str = "", greeting: str = "",
@@ -396,20 +400,6 @@ class WeChatSpy:
         request.param2 = name
         return self.__send(request, port)
 
-    def set_save_folder(self, folder: str, port: int = 0):
-        """
-        设置保存路径
-        :param folder:
-        :param pid:
-        :param port:
-        :return:
-        """
-        warnings.warn("The function 'set_save_folder' is deprecated", DeprecationWarning)
-        request = spy_pb2.Request()
-        request.cmd = SET_SAVE_FOLDER
-        request.param1 = folder
-        return self.__send(request, port)
-
     def show_qrcode(self, output_path: str = "", port: int = 0):
         """
         显示登录二维码
@@ -433,9 +423,11 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = SET_REMARK
-        request.param1 = wxid
-        request.param2 = remark
+        request.type = SET_REMARK
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = remark
+        request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
     def get_chatroom_invite_url(self, wxid: str, url: str, port: int = 0):

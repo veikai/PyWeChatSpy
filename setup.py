@@ -10,8 +10,7 @@ setup(
     packages=find_packages(),
     package_data={
         "PyWeChatSpy": [
-            "SpyHelper.exe",
-            "1644691589/WeChatSpy.dll",
+            "SpyK.exe",
             "1660944441/WeChatSpy.dll",
             "proto/*"
         ]

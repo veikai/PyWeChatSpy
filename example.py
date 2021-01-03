@@ -88,14 +88,24 @@ def my_proto_parser(data):
                 wxid = contact_details.wxid.str  # 联系人wxid
                 nickname = contact_details.nickname.str  # 联系人昵称
                 remark = contact_details.remark.str  # 联系人备注
+                if wxid.endswith("chatroom"):  # 判断是否为群聊
+                    group_member_list = contact_details.groupMemberList  # 群成员列表
+                    member_count = group_member_list.memberCount  # 群成员数量
+                    for group_member in group_member_list.groupMember:  # 遍历群成员
+                        member_wxid = group_member.wxid
+                        member_nickname = group_member.nickname
+                        print(member_wxid, member_nickname)
+                    pass
         else:
             logger.error(data.message)
+    elif data.type == GET_CONTACTS_LIST and not data.code:
+        logger.error(data.message)
     else:
         print(data)
 
 
 if __name__ == '__main__':
-    spy = WeChatSpy(parser=my_proto_parser, key="18d421169d93611a5584affac335e690", logger=logger)
+    spy = WeChatSpy(parser=my_proto_parser, key="57cbab9164536dc9c76b0c023f19f3a5", logger=logger)
     spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     while True:
         cmd = int(input())
@@ -104,3 +114,5 @@ if __name__ == '__main__':
             spy.get_account_details()
         elif cmd == SEND_TEXT:
             spy.send_text("13377920475@chatroom", "@Hello LingXi", "wxid_wbgerrlnz6kt22", 0)
+        elif cmd == SET_REMARK:
+            spy.set_remark("wxid_w4hfnfm8w5kx22", "备注测试")
