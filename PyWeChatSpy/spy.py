@@ -290,7 +290,6 @@ class WeChatSpy:
         """
         创建群聊
         :param wxid: wxid,以","分隔 至少需要两个
-        :param pid:
         :param port:
         :return:
         """
@@ -306,7 +305,6 @@ class WeChatSpy:
         分享群聊邀请链接
         :param chatroom_wxid:
         :param wxid:
-        :param pid:
         :param port:
         :return:
         """
@@ -323,7 +321,6 @@ class WeChatSpy:
         移除群成员
         :param chatroom_wxid:
         :param wxid:
-        :param pid:
         :param port:
         :return:
         """
@@ -339,7 +336,6 @@ class WeChatSpy:
         """
         移除联系人
         :param wxid:
-        :param pid:
         :param port:
         :return:
         """
