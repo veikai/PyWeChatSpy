@@ -6,6 +6,7 @@ import time
 import logging
 import base64
 import os
+import subprocess
 
 
 logger = logging.getLogger(__file__)
@@ -215,5 +216,5 @@ def my_proto_parser(data):
 
 if __name__ == '__main__':
     spy = WeChatSpy(parser=my_proto_parser, key="3ea954244f76a8cfb7e5f8f544cf6878", logger=logger)
-    spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
+    subprocess.Popen(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     input()

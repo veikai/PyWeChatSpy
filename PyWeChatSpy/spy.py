@@ -7,7 +7,6 @@ import warnings
 from uuid import uuid4
 from .proto import spy_pb2
 from .command import *
-from ctypes import cdll, c_char_p
 
 
 class WeChatSpy:
@@ -44,8 +43,8 @@ class WeChatSpy:
         t_start_server.name = "spy"
         t_start_server.start()
         current_path = os.path.split(os.path.abspath(__file__))[0]
-        helper_path = os.path.join(current_path, "SpyHelper.exe")
-        attach_thread = Thread(target=os.system, args=(helper_path,))
+        spy_path = os.path.join(current_path, "SpyK.exe")
+        attach_thread = Thread(target=os.system, args=(spy_path,))
         attach_thread.daemon = True
         attach_thread.name = "attach"
         attach_thread.start()
@@ -122,25 +121,6 @@ class WeChatSpy:
         except Exception as e:
             self.logger.warning(f"The WeChat process {port} has disconnected: {e}")
             return False
-
-    def run(self, wechat: str, bit: int = 64):
-        current_path = os.path.split(os.path.abspath(__file__))[0]
-        if bit == 64:
-            dll_path = os.path.join(current_path, "SpyHelper_x64.dll")
-        else:
-            dll_path = os.path.join(current_path, "SpyHelper_x86.dll")
-        try:
-            dll = cdll.LoadLibrary(dll_path)
-        except FileNotFoundError:
-            self.logger.error("OpenHelper not found")
-            return 0
-        except OSError as e:
-            if e.errno == 8:
-                return self.run(wechat, 64) if bit != 64 else self.run(wechat, 32)
-            self.logger.error(e)
-            return 0
-        pid = dll.OpenWeChat(c_char_p(wechat.encode()))
-        return pid
 
     def set_commercial(self, key: str, pid: int = 0, port: int = 0):
         request = spy_pb2.Request()
