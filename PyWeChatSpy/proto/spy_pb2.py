@@ -14,12 +14,13 @@ _sym_db = _symbol_database.Default()
 # import wx_pb2 as wx__pb2
 from . import wx_pb2 as wx__pb2
 
+
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='spy.proto',
   package='spy',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\tspy.proto\x12\x03spy\x1a\x08wx.proto\"/\n\x0b\x43hatMessage\x12 \n\x07message\x18\x01 \x03(\x0b\x32\x0f.wx.ChatMessage\"\xeb\x01\n\x0e\x41\x63\x63ountDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x11\n\tautograph\x18\x04 \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\x05 \x01(\t\x12\x14\n\x0cprofilePhoto\x18\x06 \x01(\t\x12\r\n\x05phone\x18\x07 \x01(\t\x12\r\n\x05\x65mail\x18\x08 \x01(\t\x12\n\n\x02qq\x18\t \x01(\x03\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x10\n\x08province\x18\x0c \x01(\t\x12\x0f\n\x07\x63ountry\x18\r \x01(\t\"6\n\x08\x43ontacts\x12*\n\x0e\x63ontactDetails\x18\x01 \x03(\x0b\x32\x12.wx.ContactDetails\"9\n\x0bTextMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x0e\n\x06wxidAt\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\"-\n\x0b\x46ileMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08\x66ilePath\x18\x02 \x01(\t\"\\\n\nXmlMessage\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\x0e\n\x06wxidTo\x18\x02 \x01(\t\x12\x10\n\x08wxidFrom\x18\x03 \x01(\t\x12\x0b\n\x03xml\x18\x04 \x01(\t\x12\x11\n\timagePath\x18\x05 \x01(\t\"=\n\x12\x43ontactApplication\x12\x17\n\x0f\x65ncryptusername\x18\x01 \x01(\t\x12\x0e\n\x06ticket\x18\x02 \x01(\t\"m\n\x08Response\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\x0b\n\x03pid\x18\x03 \x01(\x05\x12\x0c\n\x04port\x18\x04 \x01(\x05\x12\n\n\x02id\x18\x05 \x01(\t\x12\x0c\n\x04\x63ode\x18\x06 \x01(\x05\x12\x0f\n\x07message\x18\x07 \x01(\t\"2\n\x07Request\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\n\n\x02id\x18\x03 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\tspy.proto\x12\x03spy\x1a\x08wx.proto\"/\n\x0b\x43hatMessage\x12 \n\x07message\x18\x01 \x03(\x0b\x32\x0f.wx.ChatMessage\"\xeb\x01\n\x0e\x41\x63\x63ountDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x11\n\tautograph\x18\x04 \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\x05 \x01(\t\x12\x14\n\x0cprofilePhoto\x18\x06 \x01(\t\x12\r\n\x05phone\x18\x07 \x01(\t\x12\r\n\x05\x65mail\x18\x08 \x01(\t\x12\n\n\x02qq\x18\t \x01(\x03\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x10\n\x08province\x18\x0c \x01(\t\x12\x0f\n\x07\x63ountry\x18\r \x01(\t\"6\n\x08\x43ontacts\x12*\n\x0e\x63ontactDetails\x18\x01 \x03(\x0b\x32\x12.wx.ContactDetails\"9\n\x0bTextMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x0e\n\x06wxidAt\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\"-\n\x0b\x46ileMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08\x66ilePath\x18\x02 \x01(\t\"\xae\x01\n\nXmlMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x65sc\x18\x03 \x01(\t\x12\r\n\x05\x61ppId\x18\x04 \x01(\t\x12\r\n\x05route\x18\x05 \x01(\t\x12\x0b\n\x03url\x18\x06 \x01(\t\x12\x11\n\timagePath\x18\x07 \x01(\t\x12\x10\n\x08username\x18\x08 \x01(\t\x12\x14\n\x0cweappiconurl\x18\t \x01(\t\x12\x0f\n\x07\x61ppname\x18\n \x01(\t\"=\n\x12\x43ontactApplication\x12\x17\n\x0f\x65ncryptusername\x18\x01 \x01(\t\x12\x0e\n\x06ticket\x18\x02 \x01(\t\"m\n\x08Response\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\x0b\n\x03pid\x18\x03 \x01(\x05\x12\x0c\n\x04port\x18\x04 \x01(\x05\x12\n\n\x02id\x18\x05 \x01(\t\x12\x0c\n\x04\x63ode\x18\x06 \x01(\x05\x12\x0f\n\x07message\x18\x07 \x01(\t\"2\n\x07Request\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\n\n\x02id\x18\x03 \x01(\tb\x06proto3'
   ,
   dependencies=[wx__pb2.DESCRIPTOR,])
 
@@ -294,36 +295,71 @@ _XMLMESSAGE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='type', full_name='spy.XmlMessage.type', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      name='wxid', full_name='spy.XmlMessage.wxid', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='wxidTo', full_name='spy.XmlMessage.wxidTo', index=1,
+      name='title', full_name='spy.XmlMessage.title', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='wxidFrom', full_name='spy.XmlMessage.wxidFrom', index=2,
+      name='desc', full_name='spy.XmlMessage.desc', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='xml', full_name='spy.XmlMessage.xml', index=3,
+      name='appId', full_name='spy.XmlMessage.appId', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='imagePath', full_name='spy.XmlMessage.imagePath', index=4,
+      name='route', full_name='spy.XmlMessage.route', index=4,
       number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='url', full_name='spy.XmlMessage.url', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='imagePath', full_name='spy.XmlMessage.imagePath', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='username', full_name='spy.XmlMessage.username', index=7,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='weappiconurl', full_name='spy.XmlMessage.weappiconurl', index=8,
+      number=9, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='appname', full_name='spy.XmlMessage.appname', index=9,
+      number=10, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -340,8 +376,8 @@ _XMLMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=477,
-  serialized_end=569,
+  serialized_start=478,
+  serialized_end=652,
 )
 
 
@@ -378,8 +414,8 @@ _CONTACTAPPLICATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=571,
-  serialized_end=632,
+  serialized_start=654,
+  serialized_end=715,
 )
 
 
@@ -451,8 +487,8 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=634,
-  serialized_end=743,
+  serialized_start=717,
+  serialized_end=826,
 )
 
 
@@ -496,8 +532,8 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=745,
-  serialized_end=795,
+  serialized_start=828,
+  serialized_end=878,
 )
 
 _CHATMESSAGE.fields_by_name['message'].message_type = wx__pb2._CHATMESSAGE
