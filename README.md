@@ -1,7 +1,25 @@
 # PyWeChatSpy
-A spy program that helps people make better use of WeChat
+help people make better use of WeChat
 
 [硬核WeChatBot](https://zhuanlan.zhihu.com/p/118674498)
 
 ##支持微信版本
-* 3.0.0.57
+### 3.0.0.57
+
+##功能列表
+###基础功能
+* 获取聊天消息
+* 获取登录账号信息 get_account_details
+* 发送文本 send_text
+* 发送文件、图片 send_file
+###高级功能
+* 获取联系人列表 get_contacts
+* 获取联系人详情、群成员列表 get_contact_details
+* 发送群公告 send_announcement
+* 自动通过好友请求 accept_new_contact
+* 设置联系人备注 set_remark
+* 分享群聊 share_chatroom
+* 移除群成员 remove_chatroom_member
+* 移除联系人 remove_contact
+* 发送小程序 send_mini_program
+* 发送链接卡片 send_link_card

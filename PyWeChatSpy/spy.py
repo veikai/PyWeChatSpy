@@ -239,18 +239,6 @@ class WeChatSpy:
         request.bytes = file_message.SerializeToString()
         return self.__send(request, port)
 
-    def send_xml(self, _type: int, wxid_to: str, wxid_from: str, xml: str, image_path: str, port: int = 0):
-        request = spy_pb2.Request()
-        request.type = SEND_XML
-        xml_message = spy_pb2.XmlMessage()
-        xml_message.type = _type
-        xml_message.wxidTo = wxid_to
-        xml_message.wxidFrom = wxid_from
-        xml_message.xml = xml
-        xml_message.imagePath = image_path
-        request.bytes = xml_message.SerializeToString()
-        return self.__send(request, port)
-
     def accept_new_contact(self, encryptusername: str, ticket: str, port: int = 0):
         """
         接受好友请求
