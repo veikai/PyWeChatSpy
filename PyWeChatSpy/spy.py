@@ -344,6 +344,59 @@ class WeChatSpy:
         request.bytes = bytes(wxid, encoding="utf8")
         return self.__send(request, port)
 
+    def send_mini_program(self, wxid: str, title: str, image_path: str, route: str, app_id: str,
+                          username: str, weappiconurl: str, appname: str, port: int = 0):
+        """
+        发送小程序
+        :param wxid:
+        :param title: 小程序标题
+        :param image_path: 封面图片路径
+        :param route: 小程序跳转路由
+        :param app_id:
+        :param username:
+        :param weappiconurl: 小程序图标url
+        :param appname:
+        :param port:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.type = SEND_MINI_PROGRAM
+        xml = spy_pb2.XmlMessage()
+        xml.wxid = wxid
+        xml.title = title
+        xml.appId = app_id
+        xml.imagePath = image_path
+        xml.route = route
+        xml.username = username
+        xml.weappiconurl = weappiconurl
+        xml.appname = appname
+        request.bytes = xml.SerializeToString()
+        return self.__send(request, port)
+
+    def send_link_card(self, wxid: str, title: str, desc: str, app_id: str, url: str, image_path: str, port: int = 0):
+        """
+        发送链接卡片
+        :param wxid:
+        :param title:
+        :param desc:
+        :param app_id:
+        :param url:
+        :param image_path:
+        :param port:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.type = SEND_LINK_CARD
+        xml = spy_pb2.XmlMessage()
+        xml.wxid = wxid
+        xml.title = title
+        xml.desc = desc
+        xml.url = url
+        xml.appId = app_id
+        xml.imagePath = image_path
+        request.bytes = xml.SerializeToString()
+        return self.__send(request, port)
+
     def add_contact(self, wxid: str, chatroom_wxid: str = "", greeting: str = "",
                     add_type: int = 0, port: int = 0):
         """
@@ -439,26 +492,6 @@ class WeChatSpy:
         request.cmd = GET_CHATROOM_INVITATION_URL
         request.param1 = wxid
         request.param2 = url
-        return self.__send(request, port)
-
-    def send_link_card(
-            self, receive_wxid: str, send_wxid: str, content: str, image_path: str, port: int = 0):
-        """
-        发送链接卡片
-        :param receive_wxid:
-        :param send_wxid:
-        :param content:
-        :param image_path:
-        :param pid:
-        :param port:
-        :return:
-        """
-        request = spy_pb2.Request()
-        request.cmd = SEND_LINK_CARD
-        request.param1 = receive_wxid
-        request.param2 = content
-        request.param3 = send_wxid
-        request.param4 = image_path
         return self.__send(request, port)
 
     def decrypt_image(self, md5: str, file: str, port: int = 0):

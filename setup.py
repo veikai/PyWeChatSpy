@@ -11,7 +11,7 @@ setup(
     package_data={
         "PyWeChatSpy": [
             "SpyK.exe",
-            "1660944441/WeChatSpy.dll",
+            "1660944441/WeChatSpy3.0.dll",
             "proto/*"
         ]
     },

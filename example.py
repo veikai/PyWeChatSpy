@@ -105,7 +105,7 @@ def my_proto_parser(data):
 
 
 if __name__ == '__main__':
-    spy = WeChatSpy(parser=my_proto_parser, key="57cbab9164536dc9c76b0c023f19f3a5", logger=logger)
+    spy = WeChatSpy(parser=my_proto_parser, key="18d421169d93611a5584affac335e690", logger=logger)
     spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     while True:
         cmd = int(input())
@@ -116,3 +116,25 @@ if __name__ == '__main__':
             spy.send_text("13377920475@chatroom", "@Hello LingXi", "wxid_wbgerrlnz6kt22", 0)
         elif cmd == SET_REMARK:
             spy.set_remark("wxid_w4hfnfm8w5kx22", "备注测试")
+        elif cmd == SEND_MINI_PROGRAM:
+            image_path = r"D:\18020891\Pictures\b.jpg"
+            spy.send_mini_program(
+                "20646587964@chatroom",
+                "小程序发送测试",
+                image_path,
+                "packageFourth/pages/fourth/fourth.html?productId=12122946310&amp;shop=0000000000&amp;union=Ivcomvrb",
+                "mainApp",
+                "gh_1d1e15e90afc@app",
+                "http://mmbiz.qpic.cn/mmbiz_png/iclBO8bMDwtibgxxBCjYPT74TItA7iamnZST3WNLYv1RVw4LqIBEWLq657C8oR1kXY7Y2N0V8QAibibcPyicIfcT7c3g/640?wx_fmt=png&amp;wxfrom=200",
+                "1234567",
+                0
+            )
+        elif cmd == SEND_LINK_CARD:
+            spy.send_link_card(
+                "20646587964@chatroom",
+                "咖啡发送测试",
+                "屠龙宝刀点击就送",
+                "wx59cc372381201d39",
+                "http://www.baidu.com",
+                r"D:\18020891\Documents\WeChat Files\wxid_ekxxwtu6212f21\FileStorage\Cache\2020-12\af3fff6dff2e35b4d85af849ac216034_t.jpg",
+                0)
