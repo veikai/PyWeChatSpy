@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='wx',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x08wx.proto\x12\x02wx\">\n\x0cWeChatString\x12\x0b\n\x03str\x18\x01 \x01(\t\x12\x0e\n\x06strLen\x18\x02 \x01(\x05\x12\x11\n\tstrLenMax\x18\x03 \x01(\x05\"\xbc\x02\n\x0f\x41\x63\x63ountDetails1\x12\x1e\n\x04wxid\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\n\n\x02QQ\x18\x04 \x01(\x03\x12\x1f\n\x05\x65mail\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x1f\n\x05phone\x18\x06 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12\x10\n\x08unknown8\x18\x08 \x01(\x05\x12\x10\n\x08unknown9\x18\t \x01(\x0c\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x10\n\x08province\x18\x0b \x01(\t\x12\x0c\n\x04\x63ity\x18\x0c \x01(\t\x12\x11\n\tautograph\x18\r \x01(\t\x12\x10\n\x08wechatId\x18\x1b \x01(\t\x12\x0f\n\x07\x63ountry\x18& \x01(\t\"8\n\rWeChatMoments\x12\x0c\n\x04\x66lag\x18\x01 \x01(\x05\x12\x19\n\x11momentsBackground\x18\x02 \x01(\t\"i\n\x0f\x41\x63\x63ountDetails2\x12(\n\rwechatMoments\x18\x01 \x01(\x0b\x32\x11.wx.WeChatMoments\x12\x16\n\x0eprofilePhotoHD\x18\t \x01(\t\x12\x14\n\x0cprofilePhoto\x18\n \x01(\t\"\x82\x01\n\x12\x41\x63\x63ountDetailsData\x12\x10\n\x08unknown1\x18\x01 \x01(\x0c\x12,\n\x0f\x61\x63\x63ountDetails1\x18\x02 \x01(\x0b\x32\x13.wx.AccountDetails1\x12,\n\x0f\x61\x63\x63ountDetails2\x18\x03 \x01(\x0b\x32\x13.wx.AccountDetails2\":\n\rMessageDetail\x12\x13\n\x0bmessageSize\x18\x01 \x01(\x05\x12\x14\n\x0cmessageBytes\x18\x02 \x01(\x0c\"H\n\x07Message\x12\x13\n\x0bmessageType\x18\x01 \x01(\x05\x12(\n\rmessageDetail\x18\x02 \x01(\x0b\x32\x11.wx.MessageDetail\"A\n\x0bMessageList\x12\x14\n\x0cmessageCount\x18\x01 \x01(\x05\x12\x1c\n\x07message\x18\x02 \x03(\x0b\x32\x0b.wx.Message\"E\n\x0bMessageData\x12\x10\n\x08unknown1\x18\x01 \x01(\x05\x12$\n\x0bmessageList\x18\x02 \x01(\x0b\x32\x0f.wx.MessageList\"6\n\rImageOverview\x12\x11\n\timageSize\x18\x01 \x01(\x05\x12\x12\n\nimageBytes\x18\x02 \x01(\x0c\"\x85\x02\n\x0b\x43hatMessage\x12\"\n\x08wxidFrom\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12 \n\x06wxidTo\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0c\n\x04type\x18\x04 \x01(\x05\x12!\n\x07\x63ontent\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown6\x18\x06 \x01(\x05\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12(\n\rimageOverview\x18\x08 \x01(\x0b\x32\x11.wx.ImageOverview\x12\x11\n\ttimestamp\x18\t \x01(\x03\x12\x0c\n\x04head\x18\n \x01(\t\x12\x10\n\x08overview\x18\x0b \x01(\t\"-\n\x0bGroupMember\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\"\x82\x01\n\x0fGroupMemberList\x12\x13\n\x0bmemberCount\x18\x01 \x01(\x05\x12$\n\x0bgroupMember\x18\x02 \x03(\x0b\x32\x0f.wx.GroupMember\x12\x10\n\x08unknown1\x18\x03 \x01(\x05\x12\x10\n\x08unknown2\x18\x04 \x01(\t\x12\x10\n\x08unknown3\x18\x05 \x01(\x05\"C\n\x0c\x43ontactPhone\x12\x12\n\nphoneCount\x18\x01 \x01(\x05\x12\x1f\n\x05phone\x18\x02 \x03(\x0b\x32\x10.wx.WeChatString\"\xc1\x05\n\x0e\x43ontactDetails\x12\x1e\n\x04wxid\x18\x01 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\x31\n\x17nicknamePinyinUppercase\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12(\n\x0enicknamePinyin\x18\x04 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0b\n\x03sex\x18\x05 \x01(\x05\x12 \n\x06remark\x18\n \x01(\x0b\x32\x10.wx.WeChatString\x12/\n\x15remarkPinyinUppercase\x18\x0b \x01(\x0b\x32\x10.wx.WeChatString\x12&\n\x0cremarkPinyin\x18\x0c \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08province\x18\x13 \x01(\t\x12\x0c\n\x04\x63ity\x18\x14 \x01(\t\x12\x11\n\tautograph\x18\x15 \x01(\t\x12\x10\n\x08wechatId\x18\x1e \x01(\t\x12\x16\n\x0egroupOwnerWxid\x18\x1f \x01(\t\x12(\n\rweChatMoments\x18% \x03(\x0b\x32\x11.wx.WeChatMoments\x12\x0f\n\x07\x63ountry\x18& \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\' \x01(\t\x12\x14\n\x0cprofilePhoto\x18( \x01(\t\x12\x11\n\tbrandList\x18) \x01(\t\x12\x0b\n\x03md5\x18, \x01(\t\x12\x17\n\x0f\x65ncryptusername\x18- \x01(\t\x12,\n\x0fgroupMemberList\x18\x39 \x01(\x0b\x32\x13.wx.GroupMemberList\x12\x13\n\x0b\x64\x65scription\x18; \x01(\t\x12\r\n\x05tagId\x18= \x01(\t\x12&\n\x0c\x63ontactPhone\x18> \x01(\x0b\x32\x10.wx.ContactPhone\x12\r\n\x05wxid2\x18G \x01(\t\"@\n\x12\x43ontactDetailsData\x12*\n\x0e\x63ontactDetails\x18\x03 \x01(\x0b\x32\x12.wx.ContactDetailsb\x06proto3'
+  serialized_pb=b'\n\x08wx.proto\x12\x02wx\"\x1b\n\x0cWeChatString\x12\x0b\n\x03str\x18\x01 \x01(\t\"\xbc\x02\n\x0f\x41\x63\x63ountDetails1\x12\x1e\n\x04wxid\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\n\n\x02QQ\x18\x04 \x01(\x03\x12\x1f\n\x05\x65mail\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x1f\n\x05phone\x18\x06 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12\x10\n\x08unknown8\x18\x08 \x01(\x05\x12\x10\n\x08unknown9\x18\t \x01(\x0c\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x10\n\x08province\x18\x0b \x01(\t\x12\x0c\n\x04\x63ity\x18\x0c \x01(\t\x12\x11\n\tautograph\x18\r \x01(\t\x12\x10\n\x08wechatId\x18\x1b \x01(\t\x12\x0f\n\x07\x63ountry\x18& \x01(\t\"8\n\rWeChatMoments\x12\x0c\n\x04\x66lag\x18\x01 \x01(\x05\x12\x19\n\x11momentsBackground\x18\x02 \x01(\t\"i\n\x0f\x41\x63\x63ountDetails2\x12(\n\rwechatMoments\x18\x01 \x01(\x0b\x32\x11.wx.WeChatMoments\x12\x16\n\x0eprofilePhotoHD\x18\t \x01(\t\x12\x14\n\x0cprofilePhoto\x18\n \x01(\t\"\x82\x01\n\x12\x41\x63\x63ountDetailsData\x12\x10\n\x08unknown1\x18\x01 \x01(\x0c\x12,\n\x0f\x61\x63\x63ountDetails1\x18\x02 \x01(\x0b\x32\x13.wx.AccountDetails1\x12,\n\x0f\x61\x63\x63ountDetails2\x18\x03 \x01(\x0b\x32\x13.wx.AccountDetails2\":\n\rMessageDetail\x12\x13\n\x0bmessageSize\x18\x01 \x01(\x05\x12\x14\n\x0cmessageBytes\x18\x02 \x01(\x0c\"H\n\x07Message\x12\x13\n\x0bmessageType\x18\x01 \x01(\x05\x12(\n\rmessageDetail\x18\x02 \x01(\x0b\x32\x11.wx.MessageDetail\"A\n\x0bMessageList\x12\x14\n\x0cmessageCount\x18\x01 \x01(\x05\x12\x1c\n\x07message\x18\x02 \x03(\x0b\x32\x0b.wx.Message\"E\n\x0bMessageData\x12\x10\n\x08unknown1\x18\x01 \x01(\x05\x12$\n\x0bmessageList\x18\x02 \x01(\x0b\x32\x0f.wx.MessageList\"6\n\rImageOverview\x12\x11\n\timageSize\x18\x01 \x01(\x05\x12\x12\n\nimageBytes\x18\x02 \x01(\x0c\"\x93\x02\n\x0b\x43hatMessage\x12\"\n\x08wxidFrom\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12 \n\x06wxidTo\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0c\n\x04type\x18\x04 \x01(\x05\x12!\n\x07\x63ontent\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown6\x18\x06 \x01(\x05\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12(\n\rimageOverview\x18\x08 \x01(\x0b\x32\x11.wx.ImageOverview\x12\x11\n\ttimestamp\x18\t \x01(\x03\x12\x0c\n\x04head\x18\n \x01(\t\x12\x10\n\x08overview\x18\x0b \x01(\t\x12\x0c\n\x04\x66ile\x18\x0e \x01(\t\"-\n\x0bGroupMember\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\"\x82\x01\n\x0fGroupMemberList\x12\x13\n\x0bmemberCount\x18\x01 \x01(\x05\x12$\n\x0bgroupMember\x18\x02 \x03(\x0b\x32\x0f.wx.GroupMember\x12\x10\n\x08unknown1\x18\x03 \x01(\x05\x12\x10\n\x08unknown2\x18\x04 \x01(\t\x12\x10\n\x08unknown3\x18\x05 \x01(\x05\"C\n\x0c\x43ontactPhone\x12\x12\n\nphoneCount\x18\x01 \x01(\x05\x12\x1f\n\x05phone\x18\x02 \x03(\x0b\x32\x10.wx.WeChatString\"\xc1\x05\n\x0e\x43ontactDetails\x12\x1e\n\x04wxid\x18\x01 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\x31\n\x17nicknamePinyinUppercase\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12(\n\x0enicknamePinyin\x18\x04 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0b\n\x03sex\x18\x05 \x01(\x05\x12 \n\x06remark\x18\n \x01(\x0b\x32\x10.wx.WeChatString\x12/\n\x15remarkPinyinUppercase\x18\x0b \x01(\x0b\x32\x10.wx.WeChatString\x12&\n\x0cremarkPinyin\x18\x0c \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08province\x18\x13 \x01(\t\x12\x0c\n\x04\x63ity\x18\x14 \x01(\t\x12\x11\n\tautograph\x18\x15 \x01(\t\x12\x10\n\x08wechatId\x18\x1e \x01(\t\x12\x16\n\x0egroupOwnerWxid\x18\x1f \x01(\t\x12(\n\rweChatMoments\x18% \x03(\x0b\x32\x11.wx.WeChatMoments\x12\x0f\n\x07\x63ountry\x18& \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\' \x01(\t\x12\x14\n\x0cprofilePhoto\x18( \x01(\t\x12\x11\n\tbrandList\x18) \x01(\t\x12\x0b\n\x03md5\x18, \x01(\t\x12\x17\n\x0f\x65ncryptusername\x18- \x01(\t\x12,\n\x0fgroupMemberList\x18\x39 \x01(\x0b\x32\x13.wx.GroupMemberList\x12\x13\n\x0b\x64\x65scription\x18; \x01(\t\x12\r\n\x05tagId\x18= \x01(\t\x12&\n\x0c\x63ontactPhone\x18> \x01(\x0b\x32\x10.wx.ContactPhone\x12\r\n\x05wxid2\x18G \x01(\t\"@\n\x12\x43ontactDetailsData\x12*\n\x0e\x63ontactDetails\x18\x03 \x01(\x0b\x32\x12.wx.ContactDetailsb\x06proto3'
 )
 
 
@@ -38,20 +38,6 @@ _WECHATSTRING = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='strLen', full_name='wx.WeChatString.strLen', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='strLenMax', full_name='wx.WeChatString.strLenMax', index=2,
-      number=3, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -65,7 +51,7 @@ _WECHATSTRING = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=16,
-  serialized_end=78,
+  serialized_end=43,
 )
 
 
@@ -186,8 +172,8 @@ _ACCOUNTDETAILS1 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=81,
-  serialized_end=397,
+  serialized_start=46,
+  serialized_end=362,
 )
 
 
@@ -224,8 +210,8 @@ _WECHATMOMENTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=399,
-  serialized_end=455,
+  serialized_start=364,
+  serialized_end=420,
 )
 
 
@@ -269,8 +255,8 @@ _ACCOUNTDETAILS2 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=457,
-  serialized_end=562,
+  serialized_start=422,
+  serialized_end=527,
 )
 
 
@@ -314,8 +300,8 @@ _ACCOUNTDETAILSDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=565,
-  serialized_end=695,
+  serialized_start=530,
+  serialized_end=660,
 )
 
 
@@ -352,8 +338,8 @@ _MESSAGEDETAIL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=697,
-  serialized_end=755,
+  serialized_start=662,
+  serialized_end=720,
 )
 
 
@@ -390,8 +376,8 @@ _MESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=757,
-  serialized_end=829,
+  serialized_start=722,
+  serialized_end=794,
 )
 
 
@@ -428,8 +414,8 @@ _MESSAGELIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=831,
-  serialized_end=896,
+  serialized_start=796,
+  serialized_end=861,
 )
 
 
@@ -466,8 +452,8 @@ _MESSAGEDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=898,
-  serialized_end=967,
+  serialized_start=863,
+  serialized_end=932,
 )
 
 
@@ -504,8 +490,8 @@ _IMAGEOVERVIEW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=969,
-  serialized_end=1023,
+  serialized_start=934,
+  serialized_end=988,
 )
 
 
@@ -586,6 +572,13 @@ _CHATMESSAGE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='file', full_name='wx.ChatMessage.file', index=10,
+      number=14, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -598,8 +591,8 @@ _CHATMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1026,
-  serialized_end=1287,
+  serialized_start=991,
+  serialized_end=1266,
 )
 
 
@@ -636,8 +629,8 @@ _GROUPMEMBER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1289,
-  serialized_end=1334,
+  serialized_start=1268,
+  serialized_end=1313,
 )
 
 
@@ -695,8 +688,8 @@ _GROUPMEMBERLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1337,
-  serialized_end=1467,
+  serialized_start=1316,
+  serialized_end=1446,
 )
 
 
@@ -733,8 +726,8 @@ _CONTACTPHONE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1469,
-  serialized_end=1536,
+  serialized_start=1448,
+  serialized_end=1515,
 )
 
 
@@ -932,8 +925,8 @@ _CONTACTDETAILS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1539,
-  serialized_end=2244,
+  serialized_start=1518,
+  serialized_end=2223,
 )
 
 
@@ -963,8 +956,8 @@ _CONTACTDETAILSDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2246,
-  serialized_end=2310,
+  serialized_start=2225,
+  serialized_end=2289,
 )
 
 _ACCOUNTDETAILS1.fields_by_name['wxid'].message_type = _WECHATSTRING

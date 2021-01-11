@@ -1,7 +1,6 @@
 import os
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread, Lock
-from .exceptions import ParserError
 import logging
 import warnings
 from .proto import spy_pb2
@@ -482,17 +481,18 @@ class WeChatSpy:
         request.param2 = url
         return self.__send(request, port)
 
-    def decrypt_image(self, md5: str, file: str, port: int = 0):
+    def decrypt_image(self, source_file: str, target_file: str, port: int = 0):
         """
         解密图片
-        :param md5:
-        :param file:
-        :param pid:
+        :param source_file: 需要解密的图片文件
+        :param target_file: 解密后保存的路径
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = DECRYPT_IMAGE
-        request.param1 = md5
-        request.param2 = file
+        request.type = DECRYPT_IMAGE
+        file_message = spy_pb2.FileMessage()
+        file_message.wxid = source_file
+        file_message.filePath = target_file
+        request.bytes = file_message.SerializeToString()
         return self.__send(request, port)

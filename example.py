@@ -18,6 +18,7 @@ logger.addHandler(sh)
 logger.setLevel(logging.INFO)
 
 groups = []
+WECHAT_PROFILE = r"D:\18020891\Documents\WeChat Files"
 
 
 def my_proto_parser(data):
@@ -47,13 +48,17 @@ def my_proto_parser(data):
             overview = message.overview  # 消息缩略
             timestamp = message.timestamp  # 消息时间戳
             if _type == 1:  # 文本消息
-                print(_from, content)
+                print(_from, _to, content)
                 if _to == "filehelper":
                     spy.send_text("filehelper", "Hello PyWeChatSpy3.0\n" + content)
                     if content == "image":
                         spy.send_file("filehelper", r"D:\18020891\Pictures\b.jpg")
             elif _type == 3:  # 图片消息
-                pass
+                file_path = message.file
+                print(_from, _to, content, file_path)
+                file_path = os.path.join(WECHAT_PROFILE, file_path)
+                time.sleep(10)
+                spy.decrypt_image(file_path, "a.jpg")
             elif _type == 49:  # XML报文消息
                 print(_from, content)
     elif data.type == ACCOUNT_DETAILS:  # 登录账号详情
