@@ -32,7 +32,7 @@ class WeChatSpy:
         if callable(parser):
             self.__parser = parser
         else:
-            raise ParserError("Parser must be callable")
+            raise Exception("Parser must be callable")
         self.pids = []
         self.__port2client = dict()
         self.__lock = Lock()
