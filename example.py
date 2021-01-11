@@ -105,6 +105,10 @@ def my_proto_parser(data):
             logger.error(data.message)
     elif data.type == GET_CONTACTS_LIST and not data.code:
         logger.error(data.message)
+    elif data.type == CREATE_GROUP_CALLBACK:  # 创建群聊回调
+        callback = spy_pb2.CreateGroupCallback()
+        callback.ParseFromString(data.bytes)
+        print(callback)
     else:
         print(data)
 
@@ -143,3 +147,5 @@ if __name__ == '__main__':
                 "http://www.baidu.com",
                 r"D:\18020891\Documents\WeChat Files\wxid_ekxxwtu6212f21\FileStorage\Cache\2020-12\af3fff6dff2e35b4d85af849ac216034_t.jpg",
                 0)
+        elif cmd == CREATE_GROUP:
+            spy.create_group("wxid_2mh1kb172f7l21,wxid_z5xpxbzzqxih21", 0)

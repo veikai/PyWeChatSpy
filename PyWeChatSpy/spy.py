@@ -272,19 +272,18 @@ class WeChatSpy:
         request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
-    def create_chatroom(self, wxid: str, port: int = 0):
-        # TODO
+    def create_group(self, wxid: str, port: int = 0):
         """
         创建群聊
-        :param wxid: wxid,以","分隔 至少需要两个
+        :param wxid: 拉群wxid,以","分隔 至少需要两个，不包括自己
         :param port:
         :return:
         """
         if len(wxid.split(",")) < 2:
             return self.logger.warning("This function requires at least two wxids separated by ','")
         request = spy_pb2.Request()
-        # request.cmd = CREATE_CHATROOM
-        request.param1 = wxid
+        request.type = CREATE_GROUP
+        request.bytes = bytes(wxid, encoding="utf8")
         return self.__send(request, port)
 
     def share_chatroom(self, chatroom_wxid: str, wxid: str, port: int = 0):
