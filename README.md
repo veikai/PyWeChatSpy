@@ -13,6 +13,8 @@ help people make better use of WeChatForPC
 * 获取登录账号信息 get_account_details
 * 发送文本 send_text
 * 发送文件、图片 send_file
+* 解密微信图片文件 decrypt_image
+    * 微信的图片下载到本地是加密的，需要使用此方法解密后方能看到图片原始内容
 ###高级功能
 * 获取联系人列表 get_contacts
   * 获取所有联系人，包括好友与群，不活跃的群可能无法获取
@@ -25,5 +27,3 @@ help people make better use of WeChatForPC
 * 移除联系人 remove_contact
 * 发送小程序 send_mini_program
 * 发送链接卡片 send_link_card
-* 解密微信图片文件 decrypt_image
-    * 微信的图片下载到本地是加密的，需要使用此方法解密后方能看到图片原始内容
