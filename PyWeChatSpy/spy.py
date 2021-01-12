@@ -1,17 +1,19 @@
 import os
 from socket import socket, AF_INET, SOCK_STREAM
-from threading import Thread
-from .exceptions import ParserError
+from threading import Thread, Lock
 import logging
 import warnings
-from uuid import uuid4
 from .proto import spy_pb2
 from .command import *
+import subprocess
+from queue import Queue
+from time import sleep
+from uuid import uuid4
 
 
 class WeChatSpy:
     def __init__(self, parser=None, key: str = None, logger: logging.Logger = None):
-        # 商用key
+        # 付费key
         self.__key = key
         # 日志模块
         if isinstance(logger, logging.Logger):
@@ -30,9 +32,11 @@ class WeChatSpy:
         if callable(parser):
             self.__parser = parser
         else:
-            raise ParserError("Parser must be callable")
+            raise Exception("Parser must be callable")
+        self.pids = []
         self.__port2client = dict()
-        self.__pid2port = dict()
+        self.__lock = Lock()
+        self.__queue = Queue()
         host = "127.0.0.1"
         port = 9527
         self.__socket_server = socket(AF_INET, SOCK_STREAM)
@@ -43,11 +47,15 @@ class WeChatSpy:
         t_start_server.name = "spy"
         t_start_server.start()
         current_path = os.path.split(os.path.abspath(__file__))[0]
-        spy_path = os.path.join(current_path, "SpyK.exe")
-        attach_thread = Thread(target=os.system, args=(spy_path,))
+        helper_path = os.path.join(current_path, "SpyK.exe 3.0")
+        attach_thread = Thread(target=os.system, args=(helper_path,))
         attach_thread.daemon = True
         attach_thread.name = "attach"
         attach_thread.start()
+        parse_thrad = Thread(target=self.__parse)
+        parse_thrad.daemon = True
+        parse_thrad.name = "parse"
+        parse_thrad.start()
 
     def __start_server(self):
         while True:
@@ -62,57 +70,77 @@ class WeChatSpy:
             t_socket_client_receive.start()
 
     def receive(self, socket_client: socket, client_address: tuple):
-        recv_byte = b""
+        port_bytes = int.to_bytes(client_address[1], length=4, byteorder="little")
+        recv_bytes = b""
         data_size = 0
         while True:
             try:
                 _bytes = socket_client.recv(4096)
             except Exception as e:
                 return self.logger.warning(f"The WeChat process has disconnected: {e}")
-            recv_byte += _bytes
+            recv_bytes += _bytes
             while True:
                 if not data_size:
-                    if len(recv_byte) > 3:
-                        data_size = int.from_bytes(recv_byte[:4], "little")
+                    if len(recv_bytes) > 3:
+                        data_size = int.from_bytes(recv_bytes[:4], "little")
                     else:
                         break
-                elif data_size <= len(recv_byte) - 4:
-                    data_byte = recv_byte[4: data_size + 4]
-                    response = spy_pb2.Response()
-                    response.ParseFromString(data_byte)
-                    response.port = client_address[1]
-                    recv_byte = recv_byte[data_size + 4:]
+                elif data_size <= len(recv_bytes) - 4:
+                    data_byte = port_bytes + recv_bytes[: data_size + 4]
+                    # response = spy_pb2.Response()
+                    # response.ParseFromString(data_byte)
+                    # response.port = client_address[1]
+                    # print(response)
+                    self.__lock.acquire()
+                    for _byte in data_byte:
+                        self.__queue.put(int.to_bytes(_byte, 1, "little"))
+                    self.__lock.release()
+                    recv_bytes = recv_bytes[data_size + 4:]
                     data_size = 0
-                    if response.type == SYSTEM:
-                        if response.info:
-                            self.logger.info(f"{response.info}")
-                        elif response.warning:
-                            self.logger.warning(f"{response.warning}")
-                        elif response.error:
-                            self.logger.error(f"{response.error}")
-                    else:
-                        if response.type == WECHAT_CONNECTED:
-                            self.__pid2port[response.pid] = client_address[1]
-                        t = Thread(target=self.__parser, args=(response,))
-                        t.name = f"wechat {client_address}"
-                        t.daemon = True
-                        t.start()
                 else:
                     break
 
-    def __send(self, request: spy_pb2.Request, pid: int = 0, port: int = 0):
-        if pid:
-            self.logger.warning(
-                "We recommend using the parameter 'port' to distinguish between multiple different WeChat clients.")
-            if not (port := self.__pid2port.get(pid)):
-                self.logger.error(f"Failure to find port by pid:{pid}")
-                return False
+    def __parse(self):
+        port = 0
+        data_size = 0
+        _bytes = b""
+        while True:
+            if not data_size:
+                if self.__queue.qsize() > 7:
+                    _bytes += self.__queue.get()
+                    _bytes += self.__queue.get()
+                    _bytes += self.__queue.get()
+                    _bytes += self.__queue.get()
+                    port = int.from_bytes(_bytes, "little")
+                    _bytes = b""
+                    _bytes += self.__queue.get()
+                    _bytes += self.__queue.get()
+                    _bytes += self.__queue.get()
+                    _bytes += self.__queue.get()
+                    data_size = int.from_bytes(_bytes, "little")
+                    _bytes = b""
+                else:
+                    sleep(1)
+            elif data_size <= self.__queue.qsize():
+                for i in range(data_size):
+                    _bytes += self.__queue.get()
+                response = spy_pb2.Response()
+                response.ParseFromString(_bytes)
+                response.port = port
+                _bytes = b""
+                port = 0
+                data_size = 0
+                self.__parser(response)
+            else:
+                sleep(1)
+
+    def __send(self, request: spy_pb2.Request, port: int = 0):
         if not port and self.__port2client:
             socket_client = list(self.__port2client.values())[0]
         elif not (socket_client := self.__port2client.get(port)):
             self.logger.error(f"Failure to find socket client by port:{port}")
             return False
-        request.uuid = uuid4().__str__()
+        request.id = uuid4().__str__()
         data = request.SerializeToString()
         data_length_bytes = int.to_bytes(len(data), length=4, byteorder="little")
         try:
@@ -122,217 +150,241 @@ class WeChatSpy:
             self.logger.warning(f"The WeChat process {port} has disconnected: {e}")
             return False
 
-    def set_commercial(self, key: str, pid: int = 0, port: int = 0):
-        request = spy_pb2.Request()
-        request.cmd = SYSTEM
-        request.param1 = key
-        request.uuid = ""
-        self.__send(request, pid, port)
+    def run(self, wechat: str):
+        sp = subprocess.Popen(wechat)
+        self.pids.append(sp)
 
-    def get_login_info(self, pid: int = 0, port: int = 0):
+    def set_commercial(self, key: str, port: int = 0):
+        request = spy_pb2.Request()
+        request.type = PROFESSIONAL_KEY
+        request.bytes = bytes(key, encoding="utf8")
+        self.__send(request, port)
+
+    def get_account_details(self, port: int = 0):
         """
-        获取当前登录信息
-        :param pid:
+        获取当前登录账号详情
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = LOGIN_INFO
-        return self.__send(request, pid, port)
+        request.type = GET_ACCOUNT_DETAILS
+        return self.__send(request, port)
 
-    def query_login_info(self, pid: int = 0, port: int = 0):
-        warnings.warn(
-            "The function 'query_login_info' is deprecated, and has been replaced by the function 'get_login_info'",
-            DeprecationWarning)
-        return self.get_login_info(pid, port)
-
-    def get_contacts(self, pid: int = 0, port: int = 0):
+    def get_contacts(self, port: int = 0):
         """
         获取联系人详情
-        :param pid:
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = CONTACTS
-        return self.__send(request, pid, port)
+        request.type = GET_CONTACTS_LIST
+        return self.__send(request, port)
 
-    def query_contact_list(self, pid: int = 0, port: int = 0):
-        warnings.warn(
-            "The function 'query_contact_list' is deprecated, and has been replaced by the function 'get_contact_list'",
-            DeprecationWarning)
-        return self.get_contacts(pid, port)
-
-    def get_contact_details(self, wxid: str, update: bool = False, pid: int = 0, port: int = 0):
+    def get_contact_details(self, wxid: str, port: int = 0):
         """
         获取联系人详情
         :param wxid: 联系人wxid
-        :param update: 是否更新最新详情(需请求微信服务器 速度较慢)
-        :param pid:
         :param port:
         """
         request = spy_pb2.Request()
-        request.cmd = CONTACT_DETAILS
-        request.param1 = wxid
-        request.param2 = "1" if update else "0"
-        return self.__send(request, pid, port)
+        request.type = GET_CONTACT_DETAILS
+        request.bytes = bytes(wxid, encoding="utf8")
+        return self.__send(request, port)
 
-    def query_contact_details(self, wxid: str, update: bool = False, pid: int = 0, port: int = 0):
-        warnings.warn(
-            "The function 'query_contact_details' is deprecated, "
-            "and has been replaced by the function 'get_contact_details'", DeprecationWarning)
-        return self.get_contact_details(wxid, update, pid, port)
-
-    def get_chatroom_members(self, wxid: str, pid: int = 0, port: int = 0):
+    def get_chatroom_members(self, wxid: str, port: int = 0):
         """
         获取群成员列表
         :param wxid: 群wxid
-        :param pid:
         :param port:
         :return:
         """
-        request = spy_pb2.Request()
-        request.cmd = CHATROOM_MEMBERS
-        request.param1 = wxid
-        return self.__send(request, pid, port)
+        warnings.warn("The function 'get_chatroom_members' is deprecated, "
+                      "and has been replaced by the function 'get_contact_details'", DeprecationWarning)
+        return self.get_contact_details(wxid, port)
 
-    def query_chatroom_member(self, wxid: str, pid: int = 0, port: int = 0):
-        warnings.warn(
-            "The function 'query_chatroom_member' is deprecated, "
-            "and has been replaced by the function 'get_chatroom_members'", DeprecationWarning)
-        return self.get_chatroom_members(wxid, pid, port)
-
-    def send_text(self, wxid: str, content: str, at_wxid: str = "", pid: int = 0, port: int = 0):
+    def send_text(self, wxid: str, text: str, at_wxid: str = "", port: int = 0):
         """
         发送文本消息
         :param wxid: 文本消息接收wxid
-        :param content: 文本消息内容
+        :param text: 文本消息内容
         :param at_wxid: 如果wxid为群wxid且需要@群成员 此参数为被@群成员wxid，以英文逗号分隔
-        :param pid:
         :param port:
         """
         if not wxid.endswith("chatroom"):
             at_wxid = ""
         request = spy_pb2.Request()
-        request.cmd = SEND_TEXT
-        request.param1 = wxid
-        request.param2 = content
-        request.param3 = at_wxid
-        return self.__send(request, pid, port)
+        request.type = SEND_TEXT
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.wxidAt = at_wxid
+        text_message.text = text
+        request.bytes = text_message.SerializeToString()
+        return self.__send(request, port)
 
-    def send_image(self, wxid: str, image_path: str, pid: int = 0, port: int = 0):
-        warnings.warn("The function 'send_image' is deprecated, and has been replaced by the function 'send_file'",
-                      DeprecationWarning)
-        return self.send_file(wxid, image_path, pid, port)
-
-    def send_file(self, wxid: str, file_path: str, pid: int = 0, port: int = 0):
+    def send_file(self, wxid: str, file_path: str, port: int = 0):
         """
         发送文件消息
         :param wxid: 文件消息接收wxid
         :param file_path: 文件路径
-        :param pid:
         :param port:
         """
         if len(file_path.split("\\")) > 8:
             return self.logger.warning(f"File path is too long: {file_path}")
         request = spy_pb2.Request()
-        request.cmd = SEND_FILE
-        request.param1 = wxid
-        request.param2 = file_path
-        return self.__send(request, pid, port)
+        request.type = SEND_FILE
+        file_message = spy_pb2.FileMessage()
+        file_message.wxid = wxid
+        file_message.filePath = file_path
+        request.bytes = file_message.SerializeToString()
+        return self.__send(request, port)
 
-    def accept_new_contact(self, encryptusername: str, ticket: str, pid: int = 0, port: int = 0):
+    def accept_new_contact(self, encryptusername: str, ticket: str, port: int = 0):
         """
         接受好友请求
         :param encryptusername:
         :param ticket:
-        :param pid:
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = ACCEPT_CONTACT
-        request.param1 = encryptusername
-        request.param2 = ticket
-        return self.__send(request, pid, port)
+        request.type = ACCEPT_NEW_CONTACT
+        application = spy_pb2.ContactApplication()
+        application.encryptusername = encryptusername
+        application.ticket = ticket
+        request.bytes = application.SerializeToString()
+        return self.__send(request, port)
 
-    def send_announcement(self, wxid: str, content: str, pid: int = 0, port: int = 0):
+    def send_announcement(self, wxid: str, content: str, port: int = 0):
         """
         发送群公共
         :param wxid: 群wxid
         :param content: 公告内容
-        :param pid:
         :param port:
         :return:
         """
         if not wxid.endswith("chatroom"):
             return self.logger.warning("Can only send announcements to chatrooms")
         request = spy_pb2.Request()
-        request.cmd = SEND_ANNOUNCEMENT
-        request.param1 = wxid
-        request.param2 = content
-        return self.__send(request, pid, port)
+        request.type = SEND_ANNOUNCEMENT
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = content
+        request.bytes = text_message.SerializeToString()
+        return self.__send(request, port)
 
-    def create_chatroom(self, wxid: str, pid: int = 0, port: int = 0):
+    def create_chatroom(self, wxid: str, port: int = 0):
         """
         创建群聊
-        :param wxid: wxid,以","分隔 至少需要两个
-        :param pid:
+        :param wxid: 拉群wxid,以","分隔 至少需要两个，不包括自己
         :param port:
         :return:
         """
         if len(wxid.split(",")) < 2:
             return self.logger.warning("This function requires at least two wxids separated by ','")
         request = spy_pb2.Request()
-        request.cmd = CREATE_CHATROOM
-        request.param1 = wxid
-        return self.__send(request, pid, port)
+        request.type = CREATE_CHATROOM
+        request.bytes = bytes(wxid, encoding="utf8")
+        return self.__send(request, port)
 
-    def share_chatroom(self, chatroom_wxid: str, wxid: str, pid: int = 0, port: int = 0):
+    def share_chatroom(self, chatroom_wxid: str, wxid: str, port: int = 0):
         """
         分享群聊邀请链接
         :param chatroom_wxid:
         :param wxid:
-        :param pid:
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = SHARE_CHATROOM
-        request.param1 = wxid
-        request.param2 = chatroom_wxid
-        return self.__send(request, pid, port)
+        request.type = SHARE_CHATROOM
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = chatroom_wxid
+        request.bytes = text_message.SerializeToString()
+        return self.__send(request, port)
 
-    def remove_chatroom_member(self, chatroom_wxid: str, wxid: str, pid: int = 0, port: int = 0):
+    def remove_group_member(self, chatroom_wxid: str, wxid: str, port: int = 0):
         """
         移除群成员
         :param chatroom_wxid:
         :param wxid:
-        :param pid:
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = REMOVE_CHATROOM_MEMBER
-        request.param1 = wxid
-        request.param2 = chatroom_wxid
-        return self.__send(request, pid, port)
+        request.type = REMOVE_CHATROOM_MEMBER
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = chatroom_wxid
+        request.bytes = text_message.SerializeToString()
+        return self.__send(request, port)
 
-    def remove_contact(self, wxid: str, pid: int = 0, port: int = 0):
+    def remove_contact(self, wxid: str, port: int = 0):
         """
         移除联系人
         :param wxid:
-        :param pid:
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = REMOVE_CONTACT
-        request.param1 = wxid
-        return self.__send(request, pid, port)
+        request.type = REMOVE_CONTACT
+        request.bytes = bytes(wxid, encoding="utf8")
+        return self.__send(request, port)
+
+    def send_mini_program(self, wxid: str, title: str, image_path: str, route: str, app_id: str,
+                          username: str, weappiconurl: str, appname: str, port: int = 0):
+        """
+        发送小程序
+        :param wxid:
+        :param title: 小程序标题
+        :param image_path: 封面图片路径
+        :param route: 小程序跳转路由
+        :param app_id:
+        :param username:
+        :param weappiconurl: 小程序图标url
+        :param appname:
+        :param port:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.type = SEND_MINI_PROGRAM
+        xml = spy_pb2.XmlMessage()
+        xml.wxid = wxid
+        xml.title = title
+        xml.appId = app_id
+        xml.imagePath = image_path
+        xml.route = route
+        xml.username = username
+        xml.weappiconurl = weappiconurl
+        xml.appname = appname
+        request.bytes = xml.SerializeToString()
+        return self.__send(request, port)
+
+    def send_link_card(self, wxid: str, title: str, desc: str, app_id: str, url: str, image_path: str, port: int = 0):
+        """
+        发送链接卡片
+        :param wxid:
+        :param title:
+        :param desc:
+        :param app_id:
+        :param url:
+        :param image_path:
+        :param port:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.type = SEND_LINK_CARD
+        xml = spy_pb2.XmlMessage()
+        xml.wxid = wxid
+        xml.title = title
+        xml.desc = desc
+        xml.url = url
+        xml.appId = app_id
+        xml.imagePath = image_path
+        request.bytes = xml.SerializeToString()
+        return self.__send(request, port)
 
     def add_contact(self, wxid: str, chatroom_wxid: str = "", greeting: str = "",
-                    add_type: int = 0, pid: int = 0, port: int = 0):
+                    add_type: int = 0, port: int = 0):
         """
         添加联系人
         add_type = 313: wxid、chatroom_wxid、greeting必填
@@ -353,24 +405,9 @@ class WeChatSpy:
             return
         request.param2 = chatroom_wxid
         request.param3 = greeting
-        return self.__send(request, pid, port)
+        return self.__send(request, port)
 
-    def add_contact_from_chatroom(self, chatroom_wxid: str, wxid: str, msg: str, pid: int = 0, port: int = 0):
-        warnings.warn("The function 'add_contact_from_chatroom' is deprecated, "
-                      "and has been replaced by the function 'add_contact'", DeprecationWarning)
-        return self.add_contact(wxid, chatroom_wxid, msg, ADD_CONTACT_A, pid, port)
-
-    def add_unidirectional_contact_a(self, wxid: str, msg: str, pid: int = 0, port: int = 0):
-        warnings.warn("The function 'add_unidirectional_contact_a' is deprecated, "
-                      "and has been replaced by the function 'add_contact'", DeprecationWarning)
-        return self.add_contact(wxid, "", msg, ADD_CONTACT_B, pid, port)
-
-    def add_unidirectional_contact_b(self, wxid: str, pid: int = 0, port: int = 0):
-        warnings.warn("The function 'add_unidirectional_contact_b' is deprecated, "
-                      "and has been replaced by the function 'add_contact'", DeprecationWarning)
-        return self.add_contact(wxid, "", "", ADD_CONTACT_C, pid, port)
-
-    def get_contact_status(self, wxid: str, pid: int = 0, port: int = 0):
+    def get_contact_status(self, wxid: str, port: int = 0):
         """
         获取联系人状态
         :param wxid:
@@ -381,43 +418,25 @@ class WeChatSpy:
         request = spy_pb2.Request()
         request.cmd = CONTACT_STATUS
         request.param1 = wxid
-        return self.__send(request, pid, port)
+        return self.__send(request, port)
 
-    def check_contact_status(self, wxid: str, pid: int = 0, port: int = 0):
-        warnings.warn("The function 'check_contact_status' is deprecated, "
-                      "and has been replaced by the function 'get_contact_status'", DeprecationWarning)
-        return self.get_contact_status(wxid, pid, port)
-
-    def set_chatroom_name(self, wxid: str, name: str, pid: int = 0, port: int = 0):
+    def set_chatroom_name(self, wxid: str, name: str, port: int = 0):
         """
         设置群聊名称
-        :param wxid:
-        :param name:
-        :param pid:
+        :param wxid: 群wxid
+        :param name: 群名称
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = SET_CHATROOM_NAME
-        request.param1 = wxid
-        request.param2 = name
-        return self.__send(request, pid, port)
+        request.type = SET_CHATROOM_NAME
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = name
+        request.bytes = text_message.SerializeToString()
+        return self.__send(request, port)
 
-    def set_save_folder(self, folder: str, pid: int = 0, port: int = 0):
-        """
-        设置保存路径
-        :param folder:
-        :param pid:
-        :param port:
-        :return:
-        """
-        warnings.warn("The function 'set_save_folder' is deprecated", DeprecationWarning)
-        request = spy_pb2.Request()
-        request.cmd = SET_SAVE_FOLDER
-        request.param1 = folder
-        return self.__send(request, pid, port)
-
-    def show_qrcode(self, output_path: str = "", pid: int = 0, port: int = 0):
+    def show_qrcode(self, output_path: str = "", port: int = 0):
         """
         显示登录二维码
         :param output_path: 输出文件路径
@@ -428,9 +447,9 @@ class WeChatSpy:
         request = spy_pb2.Request()
         request.cmd = QRCODE
         request.param1 = output_path
-        return self.__send(request, pid, port)
+        return self.__send(request, port)
 
-    def set_remark(self, wxid: str, remark: str, pid: int = 0, port: int = 0):
+    def set_remark(self, wxid: str, remark: str, port: int = 0):
         """
         设置联系人备注
         :param wxid: 需要设置备注的联系人的wxid
@@ -440,12 +459,14 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = SET_REMARK
-        request.param1 = wxid
-        request.param2 = remark
-        return self.__send(request, pid, port)
+        request.type = SET_REMARK
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = remark
+        request.bytes = text_message.SerializeToString()
+        return self.__send(request, port)
 
-    def get_chatroom_invite_url(self, wxid: str, url: str, pid: int = 0, port: int = 0):
+    def get_chatroom_invite_url(self, wxid: str, url: str, port: int = 0):
         """
         获取群邀请链接
         :param wxid: 发送群邀请链接的人的wxid
@@ -458,39 +479,20 @@ class WeChatSpy:
         request.cmd = GET_CHATROOM_INVITATION_URL
         request.param1 = wxid
         request.param2 = url
-        return self.__send(request, pid, port)
+        return self.__send(request, port)
 
-    def send_link_card(
-            self, receive_wxid: str, send_wxid: str, content: str, image_path: str, pid: int = 0, port: int = 0):
-        """
-        发送链接卡片
-        :param receive_wxid:
-        :param send_wxid:
-        :param content:
-        :param image_path:
-        :param pid:
-        :param port:
-        :return:
-        """
-        request = spy_pb2.Request()
-        request.cmd = SEND_LINK_CARD
-        request.param1 = receive_wxid
-        request.param2 = content
-        request.param3 = send_wxid
-        request.param4 = image_path
-        return self.__send(request, pid, port)
-
-    def decrypt_image(self, md5: str, file: str, pid: int = 0, port: int = 0):
+    def decrypt_image(self, source_file: str, target_file: str, port: int = 0):
         """
         解密图片
-        :param md5:
-        :param file:
-        :param pid:
+        :param source_file: 需要解密的图片文件
+        :param target_file: 解密后保存的路径
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = DECRYPT_IMAGE
-        request.param1 = md5
-        request.param2 = file
-        return self.__send(request, pid, port)
+        request.type = DECRYPT_IMAGE
+        file_message = spy_pb2.FileMessage()
+        file_message.wxid = source_file
+        file_message.filePath = target_file
+        request.bytes = file_message.SerializeToString()
+        return self.__send(request, port)
