@@ -149,3 +149,5 @@ if __name__ == '__main__':
                 0)
         elif cmd == CREATE_GROUP:
             spy.create_group("wxid_2mh1kb172f7l21,wxid_z5xpxbzzqxih21", 0)
+        elif cmd == SET_GROUP_NAME:
+            spy.set_group_name("20646587964@chatroom", "PyWeChatSpy交流群")

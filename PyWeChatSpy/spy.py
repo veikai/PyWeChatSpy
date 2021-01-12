@@ -420,7 +420,7 @@ class WeChatSpy:
         request.param1 = wxid
         return self.__send(request, port)
 
-    def set_chatroom_name(self, wxid: str, name: str, port: int = 0):
+    def set_group_name(self, wxid: str, name: str, port: int = 0):
         """
         设置群聊名称
         :param wxid:
@@ -430,9 +430,11 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = SET_CHATROOM_NAME
-        request.param1 = wxid
-        request.param2 = name
+        request.type = SET_GROUP_NAME
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = name
+        request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
     def show_qrcode(self, output_path: str = "", port: int = 0):
