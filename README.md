@@ -27,4 +27,5 @@ help people make better use of WeChatForPC
 * 移除联系人 remove_contact
 * 发送小程序 send_mini_program
 * 发送链接卡片 send_link_card
-* 创建群聊 create_group
+* 创建群聊 create_chatroom
+* 设置群名称 set_chatroom_name

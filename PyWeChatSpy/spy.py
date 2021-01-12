@@ -272,7 +272,7 @@ class WeChatSpy:
         request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
-    def create_group(self, wxid: str, port: int = 0):
+    def create_chatroom(self, wxid: str, port: int = 0):
         """
         创建群聊
         :param wxid: 拉群wxid,以","分隔 至少需要两个，不包括自己
@@ -282,7 +282,7 @@ class WeChatSpy:
         if len(wxid.split(",")) < 2:
             return self.logger.warning("This function requires at least two wxids separated by ','")
         request = spy_pb2.Request()
-        request.type = CREATE_GROUP
+        request.type = CREATE_CHATROOM
         request.bytes = bytes(wxid, encoding="utf8")
         return self.__send(request, port)
 
@@ -302,7 +302,7 @@ class WeChatSpy:
         request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
-    def remove_chatroom_member(self, chatroom_wxid: str, wxid: str, port: int = 0):
+    def remove_group_member(self, chatroom_wxid: str, wxid: str, port: int = 0):
         """
         移除群成员
         :param chatroom_wxid:
@@ -420,17 +420,16 @@ class WeChatSpy:
         request.param1 = wxid
         return self.__send(request, port)
 
-    def set_group_name(self, wxid: str, name: str, port: int = 0):
+    def set_chatroom_name(self, wxid: str, name: str, port: int = 0):
         """
         设置群聊名称
-        :param wxid:
-        :param name:
-        :param pid:
+        :param wxid: 群wxid
+        :param name: 群名称
         :param port:
         :return:
         """
         request = spy_pb2.Request()
-        request.type = SET_GROUP_NAME
+        request.type = SET_CHATROOM_NAME
         text_message = spy_pb2.TextMessage()
         text_message.wxid = wxid
         text_message.text = name

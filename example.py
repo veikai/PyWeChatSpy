@@ -147,7 +147,7 @@ if __name__ == '__main__':
                 "http://www.baidu.com",
                 r"D:\18020891\Documents\WeChat Files\wxid_ekxxwtu6212f21\FileStorage\Cache\2020-12\af3fff6dff2e35b4d85af849ac216034_t.jpg",
                 0)
-        elif cmd == CREATE_GROUP:
-            spy.create_group("wxid_2mh1kb172f7l21,wxid_z5xpxbzzqxih21", 0)
-        elif cmd == SET_GROUP_NAME:
-            spy.set_group_name("20646587964@chatroom", "PyWeChatSpy交流群")
+        elif cmd == CREATE_CHATROOM:
+            spy.create_chatroom("wxid_2mh1kb172f7l21,wxid_z5xpxbzzqxih21", 0)
+        elif cmd == SET_CHATROOM_NAME:
+            spy.set_chatroom_name("20646587964@chatroom", "PyWeChatSpy交流群")
