@@ -3,19 +3,19 @@ help people make better use of WeChatForPC
 
 相关文章：[硬核WeChatBot](https://zhuanlan.zhihu.com/p/118674498)
 
-##支持微信版本
+## 支持微信版本
 ### 3.0.0.57
 微信客户端下载：[https://pan.baidu.com/s/1FIHQ4BCkpTSC-7QHk13LHw](https://pan.baidu.com/s/1FIHQ4BCkpTSC-7QHk13LHw) 提取码: v2n3
 
-##功能列表
-###基础功能
+## 功能列表
+### 基础功能
 * 获取聊天消息
 * 获取登录账号信息 get_account_details
 * 发送文本 send_text
 * 发送文件、图片 send_file
 * 解密微信图片文件 decrypt_image
     * 微信的图片下载到本地是加密的，需要使用此方法解密后方能看到图片原始内容
-###高级功能
+### 高级功能
 * 获取联系人列表 get_contacts
   * 获取所有联系人，包括好友与群，不活跃的群可能无法获取
 * 获取联系人详情、群成员列表 get_contact_details
