@@ -14,12 +14,13 @@ _sym_db = _symbol_database.Default()
 # import wx_pb2 as wx__pb2
 from . import wx_pb2 as wx__pb2
 
+
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='spy.proto',
   package='spy',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\tspy.proto\x12\x03spy\x1a\x08wx.proto\"/\n\x0b\x43hatMessage\x12 \n\x07message\x18\x01 \x03(\x0b\x32\x0f.wx.ChatMessage\"\xeb\x01\n\x0e\x41\x63\x63ountDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x11\n\tautograph\x18\x04 \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\x05 \x01(\t\x12\x14\n\x0cprofilePhoto\x18\x06 \x01(\t\x12\r\n\x05phone\x18\x07 \x01(\t\x12\r\n\x05\x65mail\x18\x08 \x01(\t\x12\n\n\x02qq\x18\t \x01(\x03\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x10\n\x08province\x18\x0c \x01(\t\x12\x0f\n\x07\x63ountry\x18\r \x01(\t\"6\n\x08\x43ontacts\x12*\n\x0e\x63ontactDetails\x18\x01 \x03(\x0b\x32\x12.wx.ContactDetails\"9\n\x0bTextMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x0e\n\x06wxidAt\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\"-\n\x0b\x46ileMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08\x66ilePath\x18\x02 \x01(\t\"\xae\x01\n\nXmlMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x65sc\x18\x03 \x01(\t\x12\r\n\x05\x61ppId\x18\x04 \x01(\t\x12\r\n\x05route\x18\x05 \x01(\t\x12\x0b\n\x03url\x18\x06 \x01(\t\x12\x11\n\timagePath\x18\x07 \x01(\t\x12\x10\n\x08username\x18\x08 \x01(\t\x12\x14\n\x0cweappiconurl\x18\t \x01(\t\x12\x0f\n\x07\x61ppname\x18\n \x01(\t\"=\n\x12\x43ontactApplication\x12\x17\n\x0f\x65ncryptusername\x18\x01 \x01(\t\x12\x0e\n\x06ticket\x18\x02 \x01(\t\"m\n\x08Response\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\x0b\n\x03pid\x18\x03 \x01(\x05\x12\x0c\n\x04port\x18\x04 \x01(\x05\x12\n\n\x02id\x18\x05 \x01(\t\x12\x0c\n\x04\x63ode\x18\x06 \x01(\x05\x12\x0f\n\x07message\x18\x07 \x01(\t\"2\n\x07Request\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\n\n\x02id\x18\x03 \x01(\t\"d\n\x13\x43reateGroupCallback\x12-\n\nmemberData\x18\x06 \x03(\x0b\x32\x19.wx.CreateGroupMemberData\x12\x1e\n\x04wxid\x18\x07 \x01(\x0b\x32\x10.wx.WeChatStringb\x06proto3'
+  serialized_pb=b'\n\tspy.proto\x12\x03spy\x1a\x08wx.proto\"/\n\x0b\x43hatMessage\x12 \n\x07message\x18\x01 \x03(\x0b\x32\x0f.wx.ChatMessage\"\xeb\x01\n\x0e\x41\x63\x63ountDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x10\n\x08wechatid\x18\x03 \x01(\t\x12\x11\n\tautograph\x18\x04 \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\x05 \x01(\t\x12\x14\n\x0cprofilePhoto\x18\x06 \x01(\t\x12\r\n\x05phone\x18\x07 \x01(\t\x12\r\n\x05\x65mail\x18\x08 \x01(\t\x12\n\n\x02qq\x18\t \x01(\x03\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x0c\n\x04\x63ity\x18\x0b \x01(\t\x12\x10\n\x08province\x18\x0c \x01(\t\x12\x0f\n\x07\x63ountry\x18\r \x01(\t\"6\n\x08\x43ontacts\x12*\n\x0e\x63ontactDetails\x18\x01 \x03(\x0b\x32\x12.wx.ContactDetails\"9\n\x0bTextMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x0e\n\x06wxidAt\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\"-\n\x0b\x46ileMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08\x66ilePath\x18\x02 \x01(\t\"\xae\x01\n\nXmlMessage\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x65sc\x18\x03 \x01(\t\x12\r\n\x05\x61ppId\x18\x04 \x01(\t\x12\r\n\x05route\x18\x05 \x01(\t\x12\x0b\n\x03url\x18\x06 \x01(\t\x12\x11\n\timagePath\x18\x07 \x01(\t\x12\x10\n\x08username\x18\x08 \x01(\t\x12\x14\n\x0cweappiconurl\x18\t \x01(\t\x12\x0f\n\x07\x61ppname\x18\n \x01(\t\"=\n\x12\x43ontactApplication\x12\x17\n\x0f\x65ncryptusername\x18\x01 \x01(\t\x12\x0e\n\x06ticket\x18\x02 \x01(\t\"m\n\x08Response\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\x0b\n\x03pid\x18\x03 \x01(\x05\x12\x0c\n\x04port\x18\x04 \x01(\x05\x12\n\n\x02id\x18\x05 \x01(\t\x12\x0c\n\x04\x63ode\x18\x06 \x01(\x05\x12\x0f\n\x07message\x18\x07 \x01(\t\"2\n\x07Request\x12\x0c\n\x04type\x18\x01 \x01(\x05\x12\r\n\x05\x62ytes\x18\x02 \x01(\x0c\x12\n\n\x02id\x18\x03 \x01(\t\"d\n\x13\x43reateGroupCallback\x12\x1e\n\x04wxid\x18\x01 \x01(\x0b\x32\x10.wx.WeChatString\x12-\n\nmemberData\x18\x02 \x03(\x0b\x32\x19.wx.CreateGroupMemberData\"l\n\x12GroupMemberDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x14\n\x0c\x64\x65tailsCount\x18\x02 \x01(\x05\x12\x32\n\x12groupMemberDetails\x18\x03 \x03(\x0b\x32\x16.wx.GroupMemberDetails\"E\n\x10GroupMemberEvent\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08wxidJoin\x18\x02 \x03(\t\x12\x11\n\twxidLeave\x18\x03 \x03(\tb\x06proto3'
   ,
   dependencies=[wx__pb2.DESCRIPTOR,])
 
@@ -544,16 +545,16 @@ _CREATEGROUPCALLBACK = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='memberData', full_name='spy.CreateGroupCallback.memberData', index=0,
-      number=6, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
+      name='wxid', full_name='spy.CreateGroupCallback.wxid', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='wxid', full_name='spy.CreateGroupCallback.wxid', index=1,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='memberData', full_name='spy.CreateGroupCallback.memberData', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -573,10 +574,101 @@ _CREATEGROUPCALLBACK = _descriptor.Descriptor(
   serialized_end=980,
 )
 
+
+_GROUPMEMBERDETAILS = _descriptor.Descriptor(
+  name='GroupMemberDetails',
+  full_name='spy.GroupMemberDetails',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='wxid', full_name='spy.GroupMemberDetails.wxid', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='detailsCount', full_name='spy.GroupMemberDetails.detailsCount', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='groupMemberDetails', full_name='spy.GroupMemberDetails.groupMemberDetails', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=982,
+  serialized_end=1090,
+)
+
+
+_GROUPMEMBEREVENT = _descriptor.Descriptor(
+  name='GroupMemberEvent',
+  full_name='spy.GroupMemberEvent',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='wxid', full_name='spy.GroupMemberEvent.wxid', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='wxidJoin', full_name='spy.GroupMemberEvent.wxidJoin', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='wxidLeave', full_name='spy.GroupMemberEvent.wxidLeave', index=2,
+      number=3, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1092,
+  serialized_end=1161,
+)
+
 _CHATMESSAGE.fields_by_name['message'].message_type = wx__pb2._CHATMESSAGE
 _CONTACTS.fields_by_name['contactDetails'].message_type = wx__pb2._CONTACTDETAILS
-_CREATEGROUPCALLBACK.fields_by_name['memberData'].message_type = wx__pb2._CREATEGROUPMEMBERDATA
 _CREATEGROUPCALLBACK.fields_by_name['wxid'].message_type = wx__pb2._WECHATSTRING
+_CREATEGROUPCALLBACK.fields_by_name['memberData'].message_type = wx__pb2._CREATEGROUPMEMBERDATA
+_GROUPMEMBERDETAILS.fields_by_name['groupMemberDetails'].message_type = wx__pb2._GROUPMEMBERDETAILS
 DESCRIPTOR.message_types_by_name['ChatMessage'] = _CHATMESSAGE
 DESCRIPTOR.message_types_by_name['AccountDetails'] = _ACCOUNTDETAILS
 DESCRIPTOR.message_types_by_name['Contacts'] = _CONTACTS
@@ -587,6 +679,8 @@ DESCRIPTOR.message_types_by_name['ContactApplication'] = _CONTACTAPPLICATION
 DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
 DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
 DESCRIPTOR.message_types_by_name['CreateGroupCallback'] = _CREATEGROUPCALLBACK
+DESCRIPTOR.message_types_by_name['GroupMemberDetails'] = _GROUPMEMBERDETAILS
+DESCRIPTOR.message_types_by_name['GroupMemberEvent'] = _GROUPMEMBEREVENT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ChatMessage = _reflection.GeneratedProtocolMessageType('ChatMessage', (_message.Message,), {
@@ -658,6 +752,20 @@ CreateGroupCallback = _reflection.GeneratedProtocolMessageType('CreateGroupCallb
   # @@protoc_insertion_point(class_scope:spy.CreateGroupCallback)
   })
 _sym_db.RegisterMessage(CreateGroupCallback)
+
+GroupMemberDetails = _reflection.GeneratedProtocolMessageType('GroupMemberDetails', (_message.Message,), {
+  'DESCRIPTOR' : _GROUPMEMBERDETAILS,
+  '__module__' : 'spy_pb2'
+  # @@protoc_insertion_point(class_scope:spy.GroupMemberDetails)
+  })
+_sym_db.RegisterMessage(GroupMemberDetails)
+
+GroupMemberEvent = _reflection.GeneratedProtocolMessageType('GroupMemberEvent', (_message.Message,), {
+  'DESCRIPTOR' : _GROUPMEMBEREVENT,
+  '__module__' : 'spy_pb2'
+  # @@protoc_insertion_point(class_scope:spy.GroupMemberEvent)
+  })
+_sym_db.RegisterMessage(GroupMemberEvent)
 
 
 # @@protoc_insertion_point(module_scope)

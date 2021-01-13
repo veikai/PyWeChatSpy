@@ -16,4 +16,4 @@ from .spy import WeChatSpy
 #                `--`                                                                                         `--`
 WECHAT_SUPPORTED = ["3.0.0.57"]
 
-__version__ = "3.0.3.3"
+__version__ = "3.0.4.0"

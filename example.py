@@ -109,6 +109,14 @@ def my_proto_parser(data):
         callback = spy_pb2.CreateGroupCallback()
         callback.ParseFromString(data.bytes)
         print(callback)
+    elif data.type == GROUP_MEMBER_DETAILS:  # 群成员详情
+        group_member_details = spy_pb2.GroupMemberDetails()
+        group_member_details.ParseFromString(data.bytes)
+        print(group_member_details)
+    elif data.type == GROUP_MEMBER_EVENT:
+        group_member_event = spy_pb2.GroupMemberEvent()
+        group_member_event.ParseFromString(data.bytes)
+        print(group_member_event)
     else:
         print(data)
 
