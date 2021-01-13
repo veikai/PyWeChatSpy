@@ -14,6 +14,7 @@ def my_parser(data):
             _from = message.wxidFrom.str  # 消息发送方
             _to = message.wxidTo.str  # 消息接收方
             content = message.content.str  # 消息内容
+            print(_type, _from, _to, content)
             if _type == 10000:  # 判断是微信拍一拍系统提示
                 # 因为微信系统消息很多 因此需要用正则匹配消息内容进一步过滤拍一拍提示
                 m = re.search('".*" 拍了拍你', content)

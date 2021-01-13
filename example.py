@@ -160,6 +160,7 @@ if __name__ == '__main__':
         elif cmd == SET_CHATROOM_NAME:
             spy.set_chatroom_name("20646587964@chatroom", "PyWeChatSpy交流群")
         elif cmd == GET_CONTACT_STATUS:
+            # spy.get_contact_status("wxid_wbgerrlnz6kt22")
             spy.get_contact_status("wxid_z5xpxbzzqxih21")
         elif cmd == SEND_FILE:
             spy.send_file("20646587964@chatroom", r"D:\18020891\Pictures\b.jpg")
