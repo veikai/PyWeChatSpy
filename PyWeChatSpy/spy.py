@@ -416,8 +416,8 @@ class WeChatSpy:
         :return:
         """
         request = spy_pb2.Request()
-        request.cmd = CONTACT_STATUS
-        request.param1 = wxid
+        request.type = GET_CONTACT_STATUS
+        request.bytes = bytes(wxid, encoding="utf8")
         return self.__send(request, port)
 
     def set_chatroom_name(self, wxid: str, name: str, port: int = 0):

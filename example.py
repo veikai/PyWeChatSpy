@@ -66,7 +66,7 @@ def my_proto_parser(data):
             account_details = spy_pb2.AccountDetails()
             account_details.ParseFromString(data.bytes)
             print(account_details)
-            spy.get_contacts()  # 获取联系人列表
+            # spy.get_contacts()  # 获取联系人列表
         else:
             logger.warning(data.message)
     elif data.type == CONTACTS_LIST:  # 联系人列表
@@ -151,3 +151,7 @@ if __name__ == '__main__':
             spy.create_chatroom("wxid_2mh1kb172f7l21,wxid_z5xpxbzzqxih21", 0)
         elif cmd == SET_CHATROOM_NAME:
             spy.set_chatroom_name("20646587964@chatroom", "PyWeChatSpy交流群")
+        elif cmd == GET_CONTACT_STATUS:
+            spy.get_contact_status("wxid_z5xpxbzzqxih21")
+        elif cmd == SEND_FILE:
+            spy.send_file("20646587964@chatroom", r"D:\18020891\Pictures\b.jpg")
