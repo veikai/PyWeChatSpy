@@ -68,8 +68,10 @@ def my_parse():
                     file_path = os.path.join(WECHAT_PROFILE, file_path)
                     time.sleep(10)
                     spy.decrypt_image(file_path, "a.jpg")
+                elif _type == 43:  # 视频消息
+                    print(_from, _to, content, message.file)
                 elif _type == 49:  # XML报文消息
-                    print(_from, content)
+                    print(_from, content, message.file)
         elif data.type == ACCOUNT_DETAILS:  # 登录账号详情
             if data.code:
                 account_details = spy_pb2.AccountDetails()

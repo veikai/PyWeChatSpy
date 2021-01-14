@@ -9,7 +9,7 @@ help people make better use of WeChatForPC
 
 ## 功能列表
 ### 基础功能
-* 获取聊天消息
+* 推送聊天消息 CHAT_MESSAGE
 * 获取登录账号信息 get_account_details
 * 发送文本 send_text
 * 发送文件、图片 send_file
@@ -31,5 +31,69 @@ help people make better use of WeChatForPC
 * 设置群名称 set_chatroom_name
 * 推送群成员详情 GROUP_MEMBER_DETAILS
 * 推送群成员变动(进群&退群) GROUP_MEMBER_EVENT
+
+## 数据结构
+### 登录信息 AccountDetails `account_details = spy_pb2.AccountDetails()`
+* wxid 登录账号wxid `account_details.wxid`
+* nickname 登录账号昵称 `account_details.nickname`
+* wechatid 登录账号微信号 `account_details.wechatid`
+* autograph 登录账号签名 `account_details.autograph`
+* profilePhotoHD 登录账号高清头像 `account_details.profilePhotoHD`
+* profilePhoto 登录账号头像 `account_details.profilePhoto`
+* phone 登录账号绑定手机号 `account_details.phone`
+* email 登录账号绑定邮箱 `account_details.email`
+* qq 登录账号绑定QQ `account_details.qq`
+* sex 登录账号性别 1男/2女 `account_details.sex`
+* city 登录账号所在城市 `account_details.city`
+* province 登录账号所在省份 `account_details.province`
+* country 登录账号所在国家 `account_details.country`
+
+### Contacts 联系人列表 `contacts_list = spy_pb2.Contacts()`
+* contactDetails 联系人详情(可遍历) `for contact in contacts_list.contactDetails`
+  * wxid 联系人wxid结构 `contact.wxid`
+    * str 联系人wxid `contact.wxid.str`
+  * nickname 联系人昵称结构 `contact.nickname`
+    * str 联系人昵称 `contact.nickname.str`
+  * sex 联系人性别 1男/2女 `contact.sex`
+  * remark 联系人备注结构 `contact.remark`
+    * str 联系人备注 `contact.remark.str`
+  * wechatId 联系人微信号 `contact.wechatId`
+  * groupOwnerWxid 群主wxid(如果联系人是群聊 wxid以"@chatroom"结尾) `cotact.groupOwnerWxid`
+  * profilePhotoHD 联系人高清头像 `cotact.profilePhotoHD`
+  * profilePhoto 联系人头像 `contact.profilePhoto`
+  * groupMemberList 群成员列表(如果联系人是群聊 wxid以"@chatroom"结尾) `contact.groupMemberList`
+    * memberCount 群成员数量 `contact.groupMemberList.memberCount`
+    * groupMember 群成员信息(可遍历) `for member in contacts_list.contactDetails.groupMemberList.groupMember`
+      * wxid 群成员wxid `member.wxid`
+      * nickname 群成员昵称 `member.nickname`
+
+### ChatMessage 微信消息 `chat_message = spy_pb2.ChatMessage()`
+* message 微信消息(可遍历) `for message in chat_message.message`
+  * wxidFrom 消息发送方wxid结构 `message.wxidFrom`
+    * str 消息发送方wxid `message.wxidFrom.str`
+  * wxidTo 消息接收方wxid结构 `message.wxidTo`
+    * str 消息接收方 `message.wxidTo.str`
+  * type 消息类型 1文本3图片43视频49Xml37好友请求10000系统消息... `message.type`
+  * content 消息内容结构 `message.content`
+    * str 消息内容 `message.content.str`
+  * timestamp 消息时间戳 `message.timestamp`
+  * head 消息头 `message.head`
+  * file 消息附带文件(图片、视频等) `message.file`
+  
+### GroupMemberDetails 群成员详情 `group_member_details = spy_pb2.GroupMemberDetails()`
+* wxid 群wxid `group_member_details.wxid`
+* detailsCount 详情数量(非群成员数量) `group_member_details.detailsCount`
+* groupMemberDetails 群成员详情(可遍历) `for member_details in group_member_details.groupMemberDetails`
+  * wxid 群成员wxid `member_details.wxid`
+  * nickname 群成员昵称 `member_details.nickname`
+  * groupNickname 群成员群内昵称 `member_details.groupNickname`
+  * profilePhotoHD 群成员高清头像 `member_details.profilePhotoHD`
+  * profilePhoto 群成员头像 `member_details.profilePhoto`
+  * inviterWxid 群成员邀请人wxid `member_details.inviterWxid`
+  
+### GroupMemberEvent 群成员变动事件 `group_member_event = spy_pb2.GroupMemberEvent()`
+* wxid 群wxid `group_member_event.wxid`
+* wxidJoin 进群wxid(可遍历) `for _join in group_member_event.wxidJoin`
+* wxidLeave 退群wxid(可遍历) `for _leave in group_member_event.wxidLeave`
 
 示例代码见example.py
