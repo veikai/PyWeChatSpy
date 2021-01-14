@@ -17,7 +17,7 @@ help people make better use of WeChatForPC
     * 微信的图片下载到本地是加密的，需要使用此方法解密后方能看到图片原始内容
 ### 高级功能
 * 获取联系人列表 get_contacts
-  * 获取所有联系人，包括好友与群，不活跃的群可能无法获取
+    * 获取所有联系人，包括好友与群，不活跃的群可能无法获取
 * 获取联系人详情、群成员列表 get_contact_details
 * 发送群公告 send_announcement
 * 自动通过好友请求 accept_new_contact

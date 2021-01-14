@@ -82,7 +82,7 @@ def my_proto_parser(data):
                     groups.append(wxid)
             wxid = groups.pop()
             print(wxid)
-            spy.get_contact_details("13377920475@chatroom")
+            spy.get_contact_details("20646587964@chatroom")
         else:
             logger.error(data.message)
     elif data.type == CONTACT_DETAILS:
@@ -130,9 +130,9 @@ if __name__ == '__main__':
         if cmd == ACCOUNT_DETAILS:
             spy.get_account_details()
         elif cmd == SEND_TEXT:
-            spy.send_text("13377920475@chatroom", "@Hello LingXi", "wxid_wbgerrlnz6kt22", 0)
+            spy.send_text("20646587964@chatroom", "@Hello PyWeChatSpy", "wxid_wbgerrlnz6kt22", 0)
         elif cmd == SET_REMARK:
-            spy.set_remark("wxid_w4hfnfm8w5kx22", "备注测试")
+            spy.set_remark("wxid_wbgerrlnz6kt22", "备注测试")
         elif cmd == SEND_MINI_PROGRAM:
             image_path = r"D:\18020891\Pictures\b.jpg"
             spy.send_mini_program(
