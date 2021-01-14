@@ -302,7 +302,7 @@ class WeChatSpy:
         request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
-    def remove_group_member(self, chatroom_wxid: str, wxid: str, port: int = 0):
+    def remove_chatroom_member(self, chatroom_wxid: str, wxid: str, port: int = 0):
         """
         移除群成员
         :param chatroom_wxid:

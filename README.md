@@ -10,30 +10,85 @@ help people make better use of WeChatForPC
 ## 功能列表
 ### 基础功能
 * 推送聊天消息 CHAT_MESSAGE
+    * 回调结构 [ChatMessage](#ChatMessage)
 * 获取登录账号信息 get_account_details
+    * 回调结构 [AccountDetails](#AccountDetails)
 * 发送文本 send_text
+  * 入参
+    * wxid 文本消息接收方wxid
+    * text 文本内容  
+    * at_wxid 需要被@的wxid(仅限群聊)
 * 发送文件、图片 send_file
-* 解密微信图片文件 decrypt_image
-    * 微信的图片下载到本地是加密的，需要使用此方法解密后方能看到图片原始内容
+  * 入参
+    * wxid 文件接收方wxid
+    * file_path 文件路径
+* 解密微信图片文件 decrypt_image(微信的图片下载到本地是加密的，需要使用此方法解密后方能看到图片原始内容)
+  * 入参
+    * source_file 带解密图片文件
+    * target_file 解密后图片保存路径
 ### 高级功能
-* 获取联系人列表 get_contacts
-    * 获取所有联系人，包括好友与群，不活跃的群可能无法获取
+* 获取联系人列表 get_contacts(获取所有联系人，包括好友与群，不活跃的群可能无法获取)
+  * 回调结构 [Contacts](#Contacts)
 * 获取联系人详情、群成员列表 get_contact_details
+  * 入参
+    * 联系人wxid
+  * 回调结构 [Contacts](#Contacts)
 * 发送群公告 send_announcement
+  * 入参
+    * wxid 群wxid
+    * content 公告内容
 * 自动通过好友请求 accept_new_contact
+  * 入参
+    * encryptusername 好友请求Xml消息结构体同名字段值
+    * ticket 好友请求Xml消息结构体同名字段值
 * 设置联系人备注 set_remark
+  * 入参
+    * wxid 联系人wxid
+    * remark 备注内容
 * 分享群聊 share_chatroom
+  * 入参
+    * chatroom_wxid 待分享群聊wxid
+    * wxid 联系人wxid
 * 移除群成员 remove_chatroom_member
+  * 入参
+    * chatroom_wxid 待移除成员群聊wxid
+    * wxid 待移除群聊成员wxid
 * 移除联系人 remove_contact
+  * 入参
+    * wxid 待移除联系人wxid
 * 发送小程序 send_mini_program
+  * 入参
+    * wxid 接收方wxid
+    * title 小程序标题
+    * image_path 小程序封面
+    * route 小程序跳转路由，抓包小程序消息获取pagepath或自行生成
+    * app_id 小程序AppId
+    * username 小程序源Id
+    * weappiconurl 小程序图标url
+    * appname 小程序名称
 * 发送链接卡片 send_link_card
+  * 入参
+    * wxid 接收方wxid
+    * title 卡片标题
+    * desc 卡片描述
+    * app_id 卡片AppId
+    * url 卡片跳转url
+    * image_path 卡片封面图片路径
 * 创建群聊 create_chatroom
+  * 入参
+    * wxid 创建群聊拉取的联系人wxid，不包括自己，至少连个，英文逗号分隔
+  * 回调结构 [CreateGroupCallback](#CreateGroupCallback)
 * 设置群名称 set_chatroom_name
+  * 入参
+    * wxid 待改名群聊wxid
+    * name 群聊名称
 * 推送群成员详情 GROUP_MEMBER_DETAILS
+  * 回调结构 [GroupMemberDetails](#GroupMemberDetails)
 * 推送群成员变动(进群&退群) GROUP_MEMBER_EVENT
+  * 回调结构 [GroupMemberEvent](#GroupMemberEvent)
 
 ## 数据结构
-### 登录信息 AccountDetails `account_details = spy_pb2.AccountDetails()`
+### <span id="AccountDetails">登录信息 AccountDetails</span> `account_details = spy_pb2.AccountDetails()`
 * wxid 登录账号wxid `account_details.wxid`
 * nickname 登录账号昵称 `account_details.nickname`
 * wechatid 登录账号微信号 `account_details.wechatid`
@@ -48,7 +103,7 @@ help people make better use of WeChatForPC
 * province 登录账号所在省份 `account_details.province`
 * country 登录账号所在国家 `account_details.country`
 
-### Contacts 联系人列表 `contacts_list = spy_pb2.Contacts()`
+### <span id="Contacts">Contacts</span> 联系人列表 `contacts_list = spy_pb2.Contacts()`
 * contactDetails 联系人详情(可遍历) `for contact in contacts_list.contactDetails`
   * wxid 联系人wxid结构 `contact.wxid`
     * str 联系人wxid `contact.wxid.str`
@@ -67,7 +122,7 @@ help people make better use of WeChatForPC
       * wxid 群成员wxid `member.wxid`
       * nickname 群成员昵称 `member.nickname`
 
-### ChatMessage 微信消息 `chat_message = spy_pb2.ChatMessage()`
+### <span id="ChatMessage">ChatMessage</span> 微信消息 `chat_message = spy_pb2.ChatMessage()`
 * message 微信消息(可遍历) `for message in chat_message.message`
   * wxidFrom 消息发送方wxid结构 `message.wxidFrom`
     * str 消息发送方wxid `message.wxidFrom.str`
@@ -80,7 +135,7 @@ help people make better use of WeChatForPC
   * head 消息头 `message.head`
   * file 消息附带文件(图片、视频等) `message.file`
   
-### GroupMemberDetails 群成员详情 `group_member_details = spy_pb2.GroupMemberDetails()`
+### <span id="GroupMemberDetails">GroupMemberDetails</span> 群成员详情 `group_member_details = spy_pb2.GroupMemberDetails()`
 * wxid 群wxid `group_member_details.wxid`
 * detailsCount 详情数量(非群成员数量) `group_member_details.detailsCount`
 * groupMemberDetails 群成员详情(可遍历) `for member_details in group_member_details.groupMemberDetails`
@@ -91,9 +146,14 @@ help people make better use of WeChatForPC
   * profilePhoto 群成员头像 `member_details.profilePhoto`
   * inviterWxid 群成员邀请人wxid `member_details.inviterWxid`
   
-### GroupMemberEvent 群成员变动事件 `group_member_event = spy_pb2.GroupMemberEvent()`
+### <span id="GroupMemberEvent">GroupMemberEvent</span> 群成员变动事件 `group_member_event = spy_pb2.GroupMemberEvent()`
 * wxid 群wxid `group_member_event.wxid`
 * wxidJoin 进群wxid(可遍历) `for _join in group_member_event.wxidJoin`
 * wxidLeave 退群wxid(可遍历) `for _leave in group_member_event.wxidLeave`
+
+### <span id="CreateGroupCallback">CreateGroupCallback</span> 创建群聊回调 `callback = spy_pb2.CreateGroupCallback()`
+* wxid 群聊wxid结构 `callback.wxid`
+  * str 群聊wxid `callback.wxid.str`
+  
 
 示例代码见example.py
