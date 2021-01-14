@@ -52,10 +52,10 @@ class WeChatSpy:
         attach_thread.daemon = True
         attach_thread.name = "attach"
         attach_thread.start()
-        parse_thrad = Thread(target=self.__parse)
-        parse_thrad.daemon = True
-        parse_thrad.name = "parse"
-        parse_thrad.start()
+        parse_thread = Thread(target=self.__parse)
+        parse_thread.daemon = True
+        parse_thread.name = "parse_proto"
+        parse_thread.start()
 
     def __start_server(self):
         while True:
