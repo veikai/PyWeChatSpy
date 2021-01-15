@@ -1,13 +1,12 @@
 import os
 from socket import socket, AF_INET, SOCK_STREAM
-from threading import Thread, Lock
+from threading import Thread
 import logging
 import warnings
 from .proto import spy_pb2
 from .command import *
 import subprocess
 from queue import Queue
-from time import sleep
 from uuid import uuid4
 
 
@@ -35,7 +34,6 @@ class WeChatSpy:
             raise Exception("response_queue must be Queue")
         self.pids = []
         self.__port2client = dict()
-        self.__lock = Lock()
         self.__queue = Queue()
         host = "127.0.0.1"
         port = 9527
@@ -48,20 +46,13 @@ class WeChatSpy:
         t_start_server.start()
         current_path = os.path.split(os.path.abspath(__file__))[0]
         helper_path = os.path.join(current_path, "SpyK.exe 3.0")
-        attach_thread = Thread(target=os.system, args=(helper_path,))
-        attach_thread.daemon = True
-        attach_thread.name = "attach"
-        attach_thread.start()
-        parse_thread = Thread(target=self.__parse)
-        parse_thread.daemon = True
-        parse_thread.name = "parse_proto"
-        parse_thread.start()
+        subprocess.Popen(helper_path)
 
     def __start_server(self):
         while True:
             socket_client, client_address = self.__socket_server.accept()
             self.__port2client[client_address[1]] = socket_client
-            self.logger.info(f"A WeChat process from {client_address} successfully connected")
+            self.logger.debug(f"A WeChat process from {client_address} successfully connected")
             if self.__key:
                 self.set_commercial(self.__key, port=client_address[1])
             t_socket_client_receive = Thread(target=self.receive, args=(socket_client, client_address))
@@ -70,7 +61,6 @@ class WeChatSpy:
             t_socket_client_receive.start()
 
     def receive(self, socket_client: socket, client_address: tuple):
-        port_bytes = int.to_bytes(client_address[1], length=4, byteorder="little")
         recv_bytes = b""
         data_size = 0
         while True:
@@ -86,53 +76,14 @@ class WeChatSpy:
                     else:
                         break
                 elif data_size <= len(recv_bytes) - 4:
-                    data_byte = port_bytes + recv_bytes[: data_size + 4]
-                    # response = spy_pb2.Response()
-                    # response.ParseFromString(data_byte)
-                    # response.port = client_address[1]
-                    # print(response)
-                    self.__lock.acquire()
-                    for _byte in data_byte:
-                        self.__queue.put(int.to_bytes(_byte, 1, "little"))
-                    self.__lock.release()
+                    response = spy_pb2.Response()
+                    response.ParseFromString(recv_bytes[4: data_size + 4])
+                    response.port = client_address[1]
+                    self.__response_queue.put(response)
                     recv_bytes = recv_bytes[data_size + 4:]
                     data_size = 0
                 else:
                     break
-
-    def __parse(self):
-        port = 0
-        data_size = 0
-        _bytes = b""
-        while True:
-            if not data_size:
-                if self.__queue.qsize() > 7:
-                    _bytes += self.__queue.get()
-                    _bytes += self.__queue.get()
-                    _bytes += self.__queue.get()
-                    _bytes += self.__queue.get()
-                    port = int.from_bytes(_bytes, "little")
-                    _bytes = b""
-                    _bytes += self.__queue.get()
-                    _bytes += self.__queue.get()
-                    _bytes += self.__queue.get()
-                    _bytes += self.__queue.get()
-                    data_size = int.from_bytes(_bytes, "little")
-                    _bytes = b""
-                else:
-                    sleep(1)
-            elif data_size <= self.__queue.qsize():
-                for i in range(data_size):
-                    _bytes += self.__queue.get()
-                response = spy_pb2.Response()
-                response.ParseFromString(_bytes)
-                response.port = port
-                _bytes = b""
-                port = 0
-                data_size = 0
-                self.__response_queue.put(response)
-            else:
-                sleep(1)
 
     def __send(self, request: spy_pb2.Request, port: int = 0):
         if not port and self.__port2client:

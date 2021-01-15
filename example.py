@@ -11,26 +11,27 @@ from queue import Queue
 
 
 logger = logging.getLogger(__file__)
+logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s [%(threadName)s] %(levelname)s: %(message)s')
 sh = logging.StreamHandler()
 sh.setFormatter(formatter)
-sh.setLevel(logging.DEBUG)
+sh.setLevel(logging.INFO)
 logger.addHandler(sh)
-logger.setLevel(logging.INFO)
+
 
 groups = []
 WECHAT_PROFILE = r"D:\Documents\WeChat Files"
 my_response_queue = Queue()
 
 
-def parse():
+def handle_response():
     while True:
         data = my_response_queue.get()
         if data.type == PROFESSIONAL_KEY:
             if not data.code:
                 logger.error(data.message)
         elif data.type == WECHAT_CONNECTED:  # 微信接入
-            print(data)
+            print(f"微信客户端已接入 port:{data.port}")
         elif data.type == HEART_BEAT:  # 心跳
             pass
         elif data.type == WECHAT_LOGIN:  # 微信登录
@@ -128,4 +129,4 @@ def parse():
 if __name__ == '__main__':
     spy = WeChatSpy(response_queue=my_response_queue, key="18d421169d93611a5584affac335e690", logger=logger)
     pid = spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
-    parse()
+    handle_response()
