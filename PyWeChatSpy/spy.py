@@ -12,7 +12,7 @@ from uuid import uuid4
 
 
 class WeChatSpy:
-    def __init__(self, parser=None, key: str = None, logger: logging.Logger = None):
+    def __init__(self, response_queue=None, key: str = None, logger: logging.Logger = None):
         # 付费key
         self.__key = key
         # 日志模块
@@ -28,11 +28,11 @@ class WeChatSpy:
             sh.setLevel(logging.DEBUG)
             self.logger.addHandler(sh)
             self.logger.setLevel(logging.DEBUG)
-        # socket数据处理函数
-        if callable(parser):
-            self.__parser = parser
+        # response存放队列
+        if isinstance(response_queue, Queue):
+            self.__response_queue = response_queue
         else:
-            raise Exception("Parser must be callable")
+            raise Exception("response_queue must be Queue")
         self.pids = []
         self.__port2client = dict()
         self.__lock = Lock()
@@ -130,7 +130,7 @@ class WeChatSpy:
                 _bytes = b""
                 port = 0
                 data_size = 0
-                self.__parser(response)
+                self.__response_queue.put(response)
             else:
                 sleep(1)
 
@@ -152,7 +152,8 @@ class WeChatSpy:
 
     def run(self, wechat: str):
         sp = subprocess.Popen(wechat)
-        self.pids.append(sp)
+        self.pids.append(sp.pid)
+        return sp.pid
 
     def set_commercial(self, key: str, port: int = 0):
         request = spy_pb2.Request()
@@ -394,7 +395,6 @@ class WeChatSpy:
         :param chatroom_wxid: 目标用户所在群
         :param greeting: 招呼
         :param add_type: 添加类型 313:从群聊中添加 314:自己被对方删除 315:对方被自己删除
-        :param pid:
         :param port:
         :return:
         """
@@ -411,7 +411,6 @@ class WeChatSpy:
         """
         获取联系人状态
         :param wxid:
-        :param pid:
         :param port:
         :return:
         """
@@ -440,7 +439,6 @@ class WeChatSpy:
         """
         显示登录二维码
         :param output_path: 输出文件路径
-        :param pid:
         :param port:
         :return:
         """
@@ -454,7 +452,6 @@ class WeChatSpy:
         设置联系人备注
         :param wxid: 需要设置备注的联系人的wxid
         :param remark: 备注内容
-        :param pid:
         :param port:
         :return:
         """
@@ -471,7 +468,6 @@ class WeChatSpy:
         获取群邀请链接
         :param wxid: 发送群邀请链接的人的wxid
         :param url: 群邀请解析出来的url
-        :param pid:
         :param port:
         :return:
         """

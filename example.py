@@ -8,7 +8,6 @@ from PyWeChatSpy.proto import spy_pb2
 import base64
 import os
 from queue import Queue
-from threading import Thread
 
 
 logger = logging.getLogger(__file__)
@@ -20,22 +19,18 @@ logger.addHandler(sh)
 logger.setLevel(logging.INFO)
 
 groups = []
-WECHAT_PROFILE = r"D:\18020891\Documents\WeChat Files"
-request_queue = Queue()
+WECHAT_PROFILE = r"D:\Documents\WeChat Files"
+my_response_queue = Queue()
 
 
-def get_request(data):
-    request_queue.put(data)
-
-
-def my_parse():
+def parse():
     while True:
-        data = request_queue.get()
+        data = my_response_queue.get()
         if data.type == PROFESSIONAL_KEY:
             if not data.code:
                 logger.error(data.message)
         elif data.type == WECHAT_CONNECTED:  # 微信接入
-            pass
+            print(data)
         elif data.type == HEART_BEAT:  # 心跳
             pass
         elif data.type == WECHAT_LOGIN:  # 微信登录
@@ -60,14 +55,12 @@ def my_parse():
                     print(_from, _to, content)
                     if _to == "filehelper":
                         spy.send_text("filehelper", "Hello PyWeChatSpy3.0\n" + content)
-                        if content == "image":
-                            spy.send_file("filehelper", r"D:\18020891\Pictures\b.jpg")
                 elif _type == 3:  # 图片消息
                     file_path = message.file
                     print(_from, _to, content, file_path)
                     file_path = os.path.join(WECHAT_PROFILE, file_path)
                     time.sleep(10)
-                    spy.decrypt_image(file_path, "a.jpg")
+                    # spy.decrypt_image(file_path, "a.jpg")
                 elif _type == 43:  # 视频消息
                     print(_from, _to, content, message.file)
                 elif _type == 49:  # XML报文消息
@@ -133,49 +126,6 @@ def my_parse():
 
 
 if __name__ == '__main__':
-    spy = WeChatSpy(parser=get_request, key="18d421169d93611a5584affac335e690", logger=logger)
-    spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
-    t_parse = Thread(target=my_parse)
-    t_parse.daemon = True
-    t_parse.name = "parse request"
-    t_parse.start()
-    while True:
-        cmd = int(input())
-        print(cmd)
-        if cmd == ACCOUNT_DETAILS:
-            spy.get_account_details()
-        elif cmd == SEND_TEXT:
-            spy.send_text("20646587964@chatroom", "@Hello PyWeChatSpy", "wxid_wbgerrlnz6kt22", 0)
-        elif cmd == SET_REMARK:
-            spy.set_remark("wxid_wbgerrlnz6kt22", "备注测试")
-        elif cmd == SEND_MINI_PROGRAM:
-            image_path = r"D:\18020891\Pictures\b.jpg"
-            spy.send_mini_program(
-                "20646587964@chatroom",
-                "小程序发送测试",
-                image_path,
-                "packageFourth/pages/fourth/fourth.html?productId=12122946310&amp;shop=0000000000&amp;union=Ivcomvrb",
-                "mainApp",
-                "gh_1d1e15e90afc@app",
-                "http://mmbiz.qpic.cn/mmbiz_png/iclBO8bMDwtibgxxBCjYPT74TItA7iamnZST3WNLYv1RVw4LqIBEWLq657C8oR1kXY7Y2N0V8QAibibcPyicIfcT7c3g/640?wx_fmt=png&amp;wxfrom=200",
-                "1234567",
-                0
-            )
-        elif cmd == SEND_LINK_CARD:
-            spy.send_link_card(
-                "20646587964@chatroom",
-                "咖啡发送测试",
-                "屠龙宝刀点击就送",
-                "wx59cc372381201d39",
-                "http://www.baidu.com",
-                r"D:\18020891\Documents\WeChat Files\wxid_ekxxwtu6212f21\FileStorage\Cache\2020-12\af3fff6dff2e35b4d85af849ac216034_t.jpg",
-                0)
-        elif cmd == CREATE_CHATROOM:
-            spy.create_chatroom("wxid_2mh1kb172f7l21,wxid_z5xpxbzzqxih21", 0)
-        elif cmd == SET_CHATROOM_NAME:
-            spy.set_chatroom_name("20646587964@chatroom", "PyWeChatSpy交流群")
-        elif cmd == GET_CONTACT_STATUS:
-            # spy.get_contact_status("wxid_wbgerrlnz6kt22")
-            spy.get_contact_status("wxid_z5xpxbzzqxih21")
-        elif cmd == SEND_FILE:
-            spy.send_file("20646587964@chatroom", r"D:\18020891\Pictures\b.jpg")
+    spy = WeChatSpy(response_queue=my_response_queue, key="18d421169d93611a5584affac335e690", logger=logger)
+    pid = spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
+    parse()
