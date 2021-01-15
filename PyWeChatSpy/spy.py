@@ -34,7 +34,6 @@ class WeChatSpy:
             raise Exception("response_queue must be Queue")
         self.pids = []
         self.__port2client = dict()
-        self.__queue = Queue()
         host = "127.0.0.1"
         port = 9527
         self.__socket_server = socket(AF_INET, SOCK_STREAM)
