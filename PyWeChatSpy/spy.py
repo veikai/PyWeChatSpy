@@ -86,7 +86,7 @@ class WeChatSpy:
 
     def __send(self, request: spy_pb2.Request, port: int = 0):
         if not port and self.__port2client:
-            socket_client = list(self.__port2client.values())[0]
+            socket_client: socket = list(self.__port2client.values())[0]
         elif not (socket_client := self.__port2client.get(port)):
             self.logger.error(f"Failure to find socket client by port:{port}")
             return False
@@ -348,6 +348,7 @@ class WeChatSpy:
         :param port:
         :return:
         """
+        # TODO:
         request = spy_pb2.Request()
         request.cmd = add_type
         request.param1 = wxid
@@ -364,6 +365,7 @@ class WeChatSpy:
         :param port:
         :return:
         """
+        # TODO:
         request = spy_pb2.Request()
         request.type = GET_CONTACT_STATUS
         request.bytes = bytes(wxid, encoding="utf8")
@@ -392,6 +394,7 @@ class WeChatSpy:
         :param port:
         :return:
         """
+        # TODO:
         request = spy_pb2.Request()
         request.cmd = QRCODE
         request.param1 = output_path
@@ -421,6 +424,7 @@ class WeChatSpy:
         :param port:
         :return:
         """
+        # TODO:
         request = spy_pb2.Request()
         request.cmd = GET_CHATROOM_INVITATION_URL
         request.param1 = wxid
