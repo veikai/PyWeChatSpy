@@ -35,7 +35,10 @@ def handle_response():
         elif data.type == HEART_BEAT:  # 心跳
             pass
         elif data.type == WECHAT_LOGIN:  # 微信登录
-            spy.get_account_details()  # 获取登录账号详情
+            # spy.get_account_details()  # 获取登录账号详情
+            time.sleep(2)
+            spy.send_text("20646587964@chatroom", "@111 22222", "wxid_wbgerrlnz6kt22")
+            pass
         elif data.type == WECHAT_LOGOUT:  # 微信登出
             pass
         elif data.type == CHAT_MESSAGE:  # 微信消息
@@ -66,6 +69,11 @@ def handle_response():
                     print(_from, _to, content, message.file)
                 elif _type == 49:  # XML报文消息
                     print(_from, content, message.file)
+                elif _type == 37:  # 好友申请
+                    print(message.content)
+                    obj = etree.XML(message.content.str)
+                    encryptusername, ticket = obj.xpath("/msg/@encryptusername")[0], obj.xpath("/msg/@ticket")[0]
+                    spy.accept_new_contact(encryptusername, ticket)  # 接收好友请求
         elif data.type == ACCOUNT_DETAILS:  # 登录账号详情
             if data.code:
                 account_details = spy_pb2.AccountDetails()
