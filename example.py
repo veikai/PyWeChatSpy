@@ -8,6 +8,11 @@ from PyWeChatSpy.proto import spy_pb2
 import base64
 import os
 from queue import Queue
+import sys
+
+if not sys.version >= "3.8":
+    logging.error("微信版本过低，请使用Python3.8.x或更高版本")
+    exit()
 
 
 logger = logging.getLogger(__file__)
@@ -49,6 +54,10 @@ def handle_response():
                 _from = message.wxidFrom.str  # 消息发送方
                 _to = message.wxidTo.str  # 消息接收方
                 content = message.content.str  # 消息内容
+                _from_group_member = ""
+                if _from.endswith("@chatroom"):  # 群聊消息
+                    _from_group_member = message.content.str.split(':\n', 1)[0]  # 群内发言人
+                    content = message.content.str.split(':\n', 1)[1]  # 群聊消息内容
                 image_overview_size = message.imageOverview.imageSize  # 图片缩略图大小
                 image_overview_bytes = message.imageOverview.imageBytes  # 图片缩略图数据
                 # with open("img.jpg", "wb") as wf:
@@ -70,7 +79,7 @@ def handle_response():
                 elif _type == 49:  # XML报文消息
                     print(_from, content, message.file)
                 elif _type == 37:  # 好友申请
-                    print(message.content)
+                    print("新的好友申请")
                     obj = etree.XML(message.content.str)
                     encryptusername, ticket = obj.xpath("/msg/@encryptusername")[0], obj.xpath("/msg/@ticket")[0]
                     spy.accept_new_contact(encryptusername, ticket)  # 接收好友请求
@@ -86,23 +95,21 @@ def handle_response():
             if data.code:
                 contacts_list = spy_pb2.Contacts()
                 contacts_list.ParseFromString(data.bytes)
-                for contact in contacts_list.contactDetails:
+                for contact in contacts_list.contactDetails:  # 遍历联系人列表
                     wxid = contact.wxid.str  # 联系人wxid
                     nickname = contact.nickname.str  # 联系人昵称
                     remark = contact.remark.str  # 联系人备注
                     print(wxid, nickname, remark)
                     if wxid.endswith("chatroom"):  # 群聊
                         groups.append(wxid)
-                wxid = groups.pop()
-                print(wxid)
-                spy.get_contact_details("20646587964@chatroom")
+                spy.get_contact_details("20646587964@chatroom")  # 获取群聊详情
             else:
                 logger.error(data.message)
         elif data.type == CONTACT_DETAILS:
             if data.code:
                 contact_details_list = spy_pb2.Contacts()
                 contact_details_list.ParseFromString(data.bytes)
-                for contact_details in contact_details_list.contactDetails:
+                for contact_details in contact_details_list.contactDetails:  # 遍历联系人详情
                     wxid = contact_details.wxid.str  # 联系人wxid
                     nickname = contact_details.nickname.str  # 联系人昵称
                     remark = contact_details.remark.str  # 联系人备注
@@ -110,8 +117,8 @@ def handle_response():
                         group_member_list = contact_details.groupMemberList  # 群成员列表
                         member_count = group_member_list.memberCount  # 群成员数量
                         for group_member in group_member_list.groupMember:  # 遍历群成员
-                            member_wxid = group_member.wxid
-                            member_nickname = group_member.nickname
+                            member_wxid = group_member.wxid  # 群成员wxid
+                            member_nickname = group_member.nickname  # 群成员昵称
                             print(member_wxid, member_nickname)
                         pass
             else:
