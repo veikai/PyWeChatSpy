@@ -57,7 +57,7 @@ def handle_response():
                 _from_group_member = ""
                 if _from.endswith("@chatroom"):  # 群聊消息
                     _from_group_member = message.content.str.split(':\n', 1)[0]  # 群内发言人
-                    content = message.content.str.split(':\n', 1)[1]  # 群聊消息内容
+                    content = message.content.str.split(':\n', 1)[-1]  # 群聊消息内容
                 image_overview_size = message.imageOverview.imageSize  # 图片缩略图大小
                 image_overview_bytes = message.imageOverview.imageBytes  # 图片缩略图数据
                 # with open("img.jpg", "wb") as wf:
