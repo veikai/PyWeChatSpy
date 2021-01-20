@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='wx',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x08wx.proto\x12\x02wx\"\x1b\n\x0cWeChatString\x12\x0b\n\x03str\x18\x01 \x01(\t\"\xbc\x02\n\x0f\x41\x63\x63ountDetails1\x12\x1e\n\x04wxid\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\n\n\x02QQ\x18\x04 \x01(\x03\x12\x1f\n\x05\x65mail\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x1f\n\x05phone\x18\x06 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12\x10\n\x08unknown8\x18\x08 \x01(\x05\x12\x10\n\x08unknown9\x18\t \x01(\x0c\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x10\n\x08province\x18\x0b \x01(\t\x12\x0c\n\x04\x63ity\x18\x0c \x01(\t\x12\x11\n\tautograph\x18\r \x01(\t\x12\x10\n\x08wechatId\x18\x1b \x01(\t\x12\x0f\n\x07\x63ountry\x18& \x01(\t\"8\n\rWeChatMoments\x12\x0c\n\x04\x66lag\x18\x01 \x01(\x05\x12\x19\n\x11momentsBackground\x18\x02 \x01(\t\"i\n\x0f\x41\x63\x63ountDetails2\x12(\n\rwechatMoments\x18\x01 \x01(\x0b\x32\x11.wx.WeChatMoments\x12\x16\n\x0eprofilePhotoHD\x18\t \x01(\t\x12\x14\n\x0cprofilePhoto\x18\n \x01(\t\"\x82\x01\n\x12\x41\x63\x63ountDetailsData\x12\x10\n\x08unknown1\x18\x01 \x01(\x0c\x12,\n\x0f\x61\x63\x63ountDetails1\x18\x02 \x01(\x0b\x32\x13.wx.AccountDetails1\x12,\n\x0f\x61\x63\x63ountDetails2\x18\x03 \x01(\x0b\x32\x13.wx.AccountDetails2\":\n\rMessageDetail\x12\x13\n\x0bmessageSize\x18\x01 \x01(\x05\x12\x14\n\x0cmessageBytes\x18\x02 \x01(\x0c\"H\n\x07Message\x12\x13\n\x0bmessageType\x18\x01 \x01(\x05\x12(\n\rmessageDetail\x18\x02 \x01(\x0b\x32\x11.wx.MessageDetail\"A\n\x0bMessageList\x12\x14\n\x0cmessageCount\x18\x01 \x01(\x05\x12\x1c\n\x07message\x18\x02 \x03(\x0b\x32\x0b.wx.Message\"E\n\x0bMessageData\x12\x10\n\x08unknown1\x18\x01 \x01(\x05\x12$\n\x0bmessageList\x18\x02 \x01(\x0b\x32\x0f.wx.MessageList\"6\n\rImageOverview\x12\x11\n\timageSize\x18\x01 \x01(\x05\x12\x12\n\nimageBytes\x18\x02 \x01(\x0c\"\x93\x02\n\x0b\x43hatMessage\x12\"\n\x08wxidFrom\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12 \n\x06wxidTo\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0c\n\x04type\x18\x04 \x01(\x05\x12!\n\x07\x63ontent\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown6\x18\x06 \x01(\x05\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12(\n\rimageOverview\x18\x08 \x01(\x0b\x32\x11.wx.ImageOverview\x12\x11\n\ttimestamp\x18\t \x01(\x03\x12\x0c\n\x04head\x18\n \x01(\t\x12\x10\n\x08overview\x18\x0b \x01(\t\x12\x0c\n\x04\x66ile\x18\x0e \x01(\t\"-\n\x0bGroupMember\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\"\x82\x01\n\x0fGroupMemberList\x12\x13\n\x0bmemberCount\x18\x01 \x01(\x05\x12$\n\x0bgroupMember\x18\x02 \x03(\x0b\x32\x0f.wx.GroupMember\x12\x10\n\x08unknown1\x18\x03 \x01(\x05\x12\x10\n\x08unknown2\x18\x04 \x01(\t\x12\x10\n\x08unknown3\x18\x05 \x01(\x05\"C\n\x0c\x43ontactPhone\x12\x12\n\nphoneCount\x18\x01 \x01(\x05\x12\x1f\n\x05phone\x18\x02 \x03(\x0b\x32\x10.wx.WeChatString\"\xc1\x05\n\x0e\x43ontactDetails\x12\x1e\n\x04wxid\x18\x01 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\x31\n\x17nicknamePinyinUppercase\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12(\n\x0enicknamePinyin\x18\x04 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0b\n\x03sex\x18\x05 \x01(\x05\x12 \n\x06remark\x18\n \x01(\x0b\x32\x10.wx.WeChatString\x12/\n\x15remarkPinyinUppercase\x18\x0b \x01(\x0b\x32\x10.wx.WeChatString\x12&\n\x0cremarkPinyin\x18\x0c \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08province\x18\x13 \x01(\t\x12\x0c\n\x04\x63ity\x18\x14 \x01(\t\x12\x11\n\tautograph\x18\x15 \x01(\t\x12\x10\n\x08wechatId\x18\x1e \x01(\t\x12\x16\n\x0egroupOwnerWxid\x18\x1f \x01(\t\x12(\n\rweChatMoments\x18% \x03(\x0b\x32\x11.wx.WeChatMoments\x12\x0f\n\x07\x63ountry\x18& \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\' \x01(\t\x12\x14\n\x0cprofilePhoto\x18( \x01(\t\x12\x11\n\tbrandList\x18) \x01(\t\x12\x0b\n\x03md5\x18, \x01(\t\x12\x17\n\x0f\x65ncryptusername\x18- \x01(\t\x12,\n\x0fgroupMemberList\x18\x39 \x01(\x0b\x32\x13.wx.GroupMemberList\x12\x13\n\x0b\x64\x65scription\x18; \x01(\t\x12\r\n\x05tagId\x18= \x01(\t\x12&\n\x0c\x63ontactPhone\x18> \x01(\x0b\x32\x10.wx.ContactPhone\x12\r\n\x05wxid2\x18G \x01(\t\"@\n\x12\x43ontactDetailsData\x12*\n\x0e\x63ontactDetails\x18\x03 \x01(\x0b\x32\x12.wx.ContactDetails\"7\n\x15\x43reateGroupMemberData\x12\x1e\n\x04wxid\x18\x01 \x01(\x0b\x32\x10.wx.WeChatString\"\x8e\x01\n\x12GroupMemberDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x15\n\rgroupNickname\x18\x03 \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\x04 \x01(\t\x12\x14\n\x0cprofilePhoto\x18\x05 \x01(\t\x12\x13\n\x0binviterWxid\x18\x07 \x01(\t\"b\n\x16GroupMemberDetailsList\x12\x14\n\x0c\x64\x65tailsCount\x18\x01 \x01(\x05\x12\x32\n\x12groupMemberDetails\x18\x02 \x03(\x0b\x32\x16.wx.GroupMemberDetails\"k\n\x1aGroupMemberDetailsListData\x12\x11\n\tgroupWxid\x18\x02 \x01(\t\x12:\n\x16groupMemberDetailsList\x18\x04 \x01(\x0b\x32\x1a.wx.GroupMemberDetailsListb\x06proto3'
+  serialized_pb=b'\n\x08wx.proto\x12\x02wx\"\x1b\n\x0cWeChatString\x12\x0b\n\x03str\x18\x01 \x01(\t\"\xbc\x02\n\x0f\x41\x63\x63ountDetails1\x12\x1e\n\x04wxid\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\n\n\x02QQ\x18\x04 \x01(\x03\x12\x1f\n\x05\x65mail\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x1f\n\x05phone\x18\x06 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12\x10\n\x08unknown8\x18\x08 \x01(\x05\x12\x10\n\x08unknown9\x18\t \x01(\x0c\x12\x0b\n\x03sex\x18\n \x01(\x05\x12\x10\n\x08province\x18\x0b \x01(\t\x12\x0c\n\x04\x63ity\x18\x0c \x01(\t\x12\x11\n\tautograph\x18\r \x01(\t\x12\x10\n\x08wechatId\x18\x1b \x01(\t\x12\x0f\n\x07\x63ountry\x18& \x01(\t\"8\n\rWeChatMoments\x12\x0c\n\x04\x66lag\x18\x01 \x01(\x05\x12\x19\n\x11momentsBackground\x18\x02 \x01(\t\"i\n\x0f\x41\x63\x63ountDetails2\x12(\n\rwechatMoments\x18\x01 \x01(\x0b\x32\x11.wx.WeChatMoments\x12\x16\n\x0eprofilePhotoHD\x18\t \x01(\t\x12\x14\n\x0cprofilePhoto\x18\n \x01(\t\"\x82\x01\n\x12\x41\x63\x63ountDetailsData\x12\x10\n\x08unknown1\x18\x01 \x01(\x0c\x12,\n\x0f\x61\x63\x63ountDetails1\x18\x02 \x01(\x0b\x32\x13.wx.AccountDetails1\x12,\n\x0f\x61\x63\x63ountDetails2\x18\x03 \x01(\x0b\x32\x13.wx.AccountDetails2\":\n\rMessageDetail\x12\x13\n\x0bmessageSize\x18\x01 \x01(\x05\x12\x14\n\x0cmessageBytes\x18\x02 \x01(\x0c\"H\n\x07Message\x12\x13\n\x0bmessageType\x18\x01 \x01(\x05\x12(\n\rmessageDetail\x18\x02 \x01(\x0b\x32\x11.wx.MessageDetail\"A\n\x0bMessageList\x12\x14\n\x0cmessageCount\x18\x01 \x01(\x05\x12\x1c\n\x07message\x18\x02 \x03(\x0b\x32\x0b.wx.Message\"E\n\x0bMessageData\x12\x10\n\x08unknown1\x18\x01 \x01(\x05\x12$\n\x0bmessageList\x18\x02 \x01(\x0b\x32\x0f.wx.MessageList\"6\n\rImageOverview\x12\x11\n\timageSize\x18\x01 \x01(\x05\x12\x12\n\nimageBytes\x18\x02 \x01(\x0c\"\x93\x02\n\x0b\x43hatMessage\x12\"\n\x08wxidFrom\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12 \n\x06wxidTo\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0c\n\x04type\x18\x04 \x01(\x05\x12!\n\x07\x63ontent\x18\x05 \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08unknown6\x18\x06 \x01(\x05\x12\x10\n\x08unknown7\x18\x07 \x01(\x05\x12(\n\rimageOverview\x18\x08 \x01(\x0b\x32\x11.wx.ImageOverview\x12\x11\n\ttimestamp\x18\t \x01(\x03\x12\x0c\n\x04head\x18\n \x01(\t\x12\x10\n\x08overview\x18\x0b \x01(\t\x12\x0c\n\x04\x66ile\x18\x0e \x01(\t\"-\n\x0bGroupMember\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\"\x82\x01\n\x0fGroupMemberList\x12\x13\n\x0bmemberCount\x18\x01 \x01(\x05\x12$\n\x0bgroupMember\x18\x02 \x03(\x0b\x32\x0f.wx.GroupMember\x12\x10\n\x08unknown1\x18\x03 \x01(\x05\x12\x10\n\x08unknown2\x18\x04 \x01(\t\x12\x10\n\x08unknown3\x18\x05 \x01(\x05\"C\n\x0c\x43ontactPhone\x12\x12\n\nphoneCount\x18\x01 \x01(\x05\x12\x1f\n\x05phone\x18\x02 \x03(\x0b\x32\x10.wx.WeChatString\"\xc1\x05\n\x0e\x43ontactDetails\x12\x1e\n\x04wxid\x18\x01 \x01(\x0b\x32\x10.wx.WeChatString\x12\"\n\x08nickname\x18\x02 \x01(\x0b\x32\x10.wx.WeChatString\x12\x31\n\x17nicknamePinyinUppercase\x18\x03 \x01(\x0b\x32\x10.wx.WeChatString\x12(\n\x0enicknamePinyin\x18\x04 \x01(\x0b\x32\x10.wx.WeChatString\x12\x0b\n\x03sex\x18\x05 \x01(\x05\x12 \n\x06remark\x18\n \x01(\x0b\x32\x10.wx.WeChatString\x12/\n\x15remarkPinyinUppercase\x18\x0b \x01(\x0b\x32\x10.wx.WeChatString\x12&\n\x0cremarkPinyin\x18\x0c \x01(\x0b\x32\x10.wx.WeChatString\x12\x10\n\x08province\x18\x13 \x01(\t\x12\x0c\n\x04\x63ity\x18\x14 \x01(\t\x12\x11\n\tautograph\x18\x15 \x01(\t\x12\x10\n\x08wechatId\x18\x1e \x01(\t\x12\x16\n\x0egroupOwnerWxid\x18\x1f \x01(\t\x12(\n\rweChatMoments\x18% \x03(\x0b\x32\x11.wx.WeChatMoments\x12\x0f\n\x07\x63ountry\x18& \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\' \x01(\t\x12\x14\n\x0cprofilePhoto\x18( \x01(\t\x12\x11\n\tbrandList\x18) \x01(\t\x12\x0b\n\x03md5\x18, \x01(\t\x12\x17\n\x0f\x65ncryptusername\x18- \x01(\t\x12,\n\x0fgroupMemberList\x18\x39 \x01(\x0b\x32\x13.wx.GroupMemberList\x12\x13\n\x0b\x64\x65scription\x18; \x01(\t\x12\r\n\x05tagId\x18= \x01(\t\x12&\n\x0c\x63ontactPhone\x18> \x01(\x0b\x32\x10.wx.ContactPhone\x12\r\n\x05wxid2\x18G \x01(\t\"@\n\x12\x43ontactDetailsData\x12*\n\x0e\x63ontactDetails\x18\x03 \x01(\x0b\x32\x12.wx.ContactDetails\"7\n\x15\x43reateGroupMemberData\x12\x1e\n\x04wxid\x18\x01 \x01(\x0b\x32\x10.wx.WeChatString\"\x8e\x01\n\x12GroupMemberDetails\x12\x0c\n\x04wxid\x18\x01 \x01(\t\x12\x10\n\x08nickname\x18\x02 \x01(\t\x12\x15\n\rgroupNickname\x18\x03 \x01(\t\x12\x16\n\x0eprofilePhotoHD\x18\x04 \x01(\t\x12\x14\n\x0cprofilePhoto\x18\x05 \x01(\t\x12\x13\n\x0binviterWxid\x18\x07 \x01(\t\"b\n\x16GroupMemberDetailsList\x12\x14\n\x0c\x64\x65tailsCount\x18\x01 \x01(\x05\x12\x32\n\x12groupMemberDetails\x18\x02 \x03(\x0b\x32\x16.wx.GroupMemberDetails\"k\n\x1aGroupMemberDetailsListData\x12\x11\n\tgroupWxid\x18\x02 \x01(\t\x12:\n\x16groupMemberDetailsList\x18\x04 \x01(\x0b\x32\x1a.wx.GroupMemberDetailsList\"6\n\x0bLoginQRCode\x12\x12\n\nqrcodeSize\x18\x01 \x01(\x05\x12\x13\n\x0bqrcodeBytes\x18\x02 \x01(\x0c\"7\n\x0fLoginQRCodeData\x12$\n\x0bloginQRCode\x18\x02 \x01(\x0b\x32\x0f.wx.LoginQRCodeb\x06proto3'
 )
 
 
@@ -1133,6 +1133,75 @@ _GROUPMEMBERDETAILSLISTDATA = _descriptor.Descriptor(
   serialized_end=2700,
 )
 
+
+_LOGINQRCODE = _descriptor.Descriptor(
+  name='LoginQRCode',
+  full_name='wx.LoginQRCode',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='qrcodeSize', full_name='wx.LoginQRCode.qrcodeSize', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='qrcodeBytes', full_name='wx.LoginQRCode.qrcodeBytes', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2702,
+  serialized_end=2756,
+)
+
+
+_LOGINQRCODEDATA = _descriptor.Descriptor(
+  name='LoginQRCodeData',
+  full_name='wx.LoginQRCodeData',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='loginQRCode', full_name='wx.LoginQRCodeData.loginQRCode', index=0,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2758,
+  serialized_end=2813,
+)
+
 _ACCOUNTDETAILS1.fields_by_name['wxid'].message_type = _WECHATSTRING
 _ACCOUNTDETAILS1.fields_by_name['nickname'].message_type = _WECHATSTRING
 _ACCOUNTDETAILS1.fields_by_name['email'].message_type = _WECHATSTRING
@@ -1163,6 +1232,7 @@ _CONTACTDETAILSDATA.fields_by_name['contactDetails'].message_type = _CONTACTDETA
 _CREATEGROUPMEMBERDATA.fields_by_name['wxid'].message_type = _WECHATSTRING
 _GROUPMEMBERDETAILSLIST.fields_by_name['groupMemberDetails'].message_type = _GROUPMEMBERDETAILS
 _GROUPMEMBERDETAILSLISTDATA.fields_by_name['groupMemberDetailsList'].message_type = _GROUPMEMBERDETAILSLIST
+_LOGINQRCODEDATA.fields_by_name['loginQRCode'].message_type = _LOGINQRCODE
 DESCRIPTOR.message_types_by_name['WeChatString'] = _WECHATSTRING
 DESCRIPTOR.message_types_by_name['AccountDetails1'] = _ACCOUNTDETAILS1
 DESCRIPTOR.message_types_by_name['WeChatMoments'] = _WECHATMOMENTS
@@ -1183,6 +1253,8 @@ DESCRIPTOR.message_types_by_name['CreateGroupMemberData'] = _CREATEGROUPMEMBERDA
 DESCRIPTOR.message_types_by_name['GroupMemberDetails'] = _GROUPMEMBERDETAILS
 DESCRIPTOR.message_types_by_name['GroupMemberDetailsList'] = _GROUPMEMBERDETAILSLIST
 DESCRIPTOR.message_types_by_name['GroupMemberDetailsListData'] = _GROUPMEMBERDETAILSLISTDATA
+DESCRIPTOR.message_types_by_name['LoginQRCode'] = _LOGINQRCODE
+DESCRIPTOR.message_types_by_name['LoginQRCodeData'] = _LOGINQRCODEDATA
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 WeChatString = _reflection.GeneratedProtocolMessageType('WeChatString', (_message.Message,), {
@@ -1324,6 +1396,20 @@ GroupMemberDetailsListData = _reflection.GeneratedProtocolMessageType('GroupMemb
   # @@protoc_insertion_point(class_scope:wx.GroupMemberDetailsListData)
   })
 _sym_db.RegisterMessage(GroupMemberDetailsListData)
+
+LoginQRCode = _reflection.GeneratedProtocolMessageType('LoginQRCode', (_message.Message,), {
+  'DESCRIPTOR' : _LOGINQRCODE,
+  '__module__' : 'wx_pb2'
+  # @@protoc_insertion_point(class_scope:wx.LoginQRCode)
+  })
+_sym_db.RegisterMessage(LoginQRCode)
+
+LoginQRCodeData = _reflection.GeneratedProtocolMessageType('LoginQRCodeData', (_message.Message,), {
+  'DESCRIPTOR' : _LOGINQRCODEDATA,
+  '__module__' : 'wx_pb2'
+  # @@protoc_insertion_point(class_scope:wx.LoginQRCodeData)
+  })
+_sym_db.RegisterMessage(LoginQRCodeData)
 
 
 # @@protoc_insertion_point(module_scope)

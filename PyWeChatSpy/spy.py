@@ -8,6 +8,12 @@ from .command import *
 import subprocess
 from queue import Queue
 from uuid import uuid4
+import sys
+
+
+if not sys.version >= "3.8":
+    logging.error("微信版本过低，请使用Python3.8.x或更高版本")
+    exit()
 
 
 class WeChatSpy:
@@ -387,17 +393,14 @@ class WeChatSpy:
         request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
-    def show_qrcode(self, output_path: str = "", port: int = 0):
+    def get_login_qrcode(self, port: int = 0):
         """
-        显示登录二维码
-        :param output_path: 输出文件路径
+        获取登录二维码
         :param port:
         :return:
         """
-        # TODO:
         request = spy_pb2.Request()
-        request.cmd = QRCODE
-        request.param1 = output_path
+        request.type = GET_LOGIN_QRCODE
         return self.__send(request, port)
 
     def set_remark(self, wxid: str, remark: str, port: int = 0):

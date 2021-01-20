@@ -1,18 +1,11 @@
 from PyWeChatSpy import WeChatSpy
 from PyWeChatSpy.command import *
 from lxml import etree
-import requests
 import time
 import logging
 from PyWeChatSpy.proto import spy_pb2
-import base64
 import os
 from queue import Queue
-import sys
-
-if not sys.version >= "3.8":
-    logging.error("微信版本过低，请使用Python3.8.x或更高版本")
-    exit()
 
 
 logger = logging.getLogger(__file__)
@@ -37,15 +30,17 @@ def handle_response():
                 logger.error(data.message)
         elif data.type == WECHAT_CONNECTED:  # 微信接入
             print(f"微信客户端已接入 port:{data.port}")
+            time.sleep(1)
+            spy.get_login_qrcode()  # 获取登录二维码
         elif data.type == HEART_BEAT:  # 心跳
             pass
         elif data.type == WECHAT_LOGIN:  # 微信登录
-            # spy.get_account_details()  # 获取登录账号详情
+            print("微信登录")
+            spy.get_account_details()  # 获取登录账号详情
             time.sleep(2)
-            spy.send_text("20646587964@chatroom", "@111 22222", "wxid_wbgerrlnz6kt22")
-            pass
+            # spy.send_text("20646587964@chatroom", "@111 22222", "wxid_wbgerrlnz6kt22")
         elif data.type == WECHAT_LOGOUT:  # 微信登出
-            pass
+            print("微信登出")
         elif data.type == CHAT_MESSAGE:  # 微信消息
             chat_message = spy_pb2.ChatMessage()
             chat_message.ParseFromString(data.bytes)
@@ -133,10 +128,15 @@ def handle_response():
             group_member_details = spy_pb2.GroupMemberDetails()
             group_member_details.ParseFromString(data.bytes)
             print(group_member_details)
-        elif data.type == GROUP_MEMBER_EVENT:
+        elif data.type == GROUP_MEMBER_EVENT:  # 群成员进出事件
             group_member_event = spy_pb2.GroupMemberEvent()
             group_member_event.ParseFromString(data.bytes)
             print(group_member_event)
+        elif data.type == LOGIN_QRCODE:  # 登录二维码
+            qrcode = spy_pb2.LoginQRCode()
+            qrcode.ParseFromString(data.bytes)
+            with open("qrcode.png", "wb") as wf:
+                wf.write(qrcode.qrcodeBytes)
         else:
             print(data)
 
