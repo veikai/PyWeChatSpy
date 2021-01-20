@@ -161,4 +161,4 @@ help people make better use of WeChatForPC
 * qrcodeSize 二维码大小 `qrcode.qrcodeSize`
 * qrcodeBytes 二维码数据 `qrcode.qrcodeBytes`
 
-示例代码见example.py
+示例代码见[example.py](https://github.com/veikai/PyWeChatSpy/blob/master/example.py)
