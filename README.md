@@ -86,6 +86,8 @@ help people make better use of WeChatForPC
   * 回调结构 [GroupMemberDetails](#GroupMemberDetails)
 * 推送群成员变动(进群&退群) GROUP_MEMBER_EVENT
   * 回调结构 [GroupMemberEvent](#GroupMemberEvent)
+* 获取登录二维码 get_login_qrcode
+  * 回调结构 [LoginQRCode](#LoginQRCode)
 
 ## 数据结构
 ### <span id="AccountDetails">登录信息 AccountDetails</span> `account_details = spy_pb2.AccountDetails()`
@@ -155,5 +157,8 @@ help people make better use of WeChatForPC
 * wxid 群聊wxid结构 `callback.wxid`
   * str 群聊wxid `callback.wxid.str`
   
+### <span id="LoginQRCode">LoginQRCode</span> 登录二维码 `qrcode = spy_pb2.LoginQRCode()`
+* qrcodeSize 二维码大小 `qrcode.qrcodeSize`
+* qrcodeBytes 二维码数据 `qrcode.qrcodeBytes`
 
 示例代码见example.py
