@@ -449,3 +449,13 @@ class WeChatSpy:
         file_message.filePath = target_file
         request.bytes = file_message.SerializeToString()
         return self.__send(request, port)
+
+    def send_card(self, wxid: str, card_wxid: str, card_nickname: str, port: int = 0):
+        request = spy_pb2.Request()
+        request.type = SEND_CARD
+        xml = spy_pb2.XmlMessage()
+        xml.wxid = wxid
+        xml.title = card_nickname
+        xml.username = card_wxid
+        request.bytes = xml.SerializeToString()
+        return self.__send(request, port)

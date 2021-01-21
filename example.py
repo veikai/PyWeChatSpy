@@ -39,6 +39,7 @@ def handle_response():
             spy.get_account_details()  # 获取登录账号详情
             time.sleep(2)
             # spy.send_text("20646587964@chatroom", "@111 22222", "wxid_wbgerrlnz6kt22")
+            # spy.send_card("20646587964@chatroom", "wxid_wbgerrlnz6kt22", "测试昵称")  # 发送个人名片
         elif data.type == WECHAT_LOGOUT:  # 微信登出
             print("微信登出")
         elif data.type == CHAT_MESSAGE:  # 微信消息
@@ -78,6 +79,8 @@ def handle_response():
                     obj = etree.XML(message.content.str)
                     encryptusername, ticket = obj.xpath("/msg/@encryptusername")[0], obj.xpath("/msg/@ticket")[0]
                     spy.accept_new_contact(encryptusername, ticket)  # 接收好友请求
+                else:
+                    print(message)
         elif data.type == ACCOUNT_DETAILS:  # 登录账号详情
             if data.code:
                 account_details = spy_pb2.AccountDetails()

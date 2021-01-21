@@ -88,6 +88,11 @@ help people make better use of WeChatForPC
   * 回调结构 [GroupMemberEvent](#GroupMemberEvent)
 * 获取登录二维码 get_login_qrcode
   * 回调结构 [LoginQRCode](#LoginQRCode)
+* 发送个人名片 send_card
+  * 入参
+    * wxid 名片接收wxid
+    * card_wxid 名片wxid
+    * card_nickname 名片显示昵称
 
 ## 数据结构
 ### <span id="AccountDetails">登录信息 AccountDetails</span> `account_details = spy_pb2.AccountDetails()`
