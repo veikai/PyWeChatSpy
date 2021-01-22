@@ -31,14 +31,14 @@ def handle_response():
         elif data.type == WECHAT_CONNECTED:  # 微信接入
             print(f"微信客户端已接入 port:{data.port}")
             time.sleep(1)
-            spy.get_login_qrcode()  # 获取登录二维码
+            # spy.get_login_qrcode()  # 获取登录二维码
         elif data.type == HEART_BEAT:  # 心跳
             pass
         elif data.type == WECHAT_LOGIN:  # 微信登录
             print("微信登录")
             spy.get_account_details()  # 获取登录账号详情
-            time.sleep(2)
-            # spy.send_text("20646587964@chatroom", "@111 22222", "wxid_wbgerrlnz6kt22")
+            # time.sleep(2)
+            spy.send_text("13377920475@chatroom", "@111 @000 22222", "wxid_wbgerrlnz6kt22,only_ld0510")
             # spy.send_card("20646587964@chatroom", "wxid_wbgerrlnz6kt22", "测试昵称")  # 发送个人名片
         elif data.type == WECHAT_LOGOUT:  # 微信登出
             print("微信登出")
@@ -60,20 +60,19 @@ def handle_response():
                 #     wf.write(image_overview_bytes)
                 overview = message.overview  # 消息缩略
                 timestamp = message.timestamp  # 消息时间戳
+                print(_from, _to, _from_group_member, content)
                 if _type == 1:  # 文本消息
-                    print(_from, _to, content)
                     if _to == "filehelper":
                         spy.send_text("filehelper", "Hello PyWeChatSpy3.0\n" + content)
                 elif _type == 3:  # 图片消息
                     file_path = message.file
-                    print(_from, _to, content, file_path)
                     file_path = os.path.join(WECHAT_PROFILE, file_path)
                     time.sleep(10)
                     # spy.decrypt_image(file_path, "a.jpg")
                 elif _type == 43:  # 视频消息
-                    print(_from, _to, content, message.file)
+                    pass
                 elif _type == 49:  # XML报文消息
-                    print(_from, content, message.file)
+                    pass
                 elif _type == 37:  # 好友申请
                     print("新的好友申请")
                     obj = etree.XML(message.content.str)

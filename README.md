@@ -17,7 +17,7 @@ help people make better use of WeChatForPC
   * 入参
     * wxid 文本消息接收方wxid
     * text 文本内容  
-    * at_wxid 需要被@的wxid(仅限群聊)
+    * at_wxid 需要被@的wxid(仅限群聊) at几个人,文本里就需要出现几个'@'符号 `spy.send_text('xxxx@chatroom', '@0000 @1111 Hello World', 'wxid_xxxx,wxid_yyyy')`
 * 发送文件、图片 send_file
   * 入参
     * wxid 文件接收方wxid
