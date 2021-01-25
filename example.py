@@ -19,7 +19,7 @@ logger.addHandler(sh)
 
 
 groups = []
-USER = "18020891"
+USER = ""
 WECHAT_PROFILE = rf"D:\{USER}\Documents\WeChat Files"
 PATCH_PATH = rf"C:\Users\{USER}\AppData\Roaming\Tencent\WeChat\patch"
 if not USER:
@@ -71,8 +71,8 @@ def handle_response():
                 #     wf.write(image_overview_bytes)
                 overview = message.overview  # 消息缩略
                 timestamp = message.timestamp  # 消息时间戳
-                print(_from, _to, _from_group_member, content)
                 if _type == 1:  # 文本消息
+                    print(_from, _to, _from_group_member, content)
                     if _to == "filehelper":
                         spy.send_text("filehelper", "Hello PyWeChatSpy3.0\n" + content)
                 elif _type == 3:  # 图片消息
@@ -108,7 +108,7 @@ def handle_response():
                     print(wxid, nickname, remark)
                     if wxid.endswith("chatroom"):  # 群聊
                         groups.append(wxid)
-                spy.get_contact_details("20646587964@chatroom")  # 获取群聊详情
+                # spy.get_contact_details("20646587964@chatroom")  # 获取群聊详情
             else:
                 logger.error(data.message)
         elif data.type == CONTACT_DETAILS:
@@ -154,5 +154,5 @@ def handle_response():
 
 if __name__ == '__main__':
     spy = WeChatSpy(response_queue=my_response_queue, key="18d421169d93611a5584affac335e690", logger=logger)
-    # pid = spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
+    pid = spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     handle_response()
