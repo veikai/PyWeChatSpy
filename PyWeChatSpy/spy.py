@@ -72,6 +72,7 @@ class WeChatSpy:
             try:
                 _bytes = socket_client.recv(4096)
             except Exception as e:
+                self.__port2client.pop(client_address[1])
                 return self.logger.warning(f"The WeChat process has disconnected: {e}")
             recv_bytes += _bytes
             while True:
