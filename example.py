@@ -48,9 +48,6 @@ def handle_response():
         elif data.type == WECHAT_LOGIN:  # 微信登录
             print("微信登录")
             spy.get_account_details()  # 获取登录账号详情
-            # time.sleep(2)
-            # spy.send_text("20646587964@chatroom", "@111 22222", "wxid_wbgerrlnz6kt22")
-            # spy.send_card("20646587964@chatroom", "wxid_wbgerrlnz6kt22", "测试昵称")  # 发送个人名片
         elif data.type == WECHAT_LOGOUT:  # 微信登出
             print("微信登出")
         elif data.type == CHAT_MESSAGE:  # 微信消息
@@ -83,7 +80,7 @@ def handle_response():
                 elif _type == 43:  # 视频消息
                     pass
                 elif _type == 49:  # XML报文消息
-                    pass
+                    print(_from, _to, message.file)
                 elif _type == 37:  # 好友申请
                     print("新的好友申请")
                     obj = etree.XML(message.content.str)
@@ -125,7 +122,7 @@ def handle_response():
                         for group_member in group_member_list.groupMember:  # 遍历群成员
                             member_wxid = group_member.wxid  # 群成员wxid
                             member_nickname = group_member.nickname  # 群成员昵称
-                            print(member_wxid, member_nickname)
+                            # print(member_wxid, member_nickname)
                         pass
             else:
                 logger.error(data.message)
@@ -138,16 +135,16 @@ def handle_response():
         elif data.type == GROUP_MEMBER_DETAILS:  # 群成员详情
             group_member_details = spy_pb2.GroupMemberDetails()
             group_member_details.ParseFromString(data.bytes)
-            print(group_member_details)
+            # print(group_member_details)
         elif data.type == GROUP_MEMBER_EVENT:  # 群成员进出事件
             group_member_event = spy_pb2.GroupMemberEvent()
             group_member_event.ParseFromString(data.bytes)
-            print(group_member_event)
+            # print(group_member_event)
         elif data.type == LOGIN_QRCODE:  # 登录二维码
             qrcode = spy_pb2.LoginQRCode()
             qrcode.ParseFromString(data.bytes)
-            with open("qrcode.png", "wb") as wf:
-                wf.write(qrcode.qrcodeBytes)
+            with open("qrcode.png", "wb") as _wf:
+                _wf.write(qrcode.qrcodeBytes)
         else:
             print(data)
 
