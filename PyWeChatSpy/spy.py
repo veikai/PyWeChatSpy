@@ -186,8 +186,12 @@ class WeChatSpy:
         :param file_path: 文件路径
         :param port:
         """
+        if not os.path.exists(file_path):
+            self.logger.error(f"File Not Found {file_path}")
+            return False
         if len(file_path.split("\\")) > 8:
-            return self.logger.warning(f"File path is too long: {file_path}")
+            self.logger.error(f"File path is too long: {file_path}")
+            return False
         request = spy_pb2.Request()
         request.type = SEND_FILE
         file_message = spy_pb2.FileMessage()
@@ -303,6 +307,9 @@ class WeChatSpy:
         :param port:
         :return:
         """
+        if not os.path.exists(image_path):
+            self.logger.error(f"Image Not Found {image_path}")
+            return False
         request = spy_pb2.Request()
         request.type = SEND_MINI_PROGRAM
         xml = spy_pb2.XmlMessage()
@@ -329,6 +336,9 @@ class WeChatSpy:
         :param port:
         :return:
         """
+        if not os.path.exists(image_path):
+            self.logger.error(f"Image Not Found {image_path}")
+            return False
         request = spy_pb2.Request()
         request.type = SEND_LINK_CARD
         xml = spy_pb2.XmlMessage()
@@ -443,6 +453,9 @@ class WeChatSpy:
         :param port:
         :return:
         """
+        if not os.path.exists(source_file):
+            self.logger.error(f"File Not Found {source_file}")
+            return False
         request = spy_pb2.Request()
         request.type = DECRYPT_IMAGE
         file_message = spy_pb2.FileMessage()
