@@ -430,7 +430,7 @@ class WeChatSpy:
         request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
-    def get_chatroom_invite_url(self, wxid: str, url: str, port: int = 0):
+    def get_group_enter_url(self, wxid: str, url: str, port: int = 0):
         """
         获取群邀请链接
         :param wxid: 发送群邀请链接的人的wxid
@@ -438,11 +438,12 @@ class WeChatSpy:
         :param port:
         :return:
         """
-        # TODO:
         request = spy_pb2.Request()
-        request.cmd = GET_CHATROOM_INVITATION_URL
-        request.param1 = wxid
-        request.param2 = url
+        request.type = GET_GROUP_ENTER_URL
+        text_message = spy_pb2.TextMessage()
+        text_message.wxid = wxid
+        text_message.text = url
+        request.bytes = text_message.SerializeToString()
         return self.__send(request, port)
 
     def decrypt_image(self, source_file: str, target_file: str, port: int = 0):

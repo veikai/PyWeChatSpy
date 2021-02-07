@@ -19,10 +19,10 @@ logger.addHandler(sh)
 
 
 groups = []
-USER = ""
+USER = "18020891"
 WECHAT_PROFILE = rf"D:\{USER}\Documents\WeChat Files"
 PATCH_PATH = rf"C:\Users\{USER}\AppData\Roaming\Tencent\WeChat\patch"
-if not USER:
+if not os.path.exists(WECHAT_PROFILE):
     logger.error("请先设置计算机用户名，并完善WECHAT_PROFILE和PATCH_PATH")
     exit()
 if os.path.isdir(PATCH_PATH):
@@ -81,6 +81,16 @@ def handle_response():
                     pass
                 elif _type == 49:  # XML报文消息
                     print(_from, _to, message.file)
+                    xml = etree.XML(content)
+                    xml_type = xml.xpath("/msg/appmsg/type/text()")[0]
+                    xml_title = xml.xpath("/msg/appmsg/title/text()")[0]
+                    print(xml_title)
+                    if xml_type == "5":
+                        if xml_title == "邀请你加入群聊":
+                            url = xml.xpath("/msg/appmsg/url/text()")[0]
+                            print(url)
+                            time.sleep(1)
+                            spy.get_group_enter_url(_from, url)
                 elif _type == 37:  # 好友申请
                     print("新的好友申请")
                     obj = etree.XML(message.content.str)
@@ -145,6 +155,17 @@ def handle_response():
             qrcode.ParseFromString(data.bytes)
             with open("qrcode.png", "wb") as _wf:
                 _wf.write(qrcode.qrcodeBytes)
+        elif data.type == GROUP_ENTER_URL:  # 进群链接
+            group_enter_url = spy_pb2.GroupEnterUrl()
+            group_enter_url.ParseFromString(data.bytes)
+            print(group_enter_url)
+            # 进群直接post请求链接
+            # try:
+            #     requests.post(group_enter_url.url)
+            # except requests.exceptions.InvalidSchema:
+            #     pass
+            # except Exception as e:
+            #     logger.error(f"进群失败：{e}")
         else:
             print(data)
 
