@@ -19,8 +19,8 @@ logger.addHandler(sh)
 
 
 groups = []
-USER = "18020891"
-WECHAT_PROFILE = rf"D:\{USER}\Documents\WeChat Files"
+USER = ""
+WECHAT_PROFILE = rf"C:\Users\{USER}\Documents\WeChat Files"
 PATCH_PATH = rf"C:\Users\{USER}\AppData\Roaming\Tencent\WeChat\patch"
 if not os.path.exists(WECHAT_PROFILE):
     logger.error("请先设置计算机用户名，并完善WECHAT_PROFILE和PATCH_PATH")
@@ -83,9 +83,9 @@ def handle_response():
                     print(_from, _to, message.file)
                     xml = etree.XML(content)
                     xml_type = xml.xpath("/msg/appmsg/type/text()")[0]
-                    xml_title = xml.xpath("/msg/appmsg/title/text()")[0]
-                    print(xml_title)
                     if xml_type == "5":
+                        xml_title = xml.xpath("/msg/appmsg/title/text()")[0]
+                        print(xml_title)
                         if xml_title == "邀请你加入群聊":
                             url = xml.xpath("/msg/appmsg/url/text()")[0]
                             print(url)
@@ -171,6 +171,6 @@ def handle_response():
 
 
 if __name__ == '__main__':
-    spy = WeChatSpy(response_queue=my_response_queue, key="18d421169d93611a5584affac335e690", logger=logger)
+    spy = WeChatSpy(response_queue=my_response_queue, key="7d30e1a7903a5a4de12a792ed24ae5ea", logger=logger)
     pid = spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     handle_response()
