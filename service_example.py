@@ -13,11 +13,11 @@ CORS(app, supports_credentials=True)  # 允许跨域
 
 def verify_port(fun):
     @wraps(fun)
-    def wrap(port, *args, **kwargs):
+    def wrap(port):
         if not port and app.clients:
             port = app.clients[0]
         if port:
-            return fun(port, *args, **kwargs)
+            return fun(port)
         else:
             return jsonify({"code": 0, "msg": "port not found"})
     return wrap
