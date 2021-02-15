@@ -159,7 +159,7 @@ def handle_response():
         else:
             print(data)
 
-# pb格式转dict
+# dict格式转pb
 def dict2pb(cls, adict, strict=False):
     """
     Takes a class representing the ProtoBuf Message and fills it with data from

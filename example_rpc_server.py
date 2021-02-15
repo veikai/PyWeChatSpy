@@ -56,7 +56,6 @@ def data_forward():
     pusher = context.socket(zmq.PUSH)
     pusher.bind(msg_bind_address)
     while True:
-        time.sleep(0.2)
         data = my_response_queue.get()
         # 将消息转换成dict格式
         data = pb2dict(data)
