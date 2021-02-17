@@ -24,6 +24,7 @@ class SpyService(Flask):
         self.client2login = dict()
         self.client2account = dict()
         self.response_queue = Queue()
+        self.client2qrcode = dict()
         self.spy = WeChatSpy(response_queue=self.response_queue, key=key)
         super().__init__(import_name,
                          static_url_path=static_url_path,
@@ -52,3 +53,5 @@ class SpyService(Flask):
                 self.client2login[data.port] = "0"
             elif data.type == ACCOUNT_DETAILS:
                 self.client2account[data.port] = data.bytes
+            elif data.type == LOGIN_QRCODE:
+                self.client2qrcode[data.port] = data.bytes

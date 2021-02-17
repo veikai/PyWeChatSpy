@@ -5,9 +5,10 @@ from functools import wraps
 from time import sleep
 from PyWeChatSpy.proto import spy_pb2
 from flask_cors import CORS
+import base64
 
 
-app = SpyService(__name__)
+app = SpyService(__name__, key="57cbab9164536dc9c76b0c023f19f3a5")
 CORS(app, supports_credentials=True)  # 允许跨域
 
 
@@ -24,13 +25,26 @@ def verify_port(fun):
 
 
 @app.route('/open_wechat')
-def hello_world():
+def open_wechat():
     app.spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     while True:
         if app.clients.__len__() > app.last_client_count:
             app.last_client_count = app.clients.__len__()
             return jsonify({"code": 1, "port": app.clients[-1]})
         sleep(0.5)
+
+
+@app.route('/get_login_qrcode/<int:port>')
+@verify_port
+def get_login_qrcode(port):
+    app.spy.get_login_qrcode(port)
+    for i in range(20):
+        if app.client2qrcode.get(port):
+            qrcode_data = app.client2qrcode.pop(port)
+            base64_data = base64.b64encode(qrcode_data)
+            return jsonify({"code": 1, "qrcode": f"data:image/png;base64,{base64_data.decode()}"})
+        sleep(0.5)
+    return jsonify({"code": 0, "msg": "login qrcode not found"})
 
 
 @app.route("/get_login_status/<int:port>")
