@@ -32,7 +32,7 @@ if not os.path.exists(PATCH_PATH):
     with open(PATCH_PATH, "a") as wf:
         wf.write("")
 my_response_queue = Queue()
-spy = WeChatSpy(response_queue=my_response_queue, key="57cbab9164536dc9c76b0c023f19f3a5", logger=logger)
+spy = WeChatSpy(response_queue=my_response_queue, key="ab28d8c4768ab3bc2ba86841313f6e32", logger=logger)
 tod = TruthOrDare(spy)
 
 

@@ -1,4 +1,4 @@
-from PyWeChatSpy.service import SpyService
+from PyWeChatSpy.service import SpyService, GET_CONTACTS_LIST
 from flask.json import jsonify
 from flask import request
 from functools import wraps
@@ -8,7 +8,7 @@ from flask_cors import CORS
 import base64
 
 
-app = SpyService(__name__, key="57cbab9164536dc9c76b0c023f19f3a5")
+app = SpyService(__name__, key="ab28d8c4768ab3bc2ba86841313f6e32")
 CORS(app, supports_credentials=True)  # 允许跨域
 
 
@@ -72,7 +72,7 @@ def get_account_info(port):
                 "autograph": account_info.autograph,
                 "profile_photo_hd": account_info.profilePhotoHD,
                 "profile_photo": account_info.profilePhoto,
-                "phone": account_info.photo,
+                "phone": account_info.phone,
                 "sex": account_info.sex,
                 "city": account_info.city,
                 "province": account_info.province,
@@ -91,6 +91,28 @@ def send_text(port):
     at_wxid = data.get("at_wxid")
     app.spy.send_text(wxid, text, at_wxid, port)
     return jsonify({"code": 1})
+
+
+@app.route("/get_contacts/<int:port>")
+@verify_port
+def get_contacts(port):
+    app.spy.get_contacts(port)
+    for i in range(20):
+        if contacts_data := app.client2contacts.get(port):
+            if contacts_data.type == GET_CONTACTS_LIST and not contacts_data.code:
+                return jsonify({"code": 0, "msg": "GET_CONTACTS is not available"})
+            contacts_list = spy_pb2.Contacts()
+            contacts_list.ParseFromString(contacts_data.bytes)
+            _contacts_list = []
+            for contact in contacts_list.contactDetails:  # 遍历联系人列表
+                _contacts_list.append({
+                    "wxid": contact.wxid.str,
+                    "nickname": contact.nickname.str,
+                    "remark": contact.remark.str
+                })
+            return jsonify({"code": 1, "contacts": _contacts_list})
+        sleep(0.5)
+    return jsonify({"code": 0, "msg": "contacts list not found"})
 
 
 if __name__ == '__main__':
