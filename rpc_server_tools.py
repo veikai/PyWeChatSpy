@@ -8,9 +8,8 @@ rpc_bind_address = "tcp://*:5558"
 
 # RPC服务处理类
 class RPCHandler:
-    def __init__(self, my_queue):
+    def __init__(self):
         self._functions = {}
-        self._my_queue = my_queue
         # 创建上下文对象
         t2 = Thread(target=self.rpc_server, args=())
         # t2.daemon = True

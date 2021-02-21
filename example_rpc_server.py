@@ -66,7 +66,7 @@ if __name__ == '__main__':
     spy = WeChatSpy(response_queue=my_response_queue, key="7d30e1a7903a5a4de12a792ed24ae5ea", logger=logger)
     pid = spy.run(r"D:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
     # 注册远程调用的函数, 自己按需增加
-    rpc_handler = RPCHandler(my_response_queue)
+    rpc_handler = RPCHandler()
     rpc_handler.register_function(spy.send_text)
     rpc_handler.register_function(spy.get_contacts)
     rpc_handler.register_function(spy.decrypt_image)
