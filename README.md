@@ -28,10 +28,12 @@ help people make better use of WeChatForPC
     * target_file 解密后图片保存路径
 ### 高级功能
 * 获取联系人列表 get_contacts(获取所有联系人，包括好友与群，不活跃的群可能无法获取)
+  * 回调类型 CONTACTS_LIST
   * 回调结构 [Contacts](#Contacts)
 * 获取联系人详情、群成员列表 get_contact_details
   * 入参
     * 联系人wxid
+  * 回调类型 CONTACT_DETAILS  
   * 回调结构 [Contacts](#Contacts)
 * 发送群公告 send_announcement
   * 入参
