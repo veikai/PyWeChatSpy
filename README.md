@@ -176,7 +176,7 @@ help people make better use of WeChatForPC
 示例代码见
 [service_example.py](https://github.com/veikai/PyWeChatSpy/blob/master/service_example.py)
 和
-[service_example.py](https://github.com/veikai/PyWeChatSpy/blob/master/client_example.py)
+[client_example.py](https://github.com/veikai/PyWeChatSpy/blob/master/client_example.py)
 
 ### 三、远程过程调用(RPC)
 起作用的有4个额外文件：
