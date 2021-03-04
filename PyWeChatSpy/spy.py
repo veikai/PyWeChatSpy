@@ -50,11 +50,11 @@ class WeChatSpy:
         t_start_server.name = "spy"
         t_start_server.start()
         current_path = os.path.split(os.path.abspath(__file__))[0]
-        helper_path = os.path.join(current_path, "SpyK.exe 3.0")
+        helper_path = os.path.join(current_path, "SpyK.exe")
         if not os.path.exists(helper_path):
             self.logger.error("请检查文件 SpyK.exe 是否被误删")
             exit(-1)
-        subprocess.Popen(helper_path)
+        subprocess.Popen(f"{helper_path} 3.0")
 
     def __start_server(self):
         while True:
