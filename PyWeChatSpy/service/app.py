@@ -1,8 +1,9 @@
 from flask import Flask
-from .spy import WeChatSpy
+from ..spy import WeChatSpy
 from queue import Queue
 from threading import Thread
-from .command import *
+from ..command import *
+import requests
 
 
 class SpyService(Flask):
@@ -18,12 +19,12 @@ class SpyService(Flask):
                  root_path=None,
                  key=None):
         self.last_client_count = 0
-        self.clients = []
+        self.response_queue = Queue()
         self.client2pid = dict()
         self.client2wxid = dict()
         self.client2login = dict()
+        self.client2user_logout = dict()
         self.client2account = dict()
-        self.response_queue = Queue()
         self.client2qrcode = dict()
         self.client2contacts = dict()
         self.spy = WeChatSpy(response_queue=self.response_queue, key=key)
@@ -45,7 +46,6 @@ class SpyService(Flask):
         while True:
             data = self.response_queue.get()
             if data.type == WECHAT_CONNECTED:
-                self.clients.append(data.port)
                 self.client2pid[data.port] = data.pid
                 self.client2login[data.port] = "0"
             elif data.type == WECHAT_LOGIN:
@@ -55,9 +55,11 @@ class SpyService(Flask):
             elif data.type == ACCOUNT_DETAILS:
                 self.client2account[data.port] = data.bytes
             elif data.type == LOGIN_QRCODE:
-                self.client2qrcode[data.port] = data.bytes
+                self.client2qrcode[data.port] = data
             elif data.type == GET_CONTACTS_LIST and not data.code:
                 self.client2contacts[data.port] = data
             elif data.type == CONTACTS_LIST:
                 self.client2contacts[data.port] = data
+            elif data.type == USER_LOGOUT:
+                self.client2user_logout[data.port] = data.code
 

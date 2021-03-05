@@ -6,17 +6,18 @@ from time import sleep
 from PyWeChatSpy.proto import spy_pb2
 from flask_cors import CORS
 import base64
+import os
 
 
-app = SpyService(__name__, key="ab28d8c4768ab3bc2ba86841313f6e32")
+app = SpyService(__name__, key="18d421169d93611a5584affac335e690")
 CORS(app, supports_credentials=True)  # 允许跨域
 
 
 def verify_port(fun):
     @wraps(fun)
     def wrap(port):
-        if not port and app.clients:
-            port = app.clients[0]
+        if not port and app.spy.port2client:
+            port = list(app.spy.port2client.keys())[0]
         if port:
             return fun(port)
         else:
@@ -27,10 +28,12 @@ def verify_port(fun):
 @app.route('/open_wechat')
 def open_wechat():
     app.spy.run(r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe")
-    while True:
-        if app.clients.__len__() > app.last_client_count:
-            app.last_client_count = app.clients.__len__()
-            return jsonify({"code": 1, "port": app.clients[-1]})
+    i = 0
+    while i < 10:
+        if app.spy.port2client.keys().__len__() > app.last_client_count:
+            app.last_client_count = app.spy.port2client.keys().__len__()
+            return jsonify({"code": 1, "port": list(app.spy.port2client.keys())[-1]})
+        i += 1
         sleep(0.5)
 
 
@@ -39,12 +42,38 @@ def open_wechat():
 def get_login_qrcode(port):
     app.spy.get_login_qrcode(port)
     for i in range(20):
-        if app.client2qrcode.get(port):
-            qrcode_data = app.client2qrcode.pop(port)
-            base64_data = base64.b64encode(qrcode_data)
-            return jsonify({"code": 1, "qrcode": f"data:image/png;base64,{base64_data.decode()}"})
+        if data := app.client2qrcode.get(port):
+            if not data.code:
+                return jsonify({"code": 0, "msg": "GET_LOGIN_QRCODE is not available"})
+            app.client2qrcode.pop(port)
+            qrcode_data = spy_pb2.LoginQRCode()
+            qrcode_data.ParseFromString(data.bytes)
+            base64_data = base64.b64encode(qrcode_data.qrcodeBytes)
+            return jsonify({"code": 1, "qrcode": base64_data.decode()})
         sleep(0.5)
     return jsonify({"code": 0, "msg": "login qrcode not found"})
+
+
+@app.route("/user_logout/<int:port>")
+@verify_port
+def user_logout(port):
+    app.spy.user_logout(port)
+    for i in range(20):
+        if app.client2user_logout.get(port) is not None:
+            code = app.client2user_logout.pop(port)
+            return jsonify({"code": code})
+        sleep(0.5)
+    return jsonify({"code": 0})
+
+
+@app.route("/close_wechat/<int:port>")
+@verify_port
+def close_wechat(port):
+    if pid := app.client2pid.pop(port):
+        os.system(f"taskkill /pid {pid}")
+        app.last_client_count -= 1
+        return jsonify({"code": 1})
+    return jsonify({"code": 0})
 
 
 @app.route("/get_login_status/<int:port>")
@@ -56,9 +85,9 @@ def get_login_status(port):
         return jsonify({"code": 0, "msg": "login status not found"})
 
 
-@app.route("/get_account_info/<int:port>")
+@app.route("/get_login_info/<int:port>")
 @verify_port
-def get_account_info(port):
+def get_login_info(port):
     app.spy.get_account_details(port)
     for i in range(20):
         if account_data := app.client2account.get(port):
@@ -79,7 +108,7 @@ def get_account_info(port):
                 "country": account_info.country
             })
         sleep(0.5)
-    return jsonify({"code": 0, "msg": "account info not found"})
+    return jsonify({"code": 0, "msg": "login info not found"})
 
 
 @app.route("/send_text/<int:port>", methods=["POST"])

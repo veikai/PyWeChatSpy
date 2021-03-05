@@ -39,7 +39,7 @@ class WeChatSpy:
         else:
             raise Exception("response_queue must be Queue")
         self.pids = []
-        self.__port2client = dict()
+        self.port2client = dict()
         host = "127.0.0.1"
         port = 9527
         self.__socket_server = socket(AF_INET, SOCK_STREAM)
@@ -59,7 +59,7 @@ class WeChatSpy:
     def __start_server(self):
         while True:
             socket_client, client_address = self.__socket_server.accept()
-            self.__port2client[client_address[1]] = socket_client
+            self.port2client[client_address[1]] = socket_client
             self.logger.debug(f"A WeChat process from {client_address} successfully connected")
             if self.__key:
                 self.set_commercial(self.__key, port=client_address[1])
@@ -75,7 +75,7 @@ class WeChatSpy:
             try:
                 _bytes = socket_client.recv(4096)
             except Exception as e:
-                self.__port2client.pop(client_address[1])
+                self.port2client.pop(client_address[1])
                 return self.logger.warning(f"The WeChat process has disconnected: {e}")
             recv_bytes += _bytes
             while True:
@@ -95,9 +95,9 @@ class WeChatSpy:
                     break
 
     def __send(self, request: spy_pb2.Request, port: int = 0):
-        if not port and self.__port2client:
-            socket_client: socket = list(self.__port2client.values())[0]
-        elif not (socket_client := self.__port2client.get(port)):
+        if not port and self.port2client:
+            socket_client: socket = list(self.port2client.values())[0]
+        elif not (socket_client := self.port2client.get(port)):
             self.logger.error(f"Failure to find socket client by port:{port}")
             return False
         request.id = uuid4().__str__()
@@ -201,6 +201,16 @@ class WeChatSpy:
         file_message.wxid = wxid
         file_message.filePath = file_path
         request.bytes = file_message.SerializeToString()
+        return self.__send(request, port)
+
+    def user_logout(self, port: int = 0):
+        """
+        退出登录
+        :param port:
+        :return:
+        """
+        request = spy_pb2.Request()
+        request.type = USER_LOGOUT
         return self.__send(request, port)
 
     def accept_new_contact(self, encryptusername: str, ticket: str, port: int = 0):
