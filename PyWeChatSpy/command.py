@@ -1,6 +1,7 @@
 PROFESSIONAL_KEY = 9527  # 系统设置
 WECHAT_CONNECTED = 100  # socket连接
 HEART_BEAT = 101  # 心跳
+WECHAT_DISCONNECT = 102 # socket断开
 WECHAT_LOGIN = 200  # 微信登录
 WECHAT_LOGOUT = 201  # 微信登出
 CHAT_MESSAGE = 202  # 聊天消息

@@ -1,38 +1,34 @@
 import requests
 import base64
+import time
+import os
 
 
+i = 0
+a = time.time()
 resp = requests.get("http://localhost:5000/open_wechat").json()
-print(resp)
+print(i, resp, time.time() - a)
+port = resp['port']
+i += 1
+time.sleep(1)
 input()  # 等待手动登录
-resp = requests.get(f"http://localhost:5000/get_login_qrcode/{resp['port']}").json()
-print(resp)
-with open("qrcode.png", "wb") as wf:
-    wf.write(base64.b64decode(resp["qrcode"]))
-input()
-resp = requests.get("http://localhost:5000/user_logout/0").json()
-print(resp)
-input()
-resp = requests.get("http://localhost:5000/close_wechat/0").json()
-print(resp)
-
-
-def a():
-    print(111)
-    yield
-    print(222)
-    yield
-
-
-def b():
-    print(333)
-    yield
-    print(444)
-    yield
-
-c = a()
-d = b()
-next(c)
-next(d)
-next(c)
-next(d)
+# resp = requests.get(f"http://localhost:5000/get_login_qrcode/{port}").json()
+# print(resp)
+# input()
+# resp = requests.get(f"http://localhost:5000/get_login_info/{port}").json()
+# print(resp)
+# input()
+# resp = requests.get(f"http://localhost:5000/get_contact_list/{port}").json()
+# print(resp)
+# input()
+# post_data = {"wxid": "17926000072@chatroom"}
+# resp = requests.post(f"http://localhost:5000/get_contact_details/{port}", json=post_data).json()
+# print(resp)
+# input()
+# url = f"http://localhost:5000/send_file/{port}"
+# files = {'file': open(r'D:\Pictures\a.jpg', 'rb')}
+# post_data = {
+#     "wxid": "filehelper"
+# }
+# resp = requests.post(url, data=post_data, files=files).json()
+# print(resp)
