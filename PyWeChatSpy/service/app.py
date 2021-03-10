@@ -66,7 +66,11 @@ class SpyService(Flask):
                     continue
                 elif data.type == SEND_FILE and data.code:
                     continue
-                elif data.type == CREATE_GROUP_CALLBACK and data.code:
+                elif data.type == SEND_MINI_PROGRAM and data.code:
+                    continue
+                elif data.type == SEND_LINK_CARD and data.code:
+                    continue
+                elif data.type == CREATE_CHATROOM and data.code:
                     continue
                 self.client2response[data.id] = data
 

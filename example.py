@@ -3,6 +3,7 @@ from PyWeChatSpy.command import *
 from lxml import etree
 import time
 import logging
+from logging.handlers import TimedRotatingFileHandler
 from PyWeChatSpy.proto import spy_pb2
 import os
 import shutil
@@ -16,13 +17,14 @@ formatter = logging.Formatter('%(asctime)s [%(threadName)s] %(levelname)s: %(mes
 sh = logging.StreamHandler()
 sh.setFormatter(formatter)
 sh.setLevel(logging.INFO)
+fh = TimedRotatingFileHandler("spy.log", when="midnight")
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 logger.addHandler(sh)
 
 
-groups = []
-USER = "veikai"
-WECHAT_PROFILE = rf"C:\Users\{USER}\Documents\WeChat Files"
-PATCH_PATH = rf"C:\Users\{USER}\AppData\Roaming\Tencent\WeChat\patch"
+WECHAT_PROFILE = rf"D:\{os.environ['USERNAME']}\Documents\WeChat Files"
+PATCH_PATH = rf"C:\Users\{os.environ['USERNAME']}\AppData\Roaming\Tencent\WeChat\patch"
 if not os.path.exists(WECHAT_PROFILE):
     logger.error("请先设置计算机用户名，并完善WECHAT_PROFILE和PATCH_PATH")
     exit()
@@ -79,6 +81,8 @@ def handle_response(data):
                 print(_from, _to, _from_group_member, content)
                 if _to == "filehelper":
                     spy.send_text("filehelper", "Hello PyWeChatSpy3.0\n" + content)
+                    time.sleep(2)
+                    spy.send_file("filehelper", r"D:\18020891\Pictures\b.jpg")
             elif _type == 3:  # 图片消息
                 file_path = message.file
                 file_path = os.path.join(WECHAT_PROFILE, file_path)
@@ -120,8 +124,6 @@ def handle_response(data):
                 nickname = contact.nickname.str  # 联系人昵称
                 remark = contact.remark.str  # 联系人备注
                 print(wxid, nickname, remark)
-                if wxid.endswith("chatroom"):  # 群聊
-                    groups.append(wxid)
             # spy.get_contact_details("20646587964@chatroom")  # 获取群聊详情
         else:
             logger.error(data.message)
@@ -173,6 +175,18 @@ def handle_response(data):
         #     pass
         # except Exception as e:
         #     logger.error(f"进群失败：{e}")
+    elif data.type == SEND_TEXT_CALLBACK:
+        print("发送文本回调")
+        print(data)
+        print(data.code)
+    elif data.type == SEND_XML_CALLBACK:
+        print("发送xml回调")
+        print(data)
+        print(data.code)
+    elif data.type == SEND_IMAGE_CALLBACK:
+        print("发送图片回调")
+        print(data)
+        print(data.code)
     else:
         print(data)
 
