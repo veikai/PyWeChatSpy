@@ -23,7 +23,7 @@ logger.addHandler(fh)
 logger.addHandler(sh)
 
 
-WECHAT_PROFILE = rf"D:\{os.environ['USERNAME']}\Documents\WeChat Files"
+WECHAT_PROFILE = rf"C:\Users\{os.environ['USERNAME']}\Documents\WeChat Files"
 PATCH_PATH = rf"C:\Users\{os.environ['USERNAME']}\AppData\Roaming\Tencent\WeChat\patch"
 if not os.path.exists(WECHAT_PROFILE):
     logger.error("请先设置计算机用户名，并完善WECHAT_PROFILE和PATCH_PATH")
