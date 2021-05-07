@@ -82,7 +82,7 @@ def handle_response(data):
                 if _to == "filehelper":
                     spy.send_text("filehelper", "Hello PyWeChatSpy3.0\n" + content)
                     time.sleep(2)
-                    spy.send_file("filehelper", r"D:\18020891\Pictures\b.jpg")
+                    spy.send_file("filehelper", r"C:\Users\veikai\Documents\listen1_backup.json")
             elif _type == 3:  # 图片消息
                 file_path = message.file
                 file_path = os.path.join(WECHAT_PROFILE, file_path)
@@ -111,7 +111,7 @@ def handle_response(data):
         if data.code:
             account_details = spy_pb2.AccountDetails()
             account_details.ParseFromString(data.bytes)
-            print(account_details)
+            print(account_details.nickname, "已登录")
             spy.get_contacts()  # 获取联系人列表
         else:
             logger.warning(data.message)
