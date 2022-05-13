@@ -28,10 +28,12 @@ help people make better use of WeChatForPC
     * target_file 解密后图片保存路径
 ### 高级功能
 * 获取联系人列表 get_contacts(获取所有联系人，包括好友与群，不活跃的群可能无法获取)
+  * 回调类型 CONTACTS_LIST
   * 回调结构 [Contacts](#Contacts)
 * 获取联系人详情、群成员列表 get_contact_details
   * 入参
     * 联系人wxid
+  * 回调类型 CONTACT_DETAILS  
   * 回调结构 [Contacts](#Contacts)
 * 发送群公告 send_announcement
   * 入参
@@ -166,4 +168,29 @@ help people make better use of WeChatForPC
 * qrcodeSize 二维码大小 `qrcode.qrcodeSize`
 * qrcodeBytes 二维码数据 `qrcode.qrcodeBytes`
 
+## 例子
+### 一、本地运行
 示例代码见[example.py](https://github.com/veikai/PyWeChatSpy/blob/master/example.py)
+
+### 二、HTTP调用服务端
+示例代码见
+[service_example.py](https://github.com/veikai/PyWeChatSpy/blob/master/service_example.py)
+和
+[client_example.py](https://github.com/veikai/PyWeChatSpy/blob/master/client_example.py)
+
+### 三、远程过程调用(RPC)
+起作用的有4个额外文件：
+* example_rpc_server.py
+* example_rpc_client.py
+* rpc_server_tools.py
+* rpc_client_tools.py
+
+使用方法：
+1. 运行服务端 [example_rpc_server.py](https://github.com/veikai/PyWeChatSpy/blob/master/example_rpc_server.py) 启动微信
+2. 运行客户端 [example_rpc_client.py](https://github.com/veikai/PyWeChatSpy/blob/master/example_rpc_client.py) 接收并处理消息
+
+*注意：例子中，客户端和服务端在一台机子上，所以监听的ip是127.0.0.1，如果将客户端放到其他机器，请填写实际服务端对应的ip，出现端口冲突的话也可以灵活更改端口，并配置对应服务器防火墙放行*
+
+### 四、其他例子
+
+__待补充，欢迎大家贡献！__
