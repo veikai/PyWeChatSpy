@@ -1,5 +1,5 @@
 protobuf==3.11.3
-Flask==1.1.2
+Flask==2.3.2
 lxml
 zmq
 pywin32
